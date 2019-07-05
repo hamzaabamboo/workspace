@@ -3,4 +3,4 @@ parsexml
 .env
 deploy_rsa
 deploy_rsa.pub
-**/generated
+server/**/generated

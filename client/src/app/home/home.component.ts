@@ -1,7 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Apollo } from "apollo-angular";
-import gql from "graphql-tag";
-import { stringify } from "@angular/compiler/src/util";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { HelloGQL } from "generated/graphql";
