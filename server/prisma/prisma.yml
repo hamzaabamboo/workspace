@@ -1,0 +1,32 @@
+# Specifies the HTTP endpoint of your Prisma API
+endpoint: http://prisma:4466
+
+# Defines your models, each model is mapped to the database as a table.
+datamodel: generated/datamodel.graphql
+
+secret: mysecret42
+# Specifies the language and directory for the generated Prisma client.
+generate:
+  - generator: typescript-client
+    output: ../src/generated/prisma-client
+  - generator: graphql-schema
+    output: ../src/generated/prisma.graphql
+
+# Seed your service with initial data based on `seed.graphql`.
+seed:
+  # import: seed.graphql
+  run: ts-node ./prisma/seed.ts
+# hooks:
+#   post-deploy:
+#     - prisma generate
+# # Ensures Prisma client is re-generated after a datamodel changed
+# hooks:
+#   post-deploy:
+#     - prisma generate
+#     - graphql get-schema -p prisma
+#     - graphql codegen
+
+# If specified, the `secret` must be used to generate a JWT which is attached
+# to the `Authorization` header of HTTP requests made against the Prisma API.
+# Info: https://www.prisma.io/docs/reference/prisma-api/concepts-utee3eiquo#authentication
+# secret: ${env:PRISMA_SECRET}

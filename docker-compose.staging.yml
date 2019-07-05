@@ -1,0 +1,19 @@
+version: "3.3"
+services:
+  nginx:
+    build:
+      context: ./nginx
+    restart: always
+    ports:
+      - "0.0.0.0:${APP_PORT}:80"
+  client:
+    build:
+      context: ./client
+  backend:
+    command: ["yarn", "prod"]
+    restart: on-failure
+  postgres-db:
+    volumes:
+      - postgres-staging:/var/lib/postgresql/data
+volumes:
+  postgres-staging: ~

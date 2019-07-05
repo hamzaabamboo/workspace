@@ -1,0 +1,6 @@
+type Clipboard {
+  id: ID! @id @unique
+  creator: User!
+  content: String!
+  archived: Boolean! @default(value: false)
+}

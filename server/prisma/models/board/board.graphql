@@ -1,0 +1,5 @@
+type Board {
+  id: ID! @id @unique
+  title: String!
+  slug: String!
+}
