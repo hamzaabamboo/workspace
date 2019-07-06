@@ -1,0 +1,8 @@
+query getCards {
+  getCards {
+    id
+    ...CardContent
+    public
+    archived
+  }
+}

@@ -1,0 +1,8 @@
+fragment CardContent on Card {
+  title
+  content
+  slug
+  files {
+    filename
+  }
+}

@@ -3,7 +3,7 @@ type Card {
   creator: User!
   parent: Board
   title: String!
-  slug: String!
+  slug: String! @unique
   content: String
   public: Boolean! @default(value: true)
   archived: Boolean! @default(value: false)

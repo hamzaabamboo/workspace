@@ -104,6 +104,12 @@ export type CardInput = {
   files?: Maybe<Array<Maybe<Scalars["Upload"]>>>;
 };
 
+export type CardMetaInput = {
+  __typename?: "CardMetaInput";
+  public?: Maybe<Scalars["Boolean"]>;
+  archived?: Maybe<Scalars["Boolean"]>;
+};
+
 export type CardWhereInput = {
   id?: Maybe<Scalars["ID"]>;
   id_not?: Maybe<Scalars["ID"]>;
@@ -294,6 +300,7 @@ export type Mutation = {
 
 export type MutationMakeCardArgs = {
   data?: Maybe<CardInput>;
+  board?: Maybe<Scalars["ID"]>;
 };
 
 export type MutationEditCardArgs = {
@@ -402,10 +409,81 @@ export type UserWhereInput = {
   OR?: Maybe<Array<UserWhereInput>>;
   NOT?: Maybe<Array<UserWhereInput>>;
 };
+export type CardContentFragment = { __typename?: "Card" } & Pick<
+  Card,
+  "title" | "content" | "slug"
+> & { files: Maybe<Array<{ __typename?: "File" } & Pick<File, "filename">>> };
+
+export type GetCardsQueryVariables = {};
+
+export type GetCardsQuery = { __typename?: "Query" } & {
+  getCards: Array<
+    Maybe<
+      { __typename?: "Card" } & Pick<Card, "id" | "public" | "archived"> &
+        CardContentFragment
+    >
+  >;
+};
+
+export type MakeCardMutationVariables = {
+  data?: Maybe<CardInput>;
+};
+
+export type MakeCardMutation = { __typename?: "Mutation" } & {
+  makeCard: { __typename?: "Card" } & Pick<Card, "id">;
+};
+
 export type HelloQueryVariables = {};
 
 export type HelloQuery = { __typename?: "Query" } & Pick<Query, "hello">;
+export const CardContentFragmentDoc = gql`
+  fragment CardContent on Card {
+    title
+    content
+    slug
+    files {
+      filename
+    }
+  }
+`;
+export const GetCardsDocument = gql`
+  query getCards {
+    getCards {
+      id
+      ...CardContent
+      public
+      archived
+    }
+  }
+  ${CardContentFragmentDoc}
+`;
 
+@Injectable({
+  providedIn: "root"
+})
+export class GetCardsGQL extends Apollo.Query<
+  GetCardsQuery,
+  GetCardsQueryVariables
+> {
+  document = GetCardsDocument;
+}
+export const MakeCardDocument = gql`
+  mutation makeCard($data: CardInput) {
+    makeCard(data: $data) {
+      id
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: "root"
+})
+export class MakeCardGQL extends Apollo.Mutation<
+  MakeCardMutation,
+  MakeCardMutationVariables
+> {
+  document = MakeCardDocument;
+}
 export const HelloDocument = gql`
   query Hello {
     hello

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { HelloGQL } from "generated/graphql";
+import { MakeCardGQL, HelloGQL } from "../generated/graphql";
 
 @Component({
   selector: "app-home",

@@ -1,0 +1,5 @@
+mutation makeCard($data: CardInput) {
+  makeCard(data: $data) {
+    id
+  }
+}
