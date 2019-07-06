@@ -2780,7 +2780,7 @@
       {
         "kind": "SCALAR",
         "name": "Upload",
-        "description": "The `Upload` scalar type represents a file upload.",
+        "description": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3542,6 +3542,16 @@
         "possibleTypes": null
       },
       {
+        "kind": "SCALAR",
+        "name": "DateTime",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "CardMetaInput",
         "description": null,
@@ -3565,16 +3575,6 @@
         ],
         "inputFields": null,
         "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "SCALAR",
-        "name": "DateTime",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       }

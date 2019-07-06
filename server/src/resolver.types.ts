@@ -1,7 +1,12 @@
-import gql from "graphql-tag";
-import { Injectable } from "@angular/core";
-import * as Apollo from "apollo-angular";
+import {
+  GraphQLResolveInfo,
+  GraphQLScalarType,
+  GraphQLScalarTypeConfig
+} from "graphql";
+import { Card } from "./generated/prisma";
+import { Context } from "./types";
 export type Maybe<T> = T | null;
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -408,109 +413,283 @@ export type UserWhereInput = {
   OR?: Maybe<Array<UserWhereInput>>;
   NOT?: Maybe<Array<UserWhereInput>>;
 };
-export type CardContentFragment = { __typename?: "Card" } & Pick<
-  Card,
-  "title" | "content" | "slug"
-> & { files: Maybe<Array<{ __typename?: "File" } & Pick<File, "filename">>> };
 
-export type GetCardsQueryVariables = {};
+export type ResolverTypeWrapper<T> = Promise<T> | T;
 
-export type GetCardsQuery = { __typename?: "Query" } & {
-  getCards: Array<
-    Maybe<
-      { __typename?: "Card" } & Pick<Card, "id" | "public" | "archived"> &
-        CardContentFragment
-    >
+export type ResolverFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Promise<TResult> | TResult;
+
+export type StitchingResolver<TResult, TParent, TContext, TArgs> = {
+  fragment: string;
+  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
+  | ResolverFn<TResult, TParent, TContext, TArgs>
+  | StitchingResolver<TResult, TParent, TContext, TArgs>;
+
+export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+
+export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs>;
+  resolve?: SubscriptionResolveFn<TResult, TParent, TContext, TArgs>;
+}
+
+export type SubscriptionResolver<
+  TResult,
+  TParent = {},
+  TContext = {},
+  TArgs = {}
+> =
+  | ((
+      ...args: any[]
+    ) => SubscriptionResolverObject<TResult, TParent, TContext, TArgs>)
+  | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
+
+export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
+  parent: TParent,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Maybe<TTypes>;
+
+export type NextResolverFn<T> = () => Promise<T>;
+
+export type DirectiveResolverFn<
+  TResult = {},
+  TParent = {},
+  TContext = {},
+  TArgs = {}
+> = (
+  next: NextResolverFn<TResult>,
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+/** Mapping between all available schema types and the resolvers types */
+export type ResolversTypes = {
+  Query: ResolverTypeWrapper<{}>;
+  Card: ResolverTypeWrapper<Card>;
+  ID: ResolverTypeWrapper<Scalars["ID"]>;
+  User: ResolverTypeWrapper<User>;
+  String: ResolverTypeWrapper<Scalars["String"]>;
+  UserRole: UserRole;
+  Board: ResolverTypeWrapper<Board>;
+  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  FileWhereInput: FileWhereInput;
+  CardWhereInput: CardWhereInput;
+  UserWhereInput: UserWhereInput;
+  BoardWhereInput: BoardWhereInput;
+  FileType: FileType;
+  FileOrderByInput: FileOrderByInput;
+  Int: ResolverTypeWrapper<Scalars["Int"]>;
+  File: ResolverTypeWrapper<File>;
+  Mutation: ResolverTypeWrapper<{}>;
+  CardInput: CardInput;
+  Upload: ResolverTypeWrapper<Scalars["Upload"]>;
+  AuthPayload: ResolverTypeWrapper<AuthPayload>;
+  Subscription: ResolverTypeWrapper<{}>;
+  DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
+  CardMetaInput: ResolverTypeWrapper<CardMetaInput>;
+};
+
+/** Mapping between all available schema types and the resolvers parents */
+export type ResolversParentTypes = {
+  Query: {};
+  Card: Card;
+  ID: Scalars["ID"];
+  User: User;
+  String: Scalars["String"];
+  UserRole: UserRole;
+  Board: Board;
+  Boolean: Scalars["Boolean"];
+  FileWhereInput: FileWhereInput;
+  CardWhereInput: CardWhereInput;
+  UserWhereInput: UserWhereInput;
+  BoardWhereInput: BoardWhereInput;
+  FileType: FileType;
+  FileOrderByInput: FileOrderByInput;
+  Int: Scalars["Int"];
+  File: File;
+  Mutation: {};
+  CardInput: CardInput;
+  Upload: Scalars["Upload"];
+  AuthPayload: AuthPayload;
+  Subscription: {};
+  DateTime: Scalars["DateTime"];
+  CardMetaInput: CardMetaInput;
+};
+
+export type AuthPayloadResolvers<
+  ContextType = Context,
+  ParentType = ResolversParentTypes["AuthPayload"]
+> = {
+  token?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+};
+
+export type BoardResolvers<
+  ContextType = Context,
+  ParentType = ResolversParentTypes["Board"]
+> = {
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  slug?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+};
+
+export type CardResolvers<
+  ContextType = Context,
+  ParentType = ResolversParentTypes["Card"]
+> = {
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  creator?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  parent?: Resolver<Maybe<ResolversTypes["Board"]>, ParentType, ContextType>;
+  title?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  slug?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  content?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  public?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  archived?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  files?: Resolver<
+    Maybe<Array<ResolversTypes["File"]>>,
+    ParentType,
+    ContextType,
+    CardFilesArgs
   >;
 };
 
-export type MakeCardMutationVariables = {
-  data?: Maybe<CardInput>;
+export type CardMetaInputResolvers<
+  ContextType = Context,
+  ParentType = ResolversParentTypes["CardMetaInput"]
+> = {
+  public?: Resolver<Maybe<ResolversTypes["Boolean"]>, ParentType, ContextType>;
+  archived?: Resolver<
+    Maybe<ResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType
+  >;
 };
 
-export type MakeCardMutation = { __typename?: "Mutation" } & {
-  makeCard: { __typename?: "Card" } & Pick<Card, "id">;
+export interface DateTimeScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["DateTime"], any> {
+  name: "DateTime";
+}
+
+export type FileResolvers<
+  ContextType = Context,
+  ParentType = ResolversParentTypes["File"]
+> = {
+  filename?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  mimetype?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  encoding?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 };
 
-export type HelloQueryVariables = {};
-
-export type HelloQuery = { __typename?: "Query" } & Pick<Query, "hello">;
-export const CardContentFragmentDoc = gql`
-  fragment CardContent on Card {
-    title
-    content
-    slug
-    files {
-      filename
-    }
-  }
-`;
-export const GetCardsDocument = gql`
-  query getCards {
-    getCards {
-      id
-      ...CardContent
-      public
-      archived
-    }
-  }
-  ${CardContentFragmentDoc}
-`;
-
-@Injectable({
-  providedIn: "root"
-})
-export class GetCardsGQL extends Apollo.Query<
-  GetCardsQuery,
-  GetCardsQueryVariables
-> {
-  document = GetCardsDocument;
-}
-export const MakeCardDocument = gql`
-  mutation makeCard($data: CardInput) {
-    makeCard(data: $data) {
-      id
-    }
-  }
-`;
-
-@Injectable({
-  providedIn: "root"
-})
-export class MakeCardGQL extends Apollo.Mutation<
-  MakeCardMutation,
-  MakeCardMutationVariables
-> {
-  document = MakeCardDocument;
-}
-export const HelloDocument = gql`
-  query Hello {
-    hello
-  }
-`;
-
-@Injectable({
-  providedIn: "root"
-})
-export class HelloGQL extends Apollo.Query<HelloQuery, HelloQueryVariables> {
-  document = HelloDocument;
-}
-export interface IntrospectionResultData {
-  __schema: {
-    types: {
-      kind: string;
-      name: string;
-      possibleTypes: {
-        name: string;
-      }[];
-    }[];
-  };
-}
-
-const result: IntrospectionResultData = {
-  __schema: {
-    types: []
-  }
+export type MutationResolvers<
+  ContextType = Context,
+  ParentType = ResolversParentTypes["Mutation"]
+> = {
+  makeCard?: Resolver<
+    ResolversTypes["Card"],
+    ParentType,
+    ContextType,
+    MutationMakeCardArgs
+  >;
+  editCard?: Resolver<
+    ResolversTypes["Card"],
+    ParentType,
+    ContextType,
+    MutationEditCardArgs
+  >;
+  login?: Resolver<
+    ResolversTypes["AuthPayload"],
+    ParentType,
+    ContextType,
+    MutationLoginArgs
+  >;
+  signup?: Resolver<
+    ResolversTypes["AuthPayload"],
+    ParentType,
+    ContextType,
+    MutationSignupArgs
+  >;
 };
 
-export default result;
+export type QueryResolvers<
+  ContextType = Context,
+  ParentType = ResolversParentTypes["Query"]
+> = {
+  getCards?: Resolver<
+    Array<Maybe<ResolversTypes["Card"]>>,
+    ParentType,
+    ContextType
+  >;
+  hello?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  currentUser?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+};
+
+export type SubscriptionResolvers<
+  ContextType = Context,
+  ParentType = ResolversParentTypes["Subscription"]
+> = {
+  cards?: SubscriptionResolver<
+    Array<Maybe<ResolversTypes["Card"]>>,
+    ParentType,
+    ContextType
+  >;
+};
+
+export interface UploadScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["Upload"], any> {
+  name: "Upload";
+}
+
+export type UserResolvers<
+  ContextType = Context,
+  ParentType = ResolversParentTypes["User"]
+> = {
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  password?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  role?: Resolver<ResolversTypes["UserRole"], ParentType, ContextType>;
+  profileImage?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+};
+
+export type Resolvers<ContextType = Context> = {
+  AuthPayload?: AuthPayloadResolvers<ContextType>;
+  Board?: BoardResolvers<ContextType>;
+  Card?: CardResolvers<ContextType>;
+  CardMetaInput?: CardMetaInputResolvers<ContextType>;
+  DateTime?: GraphQLScalarType;
+  File?: FileResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
+  Query?: QueryResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
+  Upload?: GraphQLScalarType;
+  User?: UserResolvers<ContextType>;
+};
+
+/**
+ * @deprecated
+ * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
+ */
+export type IResolvers<ContextType = Context> = Resolvers<ContextType>;

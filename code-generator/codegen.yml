@@ -1,13 +1,23 @@
 overwrite: true
-schema: "http://backend:4000"
+schema: "server/src/generated/schema.graphql"
 documents: "client/src/app/**/*.graphql"
 generates:
   ./client/src/app/generated/graphql.ts:
     plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-apollo-angular"
-      - "fragment-matcher"
+      - typescript
+      - typescript-operations
+      - typescript-apollo-angular
+      - fragment-matcher
   ./client/src/app/generated/graphql.schema.json:
     plugins:
-      - "introspection"
+      - introspection
+  ./server/src/resolver.types.ts:
+    config:
+      contextType: ./types#Context
+      mappers:
+        Card: ./generated/prisma#Card
+        # Clipboard: ./generated/prisma.ts#Clipboard
+      # defaultMapper: ./generated/prisma.ts#{T}
+    plugins:
+      - typescript
+      - typescript-resolvers

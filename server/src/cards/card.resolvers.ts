@@ -1,9 +1,10 @@
-import { Context } from "../types";
 import { getUser } from "../utils";
 import slugify from "slugify";
-const user = {
+import { Resolvers } from "../resolver.types";
+
+const user: Resolvers = {
   Query: {
-    async getCards(parent, args, ctx: Context, info) {
+    async getCards(parent, args, ctx, info) {
       const user = await getUser(ctx, info);
       const cards = await ctx.db.query.cards({
         where: { creator: { id: user.id } }
@@ -12,7 +13,7 @@ const user = {
     }
   },
   Mutation: {
-    async makeCard(parent, { data, board }, ctx: Context, info) {
+    async makeCard(parent, { data, board }, ctx, info) {
       const user = await getUser(ctx, info);
       const card = await ctx.db.mutation.createCard({
         data: {
@@ -29,13 +30,14 @@ const user = {
             connect: {
               id: board
             }
-          }
+          },
+          files: {}
         }
       });
 
       return card;
     },
-    async editCard(parent, { id, data }, ctx: Context, info) {
+    async editCard(parent, { id, data }, ctx, info) {
       const user = await getUser(ctx, info);
       const card = await ctx.db.query.card(
         { where: { id } },
@@ -53,7 +55,8 @@ const user = {
         },
         data: {
           ...data,
-          slug: slugify(data.title)
+          slug: slugify(data.title),
+          files: {}
         }
       });
     }

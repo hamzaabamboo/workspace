@@ -11,3 +11,5 @@ export interface Context {
 export interface TokenPayload {
   userId: string;
 }
+
+export type ResultWrapper<T> = T | Promise<T>;
