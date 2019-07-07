@@ -1,66 +1,34 @@
 import { getUser } from "../utils";
-import slugify from "slugify";
 import { Resolvers } from "../resolver.types";
+import { Service } from "typedi";
+import CardService from "./card.service";
+import { ClassResolvers } from "../types";
 
-const user: Resolvers = {
-  Query: {
-    async getCards(parent, args, ctx, info) {
-      const user = await getUser(ctx, info);
-      const cards = await ctx.db.query.cards({
-        where: { creator: { id: user.id } }
-      });
-      return cards;
-    }
-  },
-  Mutation: {
-    async makeCard(parent, { data, board }, ctx, info) {
-      const user = await getUser(ctx, info);
-      const card = await ctx.db.mutation.createCard({
-        data: {
-          ...data,
-          slug: slugify(data.title),
-          public: false,
-          archived: false,
-          creator: {
-            connect: {
-              id: user.id
-            }
-          },
-          parent: board && {
-            connect: {
-              id: board
-            }
-          },
-          files: {}
+@Service()
+class CardResolvers implements ClassResolvers {
+  constructor(private cardService: CardService) {}
+
+  resolvers(): Resolvers {
+    const { cardService } = this;
+    return {
+      Query: {
+        async getCards(parent, args, ctx, info) {
+          const user = await getUser(ctx);
+          return cardService.getCards(user, ctx.db, info);
         }
-      });
-
-      return card;
-    },
-    async editCard(parent, { id, data }, ctx, info) {
-      const user = await getUser(ctx, info);
-      const card = await ctx.db.query.card(
-        { where: { id } },
-        `{ creator { id } }`
-      );
-      if (!card) {
-        throw new Error("Card not found!");
-      }
-      if (card.creator.id != user.id) {
-        throw new Error("You are not owner of this card");
-      }
-      return await ctx.db.mutation.updateCard({
-        where: {
-          id
+      },
+      Mutation: {
+        async makeCard(parent, { data, board }, ctx, info) {
+          const user = await getUser(ctx, info);
+          return cardService.makeCard(user, data, board, ctx.db, info);
         },
-        data: {
-          ...data,
-          slug: slugify(data.title),
-          files: {}
+        async editCard(parent, { id, data }, ctx, info) {
+          const user = await getUser(ctx, info);
+          return cardService.editCard(user, id, data, ctx.db, info);
         }
-      });
-    }
+      }
+    };
   }
-};
+}
 
-export default user;
+export default CardResolvers;

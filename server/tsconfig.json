@@ -7,7 +7,9 @@
     "rootDir": "src",
     "outDir": "dist",
     "lib": ["esnext", "dom"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
     // "esModuleInterop": true
   },
   "include": ["src/**/*"],
