@@ -1,7 +1,5 @@
 import { Context } from "../types";
-import { Resolvers } from "../resolver.types";
-
-const testResolver: Resolvers<Context> = {
+const testResolver = {
   Query: {
     hello: (parent, args, ctx, info) => {
       return "world";

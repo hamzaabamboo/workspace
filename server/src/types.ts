@@ -1,4 +1,4 @@
-import { Prisma } from "./generated/prisma";
+import { Prisma } from "./generated/prisma-client";
 
 // tslint:disable-next-line:interface-name
 export interface Context {
@@ -11,5 +11,3 @@ export interface Context {
 export interface TokenPayload {
   userId: string;
 }
-
-export type ResultWrapper<T> = T | Promise<T>;

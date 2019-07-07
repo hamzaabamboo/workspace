@@ -9,6 +9,8 @@
     "prisma-generate": "ts-node prisma/datamodel.ts && prisma generate"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.135",
+    "@types/module-alias": "^2.0.0",
     "bcryptjs": "2.4.3",
     "fs": "^0.0.1-security",
     "graphql-shield": "^5.3.5",
@@ -18,7 +20,11 @@
     "lodash": "^4.17.11",
     "mkdirp-sync": "^0.0.3",
     "module-alias": "^2.2.0",
+    "nexus": "^0.12.0-beta.6",
+    "nexus-prisma": "^0.3.7",
     "prisma-binding": "^2.3.11",
+    "prisma-client": "^0.0.0",
+    "prisma-client-lib": "^1.34.0",
     "shortid": "^2.2.14",
     "slugify": "^1.3.4"
   },
