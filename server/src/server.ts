@@ -26,8 +26,11 @@ export const createGraphQLServer = (): GraphQLServer => {
   const tempServer = new GraphQLServer({
     typeDefs: ["./src/generated/schema.graphql" /*extendedTypeDefs*/],
     resolvers,
-    context: req => ({ ...req, db }),
-    middlewares: [permissions, ...middlewares],
+    context: req => ({
+      ...req,
+      db
+    }),
+    middlewares: [...middlewares, permissions],
     resolverValidationOptions: {
       requireResolversForResolveType: false
     }

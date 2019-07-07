@@ -1,1 +1,3 @@
-export const middlewares = [];
+import { attachUser } from "./attachUser";
+
+export const middlewares = [attachUser];
