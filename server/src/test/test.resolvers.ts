@@ -1,12 +1,13 @@
-import { Context } from "../types";
 import { Resolvers } from "../resolver.types";
 
-const testResolver: Resolvers<Context> = {
-  Query: {
-    hello: (parent, args, ctx, info) => {
-      return "world";
-    }
+class Test {
+  resolvers(): Resolvers {
+    return {
+      Query: {
+        hello: () => "worlds"
+      }
+    };
   }
-};
+}
 
-export default testResolver;
+export default Test;

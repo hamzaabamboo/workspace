@@ -1,4 +1,5 @@
 import { Prisma } from "./generated/prisma";
+import { Resolvers } from "./resolver.types";
 
 // tslint:disable-next-line:interface-name
 export interface Context {
@@ -13,3 +14,7 @@ export interface TokenPayload {
 }
 
 export type ResultWrapper<T> = T | Promise<T>;
+
+export interface ClassResolvers {
+  resolvers(): Resolvers;
+}

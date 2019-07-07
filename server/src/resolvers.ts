@@ -1,28 +1,19 @@
-import { isEmpty, omitBy } from "lodash";
+import { isEmpty, omitBy, merge } from "lodash";
 import { fileLoader } from "merge-graphql-schemas";
 import { join } from "path";
 import { Resolvers } from "./resolver.types";
-import { Context } from "./types";
+import { getResolvers } from "./container";
 
 export const mergeResolvers = (mergingResolvers: any[]) => {
-  const reducedResolver = mergingResolvers.reduce((prev, current) => {
-    return {
-      ...prev,
-      ...current,
-      Query: {
-        ...prev.Query,
-        ...current.Query
-      },
-      Mutation: {
-        ...prev.Mutation,
-        ...current.Mutation
-      },
-      Subscription: {
-        ...prev.Subscription,
-        ...current.Subscription
-      }
-    };
-  }, {});
+  const reducedResolver = mergingResolvers.reduce(
+    (prev: Resolvers, current) => {
+      const toMerge: Resolvers =
+        current instanceof Function ? getResolvers(current) : current;
+
+      return merge(prev, toMerge);
+    },
+    {}
+  );
 
   return omitBy(reducedResolver, isEmpty);
 };
