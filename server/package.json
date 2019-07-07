@@ -6,7 +6,8 @@
     "debug": "dotenv -- nodemon -e ts,graphql -x ts-node --inspect src/index.ts",
     "build": "rimraf dist && tsc",
     "prisma-deploy": "ts-node prisma/datamodel.ts && prisma deploy",
-    "prisma-generate": "ts-node prisma/datamodel.ts && prisma generate"
+    "prisma-generate": "ts-node prisma/datamodel.ts && prisma generate",
+    "playground": "graphql playground"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
