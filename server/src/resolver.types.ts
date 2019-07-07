@@ -14,6 +14,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The `Upload` scalar type represents a file upload. */
   Upload: any;
   DateTime: any;
 };
@@ -751,11 +752,11 @@ export type ResolversTypes = {
     Omit<AuthPayload, "user"> & { user: ResolversTypes["User"] }
   >;
   Subscription: ResolverTypeWrapper<{}>;
-  DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
   CardMetaInput: ResolverTypeWrapper<CardMetaInput>;
   Clipboard: ResolverTypeWrapper<
     Omit<Clipboard, "creator"> & { creator: ResolversTypes["User"] }
   >;
+  DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -782,9 +783,9 @@ export type ResolversParentTypes = {
   Upload: Scalars["Upload"];
   AuthPayload: Omit<AuthPayload, "user"> & { user: ResolversTypes["User"] };
   Subscription: {};
-  DateTime: Scalars["DateTime"];
   CardMetaInput: CardMetaInput;
   Clipboard: Omit<Clipboard, "creator"> & { creator: ResolversTypes["User"] };
+  DateTime: Scalars["DateTime"];
 };
 
 export type AuthPayloadResolvers<
