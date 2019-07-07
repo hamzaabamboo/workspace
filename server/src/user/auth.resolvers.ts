@@ -3,8 +3,10 @@ import * as jwt from "jsonwebtoken";
 import { Context } from "../types";
 import { GraphQLResolveInfo } from "graphql";
 import { getUser } from "../utils";
+import { Resolvers } from "../resolver.types";
+import { User } from "../generated/prisma";
 
-const user = {
+const user: Resolvers = {
   Query: {
     async currentUser(parent, args, ctx: Context, info) {
       return await getUser(ctx, info);
@@ -52,8 +54,9 @@ const user = {
   },
   AuthPayload: {
     async user(parent, args, context, info) {
-      if (parent.user.id) {
-        return context.db.query.user({ where: { id: parent.user.id } }, info);
+      const user = <User>parent.user;
+      if (user.id) {
+        return context.db.query.user({ where: { id: user.id } }, info);
       }
       return parent.user;
     }

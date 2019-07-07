@@ -3,7 +3,7 @@ import {
   GraphQLScalarType,
   GraphQLScalarTypeConfig
 } from "graphql";
-import { Card } from "./generated/prisma";
+import { Card, User, UserRole } from "./generated/prisma";
 import { Context } from "./types";
 export type Maybe<T> = T | null;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -24,7 +24,7 @@ export type AuthPayload = {
   user: User;
 };
 
-export type Board = {
+export type Board = Node & {
   __typename?: "Board";
   id: Scalars["ID"];
   title: Scalars["String"];
@@ -32,54 +32,96 @@ export type Board = {
 };
 
 export type BoardWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<BoardWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<BoardWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<BoardWhereInput>>;
   id?: Maybe<Scalars["ID"]>;
+  /** All values that are not equal to given value. */
   id_not?: Maybe<Scalars["ID"]>;
+  /** All values that are contained in given list. */
   id_in?: Maybe<Array<Scalars["ID"]>>;
+  /** All values that are not contained in given list. */
   id_not_in?: Maybe<Array<Scalars["ID"]>>;
+  /** All values less than the given value. */
   id_lt?: Maybe<Scalars["ID"]>;
+  /** All values less than or equal the given value. */
   id_lte?: Maybe<Scalars["ID"]>;
+  /** All values greater than the given value. */
   id_gt?: Maybe<Scalars["ID"]>;
+  /** All values greater than or equal the given value. */
   id_gte?: Maybe<Scalars["ID"]>;
+  /** All values containing the given string. */
   id_contains?: Maybe<Scalars["ID"]>;
+  /** All values not containing the given string. */
   id_not_contains?: Maybe<Scalars["ID"]>;
+  /** All values starting with the given string. */
   id_starts_with?: Maybe<Scalars["ID"]>;
+  /** All values not starting with the given string. */
   id_not_starts_with?: Maybe<Scalars["ID"]>;
+  /** All values ending with the given string. */
   id_ends_with?: Maybe<Scalars["ID"]>;
+  /** All values not ending with the given string. */
   id_not_ends_with?: Maybe<Scalars["ID"]>;
   title?: Maybe<Scalars["String"]>;
+  /** All values that are not equal to given value. */
   title_not?: Maybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
   title_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values that are not contained in given list. */
   title_not_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values less than the given value. */
   title_lt?: Maybe<Scalars["String"]>;
+  /** All values less than or equal the given value. */
   title_lte?: Maybe<Scalars["String"]>;
+  /** All values greater than the given value. */
   title_gt?: Maybe<Scalars["String"]>;
+  /** All values greater than or equal the given value. */
   title_gte?: Maybe<Scalars["String"]>;
+  /** All values containing the given string. */
   title_contains?: Maybe<Scalars["String"]>;
+  /** All values not containing the given string. */
   title_not_contains?: Maybe<Scalars["String"]>;
+  /** All values starting with the given string. */
   title_starts_with?: Maybe<Scalars["String"]>;
+  /** All values not starting with the given string. */
   title_not_starts_with?: Maybe<Scalars["String"]>;
+  /** All values ending with the given string. */
   title_ends_with?: Maybe<Scalars["String"]>;
+  /** All values not ending with the given string. */
   title_not_ends_with?: Maybe<Scalars["String"]>;
   slug?: Maybe<Scalars["String"]>;
+  /** All values that are not equal to given value. */
   slug_not?: Maybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
   slug_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values that are not contained in given list. */
   slug_not_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values less than the given value. */
   slug_lt?: Maybe<Scalars["String"]>;
+  /** All values less than or equal the given value. */
   slug_lte?: Maybe<Scalars["String"]>;
+  /** All values greater than the given value. */
   slug_gt?: Maybe<Scalars["String"]>;
+  /** All values greater than or equal the given value. */
   slug_gte?: Maybe<Scalars["String"]>;
+  /** All values containing the given string. */
   slug_contains?: Maybe<Scalars["String"]>;
+  /** All values not containing the given string. */
   slug_not_contains?: Maybe<Scalars["String"]>;
+  /** All values starting with the given string. */
   slug_starts_with?: Maybe<Scalars["String"]>;
+  /** All values not starting with the given string. */
   slug_not_starts_with?: Maybe<Scalars["String"]>;
+  /** All values ending with the given string. */
   slug_ends_with?: Maybe<Scalars["String"]>;
+  /** All values not ending with the given string. */
   slug_not_ends_with?: Maybe<Scalars["String"]>;
-  AND?: Maybe<Array<BoardWhereInput>>;
-  OR?: Maybe<Array<BoardWhereInput>>;
-  NOT?: Maybe<Array<BoardWhereInput>>;
 };
 
-export type Card = {
+export type Card = Node & {
   __typename?: "Card";
   id: Scalars["ID"];
   creator: User;
@@ -115,74 +157,139 @@ export type CardMetaInput = {
 };
 
 export type CardWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<CardWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<CardWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<CardWhereInput>>;
   id?: Maybe<Scalars["ID"]>;
+  /** All values that are not equal to given value. */
   id_not?: Maybe<Scalars["ID"]>;
+  /** All values that are contained in given list. */
   id_in?: Maybe<Array<Scalars["ID"]>>;
+  /** All values that are not contained in given list. */
   id_not_in?: Maybe<Array<Scalars["ID"]>>;
+  /** All values less than the given value. */
   id_lt?: Maybe<Scalars["ID"]>;
+  /** All values less than or equal the given value. */
   id_lte?: Maybe<Scalars["ID"]>;
+  /** All values greater than the given value. */
   id_gt?: Maybe<Scalars["ID"]>;
+  /** All values greater than or equal the given value. */
   id_gte?: Maybe<Scalars["ID"]>;
+  /** All values containing the given string. */
   id_contains?: Maybe<Scalars["ID"]>;
+  /** All values not containing the given string. */
   id_not_contains?: Maybe<Scalars["ID"]>;
+  /** All values starting with the given string. */
   id_starts_with?: Maybe<Scalars["ID"]>;
+  /** All values not starting with the given string. */
   id_not_starts_with?: Maybe<Scalars["ID"]>;
+  /** All values ending with the given string. */
   id_ends_with?: Maybe<Scalars["ID"]>;
+  /** All values not ending with the given string. */
   id_not_ends_with?: Maybe<Scalars["ID"]>;
-  creator?: Maybe<UserWhereInput>;
-  parent?: Maybe<BoardWhereInput>;
   title?: Maybe<Scalars["String"]>;
+  /** All values that are not equal to given value. */
   title_not?: Maybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
   title_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values that are not contained in given list. */
   title_not_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values less than the given value. */
   title_lt?: Maybe<Scalars["String"]>;
+  /** All values less than or equal the given value. */
   title_lte?: Maybe<Scalars["String"]>;
+  /** All values greater than the given value. */
   title_gt?: Maybe<Scalars["String"]>;
+  /** All values greater than or equal the given value. */
   title_gte?: Maybe<Scalars["String"]>;
+  /** All values containing the given string. */
   title_contains?: Maybe<Scalars["String"]>;
+  /** All values not containing the given string. */
   title_not_contains?: Maybe<Scalars["String"]>;
+  /** All values starting with the given string. */
   title_starts_with?: Maybe<Scalars["String"]>;
+  /** All values not starting with the given string. */
   title_not_starts_with?: Maybe<Scalars["String"]>;
+  /** All values ending with the given string. */
   title_ends_with?: Maybe<Scalars["String"]>;
+  /** All values not ending with the given string. */
   title_not_ends_with?: Maybe<Scalars["String"]>;
   slug?: Maybe<Scalars["String"]>;
+  /** All values that are not equal to given value. */
   slug_not?: Maybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
   slug_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values that are not contained in given list. */
   slug_not_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values less than the given value. */
   slug_lt?: Maybe<Scalars["String"]>;
+  /** All values less than or equal the given value. */
   slug_lte?: Maybe<Scalars["String"]>;
+  /** All values greater than the given value. */
   slug_gt?: Maybe<Scalars["String"]>;
+  /** All values greater than or equal the given value. */
   slug_gte?: Maybe<Scalars["String"]>;
+  /** All values containing the given string. */
   slug_contains?: Maybe<Scalars["String"]>;
+  /** All values not containing the given string. */
   slug_not_contains?: Maybe<Scalars["String"]>;
+  /** All values starting with the given string. */
   slug_starts_with?: Maybe<Scalars["String"]>;
+  /** All values not starting with the given string. */
   slug_not_starts_with?: Maybe<Scalars["String"]>;
+  /** All values ending with the given string. */
   slug_ends_with?: Maybe<Scalars["String"]>;
+  /** All values not ending with the given string. */
   slug_not_ends_with?: Maybe<Scalars["String"]>;
   content?: Maybe<Scalars["String"]>;
+  /** All values that are not equal to given value. */
   content_not?: Maybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
   content_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values that are not contained in given list. */
   content_not_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values less than the given value. */
   content_lt?: Maybe<Scalars["String"]>;
+  /** All values less than or equal the given value. */
   content_lte?: Maybe<Scalars["String"]>;
+  /** All values greater than the given value. */
   content_gt?: Maybe<Scalars["String"]>;
+  /** All values greater than or equal the given value. */
   content_gte?: Maybe<Scalars["String"]>;
+  /** All values containing the given string. */
   content_contains?: Maybe<Scalars["String"]>;
+  /** All values not containing the given string. */
   content_not_contains?: Maybe<Scalars["String"]>;
+  /** All values starting with the given string. */
   content_starts_with?: Maybe<Scalars["String"]>;
+  /** All values not starting with the given string. */
   content_not_starts_with?: Maybe<Scalars["String"]>;
+  /** All values ending with the given string. */
   content_ends_with?: Maybe<Scalars["String"]>;
+  /** All values not ending with the given string. */
   content_not_ends_with?: Maybe<Scalars["String"]>;
   public?: Maybe<Scalars["Boolean"]>;
+  /** All values that are not equal to given value. */
   public_not?: Maybe<Scalars["Boolean"]>;
   archived?: Maybe<Scalars["Boolean"]>;
+  /** All values that are not equal to given value. */
   archived_not?: Maybe<Scalars["Boolean"]>;
+  creator?: Maybe<UserWhereInput>;
+  parent?: Maybe<BoardWhereInput>;
   files_every?: Maybe<FileWhereInput>;
   files_some?: Maybe<FileWhereInput>;
   files_none?: Maybe<FileWhereInput>;
-  AND?: Maybe<Array<CardWhereInput>>;
-  OR?: Maybe<Array<CardWhereInput>>;
-  NOT?: Maybe<Array<CardWhereInput>>;
+};
+
+export type Clipboard = Node & {
+  __typename?: "Clipboard";
+  id: Scalars["ID"];
+  creator: User;
+  content: Scalars["String"];
+  archived: Scalars["Boolean"];
 };
 
 export type File = {
@@ -214,84 +321,155 @@ export enum FileType {
 }
 
 export type FileWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<FileWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<FileWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<FileWhereInput>>;
   id?: Maybe<Scalars["ID"]>;
+  /** All values that are not equal to given value. */
   id_not?: Maybe<Scalars["ID"]>;
+  /** All values that are contained in given list. */
   id_in?: Maybe<Array<Scalars["ID"]>>;
+  /** All values that are not contained in given list. */
   id_not_in?: Maybe<Array<Scalars["ID"]>>;
+  /** All values less than the given value. */
   id_lt?: Maybe<Scalars["ID"]>;
+  /** All values less than or equal the given value. */
   id_lte?: Maybe<Scalars["ID"]>;
+  /** All values greater than the given value. */
   id_gt?: Maybe<Scalars["ID"]>;
+  /** All values greater than or equal the given value. */
   id_gte?: Maybe<Scalars["ID"]>;
+  /** All values containing the given string. */
   id_contains?: Maybe<Scalars["ID"]>;
+  /** All values not containing the given string. */
   id_not_contains?: Maybe<Scalars["ID"]>;
+  /** All values starting with the given string. */
   id_starts_with?: Maybe<Scalars["ID"]>;
+  /** All values not starting with the given string. */
   id_not_starts_with?: Maybe<Scalars["ID"]>;
+  /** All values ending with the given string. */
   id_ends_with?: Maybe<Scalars["ID"]>;
+  /** All values not ending with the given string. */
   id_not_ends_with?: Maybe<Scalars["ID"]>;
-  card?: Maybe<CardWhereInput>;
   type?: Maybe<FileType>;
+  /** All values that are not equal to given value. */
   type_not?: Maybe<FileType>;
+  /** All values that are contained in given list. */
   type_in?: Maybe<Array<FileType>>;
+  /** All values that are not contained in given list. */
   type_not_in?: Maybe<Array<FileType>>;
   path?: Maybe<Scalars["String"]>;
+  /** All values that are not equal to given value. */
   path_not?: Maybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
   path_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values that are not contained in given list. */
   path_not_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values less than the given value. */
   path_lt?: Maybe<Scalars["String"]>;
+  /** All values less than or equal the given value. */
   path_lte?: Maybe<Scalars["String"]>;
+  /** All values greater than the given value. */
   path_gt?: Maybe<Scalars["String"]>;
+  /** All values greater than or equal the given value. */
   path_gte?: Maybe<Scalars["String"]>;
+  /** All values containing the given string. */
   path_contains?: Maybe<Scalars["String"]>;
+  /** All values not containing the given string. */
   path_not_contains?: Maybe<Scalars["String"]>;
+  /** All values starting with the given string. */
   path_starts_with?: Maybe<Scalars["String"]>;
+  /** All values not starting with the given string. */
   path_not_starts_with?: Maybe<Scalars["String"]>;
+  /** All values ending with the given string. */
   path_ends_with?: Maybe<Scalars["String"]>;
+  /** All values not ending with the given string. */
   path_not_ends_with?: Maybe<Scalars["String"]>;
   filename?: Maybe<Scalars["String"]>;
+  /** All values that are not equal to given value. */
   filename_not?: Maybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
   filename_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values that are not contained in given list. */
   filename_not_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values less than the given value. */
   filename_lt?: Maybe<Scalars["String"]>;
+  /** All values less than or equal the given value. */
   filename_lte?: Maybe<Scalars["String"]>;
+  /** All values greater than the given value. */
   filename_gt?: Maybe<Scalars["String"]>;
+  /** All values greater than or equal the given value. */
   filename_gte?: Maybe<Scalars["String"]>;
+  /** All values containing the given string. */
   filename_contains?: Maybe<Scalars["String"]>;
+  /** All values not containing the given string. */
   filename_not_contains?: Maybe<Scalars["String"]>;
+  /** All values starting with the given string. */
   filename_starts_with?: Maybe<Scalars["String"]>;
+  /** All values not starting with the given string. */
   filename_not_starts_with?: Maybe<Scalars["String"]>;
+  /** All values ending with the given string. */
   filename_ends_with?: Maybe<Scalars["String"]>;
+  /** All values not ending with the given string. */
   filename_not_ends_with?: Maybe<Scalars["String"]>;
   mimetype?: Maybe<Scalars["String"]>;
+  /** All values that are not equal to given value. */
   mimetype_not?: Maybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
   mimetype_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values that are not contained in given list. */
   mimetype_not_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values less than the given value. */
   mimetype_lt?: Maybe<Scalars["String"]>;
+  /** All values less than or equal the given value. */
   mimetype_lte?: Maybe<Scalars["String"]>;
+  /** All values greater than the given value. */
   mimetype_gt?: Maybe<Scalars["String"]>;
+  /** All values greater than or equal the given value. */
   mimetype_gte?: Maybe<Scalars["String"]>;
+  /** All values containing the given string. */
   mimetype_contains?: Maybe<Scalars["String"]>;
+  /** All values not containing the given string. */
   mimetype_not_contains?: Maybe<Scalars["String"]>;
+  /** All values starting with the given string. */
   mimetype_starts_with?: Maybe<Scalars["String"]>;
+  /** All values not starting with the given string. */
   mimetype_not_starts_with?: Maybe<Scalars["String"]>;
+  /** All values ending with the given string. */
   mimetype_ends_with?: Maybe<Scalars["String"]>;
+  /** All values not ending with the given string. */
   mimetype_not_ends_with?: Maybe<Scalars["String"]>;
   encoding?: Maybe<Scalars["String"]>;
+  /** All values that are not equal to given value. */
   encoding_not?: Maybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
   encoding_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values that are not contained in given list. */
   encoding_not_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values less than the given value. */
   encoding_lt?: Maybe<Scalars["String"]>;
+  /** All values less than or equal the given value. */
   encoding_lte?: Maybe<Scalars["String"]>;
+  /** All values greater than the given value. */
   encoding_gt?: Maybe<Scalars["String"]>;
+  /** All values greater than or equal the given value. */
   encoding_gte?: Maybe<Scalars["String"]>;
+  /** All values containing the given string. */
   encoding_contains?: Maybe<Scalars["String"]>;
+  /** All values not containing the given string. */
   encoding_not_contains?: Maybe<Scalars["String"]>;
+  /** All values starting with the given string. */
   encoding_starts_with?: Maybe<Scalars["String"]>;
+  /** All values not starting with the given string. */
   encoding_not_starts_with?: Maybe<Scalars["String"]>;
+  /** All values ending with the given string. */
   encoding_ends_with?: Maybe<Scalars["String"]>;
+  /** All values not ending with the given string. */
   encoding_not_ends_with?: Maybe<Scalars["String"]>;
-  AND?: Maybe<Array<FileWhereInput>>;
-  OR?: Maybe<Array<FileWhereInput>>;
-  NOT?: Maybe<Array<FileWhereInput>>;
+  card?: Maybe<CardWhereInput>;
 };
 
 export type Mutation = {
@@ -322,6 +500,12 @@ export type MutationSignupArgs = {
   password: Scalars["String"];
 };
 
+/** An object with an ID */
+export type Node = {
+  /** The id of the object. */
+  id: Scalars["ID"];
+};
+
 export type Query = {
   __typename?: "Query";
   getCards: Array<Maybe<Card>>;
@@ -334,7 +518,7 @@ export type Subscription = {
   cards: Array<Maybe<Card>>;
 };
 
-export type User = {
+export type User = Node & {
   __typename?: "User";
   id: Scalars["ID"];
   email: Scalars["String"];
@@ -349,69 +533,127 @@ export enum UserRole {
 }
 
 export type UserWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<UserWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<UserWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<UserWhereInput>>;
   id?: Maybe<Scalars["ID"]>;
+  /** All values that are not equal to given value. */
   id_not?: Maybe<Scalars["ID"]>;
+  /** All values that are contained in given list. */
   id_in?: Maybe<Array<Scalars["ID"]>>;
+  /** All values that are not contained in given list. */
   id_not_in?: Maybe<Array<Scalars["ID"]>>;
+  /** All values less than the given value. */
   id_lt?: Maybe<Scalars["ID"]>;
+  /** All values less than or equal the given value. */
   id_lte?: Maybe<Scalars["ID"]>;
+  /** All values greater than the given value. */
   id_gt?: Maybe<Scalars["ID"]>;
+  /** All values greater than or equal the given value. */
   id_gte?: Maybe<Scalars["ID"]>;
+  /** All values containing the given string. */
   id_contains?: Maybe<Scalars["ID"]>;
+  /** All values not containing the given string. */
   id_not_contains?: Maybe<Scalars["ID"]>;
+  /** All values starting with the given string. */
   id_starts_with?: Maybe<Scalars["ID"]>;
+  /** All values not starting with the given string. */
   id_not_starts_with?: Maybe<Scalars["ID"]>;
+  /** All values ending with the given string. */
   id_ends_with?: Maybe<Scalars["ID"]>;
+  /** All values not ending with the given string. */
   id_not_ends_with?: Maybe<Scalars["ID"]>;
   email?: Maybe<Scalars["String"]>;
+  /** All values that are not equal to given value. */
   email_not?: Maybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
   email_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values that are not contained in given list. */
   email_not_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values less than the given value. */
   email_lt?: Maybe<Scalars["String"]>;
+  /** All values less than or equal the given value. */
   email_lte?: Maybe<Scalars["String"]>;
+  /** All values greater than the given value. */
   email_gt?: Maybe<Scalars["String"]>;
+  /** All values greater than or equal the given value. */
   email_gte?: Maybe<Scalars["String"]>;
+  /** All values containing the given string. */
   email_contains?: Maybe<Scalars["String"]>;
+  /** All values not containing the given string. */
   email_not_contains?: Maybe<Scalars["String"]>;
+  /** All values starting with the given string. */
   email_starts_with?: Maybe<Scalars["String"]>;
+  /** All values not starting with the given string. */
   email_not_starts_with?: Maybe<Scalars["String"]>;
+  /** All values ending with the given string. */
   email_ends_with?: Maybe<Scalars["String"]>;
+  /** All values not ending with the given string. */
   email_not_ends_with?: Maybe<Scalars["String"]>;
   password?: Maybe<Scalars["String"]>;
+  /** All values that are not equal to given value. */
   password_not?: Maybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
   password_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values that are not contained in given list. */
   password_not_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values less than the given value. */
   password_lt?: Maybe<Scalars["String"]>;
+  /** All values less than or equal the given value. */
   password_lte?: Maybe<Scalars["String"]>;
+  /** All values greater than the given value. */
   password_gt?: Maybe<Scalars["String"]>;
+  /** All values greater than or equal the given value. */
   password_gte?: Maybe<Scalars["String"]>;
+  /** All values containing the given string. */
   password_contains?: Maybe<Scalars["String"]>;
+  /** All values not containing the given string. */
   password_not_contains?: Maybe<Scalars["String"]>;
+  /** All values starting with the given string. */
   password_starts_with?: Maybe<Scalars["String"]>;
+  /** All values not starting with the given string. */
   password_not_starts_with?: Maybe<Scalars["String"]>;
+  /** All values ending with the given string. */
   password_ends_with?: Maybe<Scalars["String"]>;
+  /** All values not ending with the given string. */
   password_not_ends_with?: Maybe<Scalars["String"]>;
   role?: Maybe<UserRole>;
+  /** All values that are not equal to given value. */
   role_not?: Maybe<UserRole>;
+  /** All values that are contained in given list. */
   role_in?: Maybe<Array<UserRole>>;
+  /** All values that are not contained in given list. */
   role_not_in?: Maybe<Array<UserRole>>;
   profileImage?: Maybe<Scalars["String"]>;
+  /** All values that are not equal to given value. */
   profileImage_not?: Maybe<Scalars["String"]>;
+  /** All values that are contained in given list. */
   profileImage_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values that are not contained in given list. */
   profileImage_not_in?: Maybe<Array<Scalars["String"]>>;
+  /** All values less than the given value. */
   profileImage_lt?: Maybe<Scalars["String"]>;
+  /** All values less than or equal the given value. */
   profileImage_lte?: Maybe<Scalars["String"]>;
+  /** All values greater than the given value. */
   profileImage_gt?: Maybe<Scalars["String"]>;
+  /** All values greater than or equal the given value. */
   profileImage_gte?: Maybe<Scalars["String"]>;
+  /** All values containing the given string. */
   profileImage_contains?: Maybe<Scalars["String"]>;
+  /** All values not containing the given string. */
   profileImage_not_contains?: Maybe<Scalars["String"]>;
+  /** All values starting with the given string. */
   profileImage_starts_with?: Maybe<Scalars["String"]>;
+  /** All values not starting with the given string. */
   profileImage_not_starts_with?: Maybe<Scalars["String"]>;
+  /** All values ending with the given string. */
   profileImage_ends_with?: Maybe<Scalars["String"]>;
+  /** All values not ending with the given string. */
   profileImage_not_ends_with?: Maybe<Scalars["String"]>;
-  AND?: Maybe<Array<UserWhereInput>>;
-  OR?: Maybe<Array<UserWhereInput>>;
-  NOT?: Maybe<Array<UserWhereInput>>;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -487,33 +729,40 @@ export type DirectiveResolverFn<
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   Card: ResolverTypeWrapper<Card>;
+  Node: ResolverTypeWrapper<Node>;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
   User: ResolverTypeWrapper<User>;
   String: ResolverTypeWrapper<Scalars["String"]>;
-  UserRole: UserRole;
+  UserRole: ResolverTypeWrapper<UserRole>;
   Board: ResolverTypeWrapper<Board>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   FileWhereInput: FileWhereInput;
+  FileType: FileType;
   CardWhereInput: CardWhereInput;
   UserWhereInput: UserWhereInput;
   BoardWhereInput: BoardWhereInput;
-  FileType: FileType;
   FileOrderByInput: FileOrderByInput;
   Int: ResolverTypeWrapper<Scalars["Int"]>;
   File: ResolverTypeWrapper<File>;
   Mutation: ResolverTypeWrapper<{}>;
   CardInput: CardInput;
   Upload: ResolverTypeWrapper<Scalars["Upload"]>;
-  AuthPayload: ResolverTypeWrapper<AuthPayload>;
+  AuthPayload: ResolverTypeWrapper<
+    Omit<AuthPayload, "user"> & { user: ResolversTypes["User"] }
+  >;
   Subscription: ResolverTypeWrapper<{}>;
   DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
   CardMetaInput: ResolverTypeWrapper<CardMetaInput>;
+  Clipboard: ResolverTypeWrapper<
+    Omit<Clipboard, "creator"> & { creator: ResolversTypes["User"] }
+  >;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {};
   Card: Card;
+  Node: Node;
   ID: Scalars["ID"];
   User: User;
   String: Scalars["String"];
@@ -521,20 +770,21 @@ export type ResolversParentTypes = {
   Board: Board;
   Boolean: Scalars["Boolean"];
   FileWhereInput: FileWhereInput;
+  FileType: FileType;
   CardWhereInput: CardWhereInput;
   UserWhereInput: UserWhereInput;
   BoardWhereInput: BoardWhereInput;
-  FileType: FileType;
   FileOrderByInput: FileOrderByInput;
   Int: Scalars["Int"];
   File: File;
   Mutation: {};
   CardInput: CardInput;
   Upload: Scalars["Upload"];
-  AuthPayload: AuthPayload;
+  AuthPayload: Omit<AuthPayload, "user"> & { user: ResolversTypes["User"] };
   Subscription: {};
   DateTime: Scalars["DateTime"];
   CardMetaInput: CardMetaInput;
+  Clipboard: Omit<Clipboard, "creator"> & { creator: ResolversTypes["User"] };
 };
 
 export type AuthPayloadResolvers<
@@ -586,6 +836,16 @@ export type CardMetaInputResolvers<
   >;
 };
 
+export type ClipboardResolvers<
+  ContextType = Context,
+  ParentType = ResolversParentTypes["Clipboard"]
+> = {
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  creator?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  content?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  archived?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+};
+
 export interface DateTimeScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["DateTime"], any> {
   name: "DateTime";
@@ -628,6 +888,18 @@ export type MutationResolvers<
     ContextType,
     MutationSignupArgs
   >;
+};
+
+export type NodeResolvers<
+  ContextType = Context,
+  ParentType = ResolversParentTypes["Node"]
+> = {
+  __resolveType: TypeResolveFn<
+    "Card" | "User" | "Board" | "Clipboard",
+    ParentType,
+    ContextType
+  >;
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 };
 
 export type QueryResolvers<
@@ -679,9 +951,11 @@ export type Resolvers<ContextType = Context> = {
   Board?: BoardResolvers<ContextType>;
   Card?: CardResolvers<ContextType>;
   CardMetaInput?: CardMetaInputResolvers<ContextType>;
+  Clipboard?: ClipboardResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   File?: FileResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  Node?: NodeResolvers;
   Query?: QueryResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
   Upload?: GraphQLScalarType;

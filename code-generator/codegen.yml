@@ -16,6 +16,8 @@ generates:
       contextType: ./types#Context
       mappers:
         Card: ./generated/prisma#Card
+        User: ./generated/prisma#User
+        UserRole: ./generated/prisma#UserRole
         # Clipboard: ./generated/prisma.ts#Clipboard
       # defaultMapper: ./generated/prisma.ts#{T}
     plugins:

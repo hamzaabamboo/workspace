@@ -4,10 +4,8 @@ import { join } from "path";
 import { Resolvers } from "./resolver.types";
 import { Context } from "./types";
 
-export const mergeResolvers = (mergingResolvers: any[]): Resolvers => {
-  const reducedResolver = mergingResolvers.reduce((prev, current): Partial<
-    Resolvers
-  > => {
+export const mergeResolvers = (mergingResolvers: any[]) => {
+  const reducedResolver = mergingResolvers.reduce((prev, current) => {
     return {
       ...prev,
       ...current,

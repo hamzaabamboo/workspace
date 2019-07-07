@@ -1,16 +1,19 @@
 {
   "scripts": {
-    "codegen": "graphql-codegen --config codegen.yml",
-    "watch": "yarn codegen --watch"
+    "codegen": "graphql-codegen --watch --config codegen.yml",
+    "watch": "nodemon --watch codegen.yml --exec yarn codegen "
   },
   "dependencies": {
     "@graphql-codegen/cli": "^1.3.1",
-    "graphql": "^14.4.2",
-    "@graphql-codegen/typescript": "1.3.1",
-    "@graphql-codegen/typescript-operations": "1.3.1",
-    "@graphql-codegen/typescript-apollo-angular": "1.3.1",
-    "@graphql-codegen/typescript-resolvers": "1.3.1",
     "@graphql-codegen/fragment-matcher": "1.3.1",
-    "@graphql-codegen/introspection": "1.3.1"
+    "@graphql-codegen/introspection": "1.3.1",
+    "@graphql-codegen/typescript": "1.3.1",
+    "@graphql-codegen/typescript-apollo-angular": "1.3.1",
+    "@graphql-codegen/typescript-operations": "1.3.1",
+    "@graphql-codegen/typescript-resolvers": "1.3.1",
+    "graphql": "^14.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
   }
 }
