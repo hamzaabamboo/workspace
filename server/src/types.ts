@@ -1,13 +1,14 @@
 import { Prisma } from "./generated/prisma";
 import { Resolvers, User } from "./resolver.types";
 import { Request } from "express";
+import { GraphQLResolveInfo } from "graphql";
 
 // tslint:disable-next-line:interface-name
 export interface Context {
   db: Prisma;
   connection: any;
   request: Request;
-  user?: User;
+  user: (info?: GraphQLResolveInfo) => Promise<User>;
 }
 
 // tslint:disable-next-line:interface-name

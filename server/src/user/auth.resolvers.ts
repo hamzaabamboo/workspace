@@ -1,19 +1,17 @@
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { Context } from "../types";
-import { GraphQLResolveInfo } from "graphql";
-import { getUser } from "../utils";
 import { Resolvers } from "../resolver.types";
 import { User } from "../generated/prisma";
 
 const user: Resolvers = {
   Query: {
-    async currentUser(parent, args, ctx: Context, info) {
-      return await getUser(ctx, info);
+    async currentUser(parent, args, ctx, info) {
+      return ctx.user(info);
     }
   },
   Mutation: {
-    async signup(parent, { email, password }, ctx: Context) {
+    async signup(parent, { email, password }, ctx) {
       if (await ctx.db.exists.User({ email })) {
         throw new Error(`${email} has already been registered`);
       }
@@ -31,12 +29,7 @@ const user: Resolvers = {
       };
     },
 
-    async login(
-      parent,
-      { email, password },
-      ctx: Context,
-      info: GraphQLResolveInfo
-    ) {
+    async login(parent, { email, password }, ctx, info) {
       const user = await ctx.db.query.user({ where: { email } });
       if (!user) {
         throw new Error(`No such user found for email: ${email}`);
