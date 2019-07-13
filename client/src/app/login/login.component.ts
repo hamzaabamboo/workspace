@@ -1,5 +1,15 @@
 import { Component, OnInit } from "@angular/core";
-import { LoginGQL } from "../generated/graphql";
+import {
+  LoginGQL,
+  LoginMutationVariables,
+  LoginMutation
+} from "../generated/graphql";
+import { FormGroup, FormBuilder } from "ngx-strongly-typed-forms";
+import { Validators } from "@angular/forms";
+import { AuthService } from "../auth.service";
+import { map } from "rxjs/operators";
+import { pipe } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-login",
@@ -7,8 +17,30 @@ import { LoginGQL } from "../generated/graphql";
   styleUrls: ["./login.component.scss"]
 })
 export class LoginComponent implements OnInit {
-  constructor(private login: LoginGQL) {
-    this.login.mutate({ username: "admin", password: "" });
+  loginForm: FormGroup<LoginMutationVariables>;
+  constructor(
+    private loginGQL: LoginGQL,
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.loginForm = formBuilder.group<LoginMutationVariables>({
+      username: ["", Validators.required],
+      password: ["", Validators.required]
+    });
   }
+
+  async login() {
+    console.log(this.loginForm.value);
+    if (this.loginForm.valid) {
+      const { token, user } = await this.loginGQL
+        .mutate(this.loginForm.value)
+        .pipe(map(r => r.data.login))
+        .toPromise();
+      this.authService.setToken(token);
+      this.router.navigate([""]);
+    }
+  }
+
   ngOnInit() {}
 }

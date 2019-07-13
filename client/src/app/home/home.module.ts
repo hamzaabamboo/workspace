@@ -7,9 +7,16 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { CardsComponent } from "./cards/cards.component";
 import { MatCardModule } from "@angular/material/card";
 import { ReactiveFormsModule } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
 
 @NgModule({
   declarations: [HomeComponent, CardsComponent],
-  imports: [CommonModule, AppRoutingModule, MatToolbarModule, MatCardModule]
+  imports: [
+    CommonModule,
+    AppRoutingModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatButtonModule
+  ]
 })
 export class HomeModule {}

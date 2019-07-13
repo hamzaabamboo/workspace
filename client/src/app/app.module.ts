@@ -13,8 +13,10 @@ import { NgxStronglyTypedFormsModule } from "ngx-strongly-typed-forms";
 import links from "./links";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatCardModule } from "@angular/material/card";
+import { MatButtonModule } from "@angular/material/button";
 import { NavigationComponent } from "./components/navigation/navigation.component";
 import { LoginModule } from "./login/login.module";
+import { MatIconModule } from "@angular/material/icon";
 
 @NgModule({
   declarations: [AppComponent, NavigationComponent],
@@ -30,7 +32,9 @@ import { LoginModule } from "./login/login.module";
     HomeModule,
     LoginModule,
     MatToolbarModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [/*ErrorService*/ AuthService],
   bootstrap: [AppComponent]

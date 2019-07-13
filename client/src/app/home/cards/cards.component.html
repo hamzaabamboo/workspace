@@ -1,6 +1,13 @@
 <h1 class="mat-display-3">Cards</h1>
-<div class="cards-container">
-  <mat-card *ngFor="let card of $cards | async">
-    {{ card.title }}
-  </mat-card>
+<div class="card-wrapper">
+  <div class="cards-container">
+    <mat-card *ngFor="let card of $cards | async">
+      <mat-card-title>{{ card.title }}</mat-card-title>
+      <mat-card-content>{{ card.content }}</mat-card-content>
+      <mat-card-actions>
+        <button mat-button>View</button>
+        <button mat-button>Edit</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>

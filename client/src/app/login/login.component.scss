@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  padding: 20px;
+
+  mat-card-content {
+    form {
+      flex-direction: row;
+    }
+  }
+}
