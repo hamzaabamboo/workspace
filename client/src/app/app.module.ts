@@ -11,9 +11,13 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloModule, Apollo } from "apollo-angular";
 import { NgxStronglyTypedFormsModule } from "ngx-strongly-typed-forms";
 import links from "./links";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatCardModule } from "@angular/material/card";
+import { NavigationComponent } from "./components/navigation/navigation.component";
+import { LoginModule } from "./login/login.module";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, NavigationComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -23,7 +27,10 @@ import links from "./links";
     ApolloModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    HomeModule
+    HomeModule,
+    LoginModule,
+    MatToolbarModule,
+    MatCardModule
   ],
   providers: [/*ErrorService*/ AuthService],
   bootstrap: [AppComponent]

@@ -678,6 +678,17 @@ export type MakeCardMutation = { __typename?: "Mutation" } & {
 export type HelloQueryVariables = {};
 
 export type HelloQuery = { __typename?: "Query" } & Pick<Query, "hello">;
+
+export type LoginMutationVariables = {
+  username: Scalars["String"];
+  password: Scalars["String"];
+};
+
+export type LoginMutation = { __typename?: "Mutation" } & {
+  login: { __typename?: "AuthPayload" } & Pick<AuthPayload, "token"> & {
+      user: { __typename?: "User" } & Pick<User, "id">;
+    };
+};
 export const CardContentFragmentDoc = gql`
   fragment CardContent on Card {
     title
@@ -737,6 +748,26 @@ export const HelloDocument = gql`
 })
 export class HelloGQL extends Apollo.Query<HelloQuery, HelloQueryVariables> {
   document = HelloDocument;
+}
+export const LoginDocument = gql`
+  mutation Login($username: String!, $password: String!) {
+    login(email: $username, password: $password) {
+      token
+      user {
+        id
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: "root"
+})
+export class LoginGQL extends Apollo.Mutation<
+  LoginMutation,
+  LoginMutationVariables
+> {
+  document = LoginDocument;
 }
 export interface IntrospectionResultData {
   __schema: {

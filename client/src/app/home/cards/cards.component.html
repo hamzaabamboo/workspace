@@ -1,0 +1,6 @@
+<h1 class="mat-display-3">Cards</h1>
+<div class="cards-container">
+  <mat-card *ngFor="let card of $cards | async">
+    {{ card.title }}
+  </mat-card>
+</div>
