@@ -1,4 +1,3 @@
-import { getUser } from "../utils";
 import { Resolvers } from "../resolver.types";
 import { Service } from "typedi";
 import CardService from "./card.service";
@@ -13,17 +12,17 @@ class CardResolvers implements ClassResolvers {
     return {
       Query: {
         async getCards(parent, args, ctx, info) {
-          const user = await getUser(ctx);
+          const user = await ctx.user();
           return cardService.getCards(user, ctx.db, info);
         }
       },
       Mutation: {
         async makeCard(parent, { data, board }, ctx, info) {
-          const user = await getUser(ctx, info);
+          const user = await ctx.user();
           return cardService.makeCard(user, data, board, ctx.db, info);
         },
         async editCard(parent, { id, data }, ctx, info) {
-          const user = await getUser(ctx, info);
+          const user = await ctx.user();
           return cardService.editCard(user, id, data, ctx.db, info);
         }
       }

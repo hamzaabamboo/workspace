@@ -5,7 +5,6 @@ import { Server } from "http";
 import { extractFragmentReplacements } from "prisma-binding";
 import { Prisma } from "./generated/prisma";
 import { middlewares } from "./middlewares/index";
-import { permissions } from "./permissions";
 import { resolvers } from "./resolvers";
 import { /* extendedTypeDefs, */ generateTypeDefs } from "./typeDefs";
 import express = require("express");
@@ -26,8 +25,11 @@ export const createGraphQLServer = (): GraphQLServer => {
   const tempServer = new GraphQLServer({
     typeDefs: ["./src/generated/schema.graphql" /*extendedTypeDefs*/],
     resolvers,
-    context: req => ({ ...req, db }),
-    middlewares: [permissions, ...middlewares],
+    context: req => ({
+      ...req,
+      db
+    }),
+    middlewares,
     resolverValidationOptions: {
       requireResolversForResolveType: false
     }
