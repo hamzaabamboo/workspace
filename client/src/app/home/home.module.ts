@@ -8,15 +8,19 @@ import { CardsComponent } from "./cards/cards.component";
 import { MatCardModule } from "@angular/material/card";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
+import { CardDialogComponent } from "./cards/card-dialog/card-dialog.component";
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
-  declarations: [HomeComponent, CardsComponent],
+  declarations: [HomeComponent, CardsComponent, CardDialogComponent],
   imports: [
     CommonModule,
     AppRoutingModule,
     MatToolbarModule,
     MatCardModule,
-    MatButtonModule
-  ]
+    MatButtonModule,
+    MatDialogModule
+  ],
+  entryComponents: [CardDialogComponent]
 })
 export class HomeModule {}
