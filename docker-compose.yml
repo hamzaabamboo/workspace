@@ -34,6 +34,8 @@ services:
       - prisma
     volumes:
       - uploads:/app/uploads
+    environment:
+      PRISMA_ENDPOINT: http://prisma:4466
     command: ["yarn", "start"]
 volumes:
   postgres: ~

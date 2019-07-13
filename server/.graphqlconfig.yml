@@ -13,4 +13,3 @@ projects:
           language: typescript
           output:
             binding: src/generated/prisma.ts
-      endpoints: http://localhost:4466
