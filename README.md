@@ -41,6 +41,15 @@ $ yarn # install dependencies
 $ yarn start # start development server
 ```
 
+### Graphql Playground
+
+make sure you have installed all dependecies for backend
+
+```sh
+$ sh scripts/playground.sh # or simply
+$ scripts/playground.sh
+```
+
 backend endpoints can be configured in `client/src/enviroments`
 
 ## Production
