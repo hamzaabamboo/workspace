@@ -1,0 +1,13 @@
+type Query {
+  getBoards: [Board]!
+}
+
+type Mutation {
+  makeBoard(data: BoardInput!): Board!
+  editBoard(id: ID!, data: BoardInput!): Board!
+}
+
+input BoardInput {
+  title: String!
+  isPublic: Boolean!
+}

@@ -3,8 +3,7 @@ import {
   GraphQLScalarType,
   GraphQLScalarTypeConfig
 } from "graphql";
-import { Card, User, UserRole } from "./generated/prisma";
-import { Clipboard } from "./generated/prisma.ts";
+import { Board, Card, User, UserRole, Clipboard } from "./generated/prisma";
 import { Context } from "./types";
 export type Maybe<T> = T | null;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -30,7 +29,36 @@ export type Board = {
   id: Scalars["ID"];
   title: Scalars["String"];
   slug: Scalars["String"];
+  creator: User;
+  member?: Maybe<Array<User>>;
+  isPublic: Scalars["Boolean"];
 };
+
+export type BoardMemberArgs = {
+  where?: Maybe<UserWhereInput>;
+  orderBy?: Maybe<UserOrderByInput>;
+  skip?: Maybe<Scalars["Int"]>;
+  after?: Maybe<Scalars["String"]>;
+  before?: Maybe<Scalars["String"]>;
+  first?: Maybe<Scalars["Int"]>;
+  last?: Maybe<Scalars["Int"]>;
+};
+
+export type BoardInput = {
+  title: Scalars["String"];
+  isPublic: Scalars["Boolean"];
+};
+
+export enum BoardOrderByInput {
+  IdAsc = "id_ASC",
+  IdDesc = "id_DESC",
+  TitleAsc = "title_ASC",
+  TitleDesc = "title_DESC",
+  SlugAsc = "slug_ASC",
+  SlugDesc = "slug_DESC",
+  IsPublicAsc = "isPublic_ASC",
+  IsPublicDesc = "isPublic_DESC"
+}
 
 export type BoardWhereInput = {
   id?: Maybe<Scalars["ID"]>;
@@ -75,6 +103,12 @@ export type BoardWhereInput = {
   slug_not_starts_with?: Maybe<Scalars["String"]>;
   slug_ends_with?: Maybe<Scalars["String"]>;
   slug_not_ends_with?: Maybe<Scalars["String"]>;
+  creator?: Maybe<UserWhereInput>;
+  member_every?: Maybe<UserWhereInput>;
+  member_some?: Maybe<UserWhereInput>;
+  member_none?: Maybe<UserWhereInput>;
+  isPublic?: Maybe<Scalars["Boolean"]>;
+  isPublic_not?: Maybe<Scalars["Boolean"]>;
   AND?: Maybe<Array<BoardWhereInput>>;
   OR?: Maybe<Array<BoardWhereInput>>;
   NOT?: Maybe<Array<BoardWhereInput>>;
@@ -309,12 +343,23 @@ export type FileWhereInput = {
 
 export type Mutation = {
   __typename?: "Mutation";
+  makeBoard: Board;
+  editBoard: Board;
   makeCard: Card;
   editCard: Card;
   makeClipboard: Clipboard;
   deleteClipboard: Clipboard;
   login: AuthPayload;
   signup: AuthPayload;
+};
+
+export type MutationMakeBoardArgs = {
+  data: BoardInput;
+};
+
+export type MutationEditBoardArgs = {
+  id: Scalars["ID"];
+  data: BoardInput;
 };
 
 export type MutationMakeCardArgs = {
@@ -347,6 +392,7 @@ export type MutationSignupArgs = {
 
 export type Query = {
   __typename?: "Query";
+  getBoards: Array<Maybe<Board>>;
   getCards: Array<Maybe<Card>>;
   getClipboards: Array<Maybe<Clipboard>>;
   hello?: Maybe<Scalars["String"]>;
@@ -366,7 +412,42 @@ export type User = {
   password: Scalars["String"];
   role: UserRole;
   profileImage?: Maybe<Scalars["String"]>;
+  createdBoards?: Maybe<Array<Board>>;
+  joinedBoards?: Maybe<Array<Board>>;
 };
+
+export type UserCreatedBoardsArgs = {
+  where?: Maybe<BoardWhereInput>;
+  orderBy?: Maybe<BoardOrderByInput>;
+  skip?: Maybe<Scalars["Int"]>;
+  after?: Maybe<Scalars["String"]>;
+  before?: Maybe<Scalars["String"]>;
+  first?: Maybe<Scalars["Int"]>;
+  last?: Maybe<Scalars["Int"]>;
+};
+
+export type UserJoinedBoardsArgs = {
+  where?: Maybe<BoardWhereInput>;
+  orderBy?: Maybe<BoardOrderByInput>;
+  skip?: Maybe<Scalars["Int"]>;
+  after?: Maybe<Scalars["String"]>;
+  before?: Maybe<Scalars["String"]>;
+  first?: Maybe<Scalars["Int"]>;
+  last?: Maybe<Scalars["Int"]>;
+};
+
+export enum UserOrderByInput {
+  IdAsc = "id_ASC",
+  IdDesc = "id_DESC",
+  EmailAsc = "email_ASC",
+  EmailDesc = "email_DESC",
+  PasswordAsc = "password_ASC",
+  PasswordDesc = "password_DESC",
+  RoleAsc = "role_ASC",
+  RoleDesc = "role_DESC",
+  ProfileImageAsc = "profileImage_ASC",
+  ProfileImageDesc = "profileImage_DESC"
+}
 
 export enum UserRole {
   Normal = "NORMAL",
@@ -434,6 +515,12 @@ export type UserWhereInput = {
   profileImage_not_starts_with?: Maybe<Scalars["String"]>;
   profileImage_ends_with?: Maybe<Scalars["String"]>;
   profileImage_not_ends_with?: Maybe<Scalars["String"]>;
+  createdBoards_every?: Maybe<BoardWhereInput>;
+  createdBoards_some?: Maybe<BoardWhereInput>;
+  createdBoards_none?: Maybe<BoardWhereInput>;
+  joinedBoards_every?: Maybe<BoardWhereInput>;
+  joinedBoards_some?: Maybe<BoardWhereInput>;
+  joinedBoards_none?: Maybe<BoardWhereInput>;
   AND?: Maybe<Array<UserWhereInput>>;
   OR?: Maybe<Array<UserWhereInput>>;
   NOT?: Maybe<Array<UserWhereInput>>;
@@ -511,23 +598,26 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
-  Card: ResolverTypeWrapper<Card>;
-  ID: ResolverTypeWrapper<Scalars["ID"]>;
-  User: ResolverTypeWrapper<User>;
-  String: ResolverTypeWrapper<Scalars["String"]>;
-  UserRole: ResolverTypeWrapper<UserRole>;
   Board: ResolverTypeWrapper<Board>;
+  ID: ResolverTypeWrapper<Scalars["ID"]>;
+  String: ResolverTypeWrapper<Scalars["String"]>;
+  User: ResolverTypeWrapper<User>;
+  UserRole: ResolverTypeWrapper<UserRole>;
+  BoardWhereInput: BoardWhereInput;
+  UserWhereInput: UserWhereInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  BoardOrderByInput: BoardOrderByInput;
+  Int: ResolverTypeWrapper<Scalars["Int"]>;
+  UserOrderByInput: UserOrderByInput;
+  Card: ResolverTypeWrapper<Card>;
   FileWhereInput: FileWhereInput;
   CardWhereInput: CardWhereInput;
-  UserWhereInput: UserWhereInput;
-  BoardWhereInput: BoardWhereInput;
   FileType: FileType;
   FileOrderByInput: FileOrderByInput;
-  Int: ResolverTypeWrapper<Scalars["Int"]>;
   File: ResolverTypeWrapper<File>;
   Clipboard: ResolverTypeWrapper<Clipboard>;
   Mutation: ResolverTypeWrapper<{}>;
+  BoardInput: BoardInput;
   CardInput: CardInput;
   Upload: ResolverTypeWrapper<Scalars["Upload"]>;
   ClipboardInput: ClipboardInput;
@@ -542,23 +632,26 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {};
-  Card: Card;
-  ID: Scalars["ID"];
-  User: User;
-  String: Scalars["String"];
-  UserRole: UserRole;
   Board: Board;
+  ID: Scalars["ID"];
+  String: Scalars["String"];
+  User: User;
+  UserRole: UserRole;
+  BoardWhereInput: BoardWhereInput;
+  UserWhereInput: UserWhereInput;
   Boolean: Scalars["Boolean"];
+  BoardOrderByInput: BoardOrderByInput;
+  Int: Scalars["Int"];
+  UserOrderByInput: UserOrderByInput;
+  Card: Card;
   FileWhereInput: FileWhereInput;
   CardWhereInput: CardWhereInput;
-  UserWhereInput: UserWhereInput;
-  BoardWhereInput: BoardWhereInput;
   FileType: FileType;
   FileOrderByInput: FileOrderByInput;
-  Int: Scalars["Int"];
   File: File;
   Clipboard: Clipboard;
   Mutation: {};
+  BoardInput: BoardInput;
   CardInput: CardInput;
   Upload: Scalars["Upload"];
   ClipboardInput: ClipboardInput;
@@ -583,6 +676,14 @@ export type BoardResolvers<
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   title?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   slug?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  creator?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  member?: Resolver<
+    Maybe<Array<ResolversTypes["User"]>>,
+    ParentType,
+    ContextType,
+    BoardMemberArgs
+  >;
+  isPublic?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
 };
 
 export type CardResolvers<
@@ -645,6 +746,18 @@ export type MutationResolvers<
   ContextType = Context,
   ParentType = ResolversParentTypes["Mutation"]
 > = {
+  makeBoard?: Resolver<
+    ResolversTypes["Board"],
+    ParentType,
+    ContextType,
+    MutationMakeBoardArgs
+  >;
+  editBoard?: Resolver<
+    ResolversTypes["Board"],
+    ParentType,
+    ContextType,
+    MutationEditBoardArgs
+  >;
   makeCard?: Resolver<
     ResolversTypes["Card"],
     ParentType,
@@ -687,6 +800,11 @@ export type QueryResolvers<
   ContextType = Context,
   ParentType = ResolversParentTypes["Query"]
 > = {
+  getBoards?: Resolver<
+    Array<Maybe<ResolversTypes["Board"]>>,
+    ParentType,
+    ContextType
+  >;
   getCards?: Resolver<
     Array<Maybe<ResolversTypes["Card"]>>,
     ParentType,
@@ -734,6 +852,18 @@ export type UserResolvers<
     Maybe<ResolversTypes["String"]>,
     ParentType,
     ContextType
+  >;
+  createdBoards?: Resolver<
+    Maybe<Array<ResolversTypes["Board"]>>,
+    ParentType,
+    ContextType,
+    UserCreatedBoardsArgs
+  >;
+  joinedBoards?: Resolver<
+    Maybe<Array<ResolversTypes["Board"]>>,
+    ParentType,
+    ContextType,
+    UserJoinedBoardsArgs
   >;
 };
 
