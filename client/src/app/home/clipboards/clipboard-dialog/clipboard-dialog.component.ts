@@ -5,6 +5,7 @@ import {
   MAT_DIALOG_DATA
 } from "@angular/material/dialog";
 import { ClipboardDialogData } from "../clipboards.component";
+import { NgNavigatorShareService } from "ng-navigator-share";
 
 @Component({
   selector: "app-clipboard-dialog",
@@ -12,6 +13,8 @@ import { ClipboardDialogData } from "../clipboards.component";
   styleUrls: ["./clipboard-dialog.component.scss"]
 })
 export class ClipboardDialogComponent {
+  navigator: { share?: any } & Navigator = navigator;
+
   constructor(
     private dialogService: MatDialog,
     public dialogRef: MatDialogRef<ClipboardDialogComponent>,
@@ -22,6 +25,15 @@ export class ClipboardDialogComponent {
     this.dialogRef.close();
   }
 
+  async share() {
+    if (this.navigator.share) {
+      const res = await this.navigator.share({
+        title: "Clipboard from Workspace",
+        text: this.data.clipboard.content
+      });
+      this.dialogRef.close();
+    }
+  }
   edit() {
     this.dialogRef.close();
     // this.dialogService.open();

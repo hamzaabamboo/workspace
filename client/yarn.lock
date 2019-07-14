@@ -4432,6 +4432,13 @@ neo-async@^2.5.0, neo-async@^2.6.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
+ng-navigator-share@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ng-navigator-share/-/ng-navigator-share-1.0.0.tgz#2a0693c4b37e43fa0a0f046ff3069fe2e8d2ba1a"
+  integrity sha512-cGRzux66MzC7c+87/bJvcuAAxmlgA7REMFwPSqLzHh5drUXOHzbSPYOB0Sgqa6Bdjz6uutKY1zw6j4YMabVfpQ==
+  dependencies:
+    tslib "^1.9.0"
+
 ngx-strongly-typed-forms@^8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/ngx-strongly-typed-forms/-/ngx-strongly-typed-forms-8.0.1.tgz#93e12b04adaa8351517cf48a9e2c61416e1fde0b"
