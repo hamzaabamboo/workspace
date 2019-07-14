@@ -1,12 +1,8 @@
 import { createWriteStream, ReadStream } from "fs";
 
-interface UploadInput {
-  stream: ReadStream;
-  filename: string;
-}
-
 export const uploadFile = (
-  { stream, filename }: UploadInput,
+  stream: ReadStream,
+  filename: string,
   directory: string
 ): Promise<string> => {
   const path = `${directory}/${filename}`;
