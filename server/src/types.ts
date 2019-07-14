@@ -2,6 +2,7 @@ import { Prisma } from "./generated/prisma";
 import { Resolvers, User } from "./resolver.types";
 import { Request } from "express";
 import { GraphQLResolveInfo } from "graphql";
+import { ReadStream } from "fs";
 
 // tslint:disable-next-line:interface-name
 export interface Context {
@@ -21,3 +22,10 @@ export type ResultWrapper<T> = T | Promise<T>;
 export interface ClassResolvers {
   resolvers(): Resolvers;
 }
+
+export type FileUpload = Promise<{
+  filename: string;
+  mimetype: string;
+  encoding: string;
+  createReadStream: () => ReadStream;
+}>;
