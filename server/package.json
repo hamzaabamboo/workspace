@@ -7,7 +7,8 @@
     "build": "rimraf dist && tsc",
     "prisma-deploy": "ts-node prisma/datamodel.ts && prisma deploy",
     "prisma-generate": "ts-node prisma/datamodel.ts && prisma generate",
-    "playground": "graphql playground"
+    "playground": "graphql playground",
+    "test": "jest"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
@@ -28,15 +29,19 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "2.4.2",
+    "@types/jest": "^24.0.15",
     "@types/lodash": "^4.14.135",
     "@types/node": "^10.14.12",
+    "@types/shortid": "^0.0.29",
     "dotenv-cli": "1.4.0",
     "graphql": "^14.4.2",
     "graphql-cli": "^3.0.11",
+    "jest": "^24.8.0",
     "merge-graphql-schemas": "^1.5.8",
     "nodemon": "1.19.1",
     "prisma": "1.33.0",
     "rimraf": "2.6.3",
+    "ts-jest": "^24.0.2",
     "ts-node": "7.0.1",
     "typescript": "3.2.2"
   }

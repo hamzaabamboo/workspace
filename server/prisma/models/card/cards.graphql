@@ -14,10 +14,7 @@ type File {
   id: ID! @id @unique
   card: Card!
   type: FileType
-  path: String
   filename: String!
-  mimetype: String!
-  encoding: String!
 }
 
 enum FileType {

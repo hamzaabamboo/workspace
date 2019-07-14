@@ -2,8 +2,12 @@ import { GraphQLResolveInfo } from "graphql";
 import { User, CardInput } from "../resolver.types";
 import { Prisma } from "../generated/prisma";
 import slugify from "slugify";
+import { Service } from "typedi";
+import FileService from "../file/file.service";
 
+@Service()
 class CardService {
+  constructor(private readonly fileService: FileService) {}
   getCards(user: User, db: Prisma, info: GraphQLResolveInfo) {
     return db.query.cards(
       {
@@ -15,7 +19,7 @@ class CardService {
 
   async makeCard(
     user: User,
-    data: CardInput,
+    { title, content, files = [] }: CardInput,
     board: string,
     db: Prisma,
     info: GraphQLResolveInfo
@@ -23,8 +27,9 @@ class CardService {
     return await db.mutation.createCard(
       {
         data: {
-          ...data,
-          slug: slugify(data.title),
+          title,
+          content,
+          slug: slugify(title),
           public: false,
           archived: false,
           creator: {
@@ -37,7 +42,9 @@ class CardService {
               id: board
             }
           },
-          files: {}
+          files: {
+            create: await this.fileService.processMultipleFiles(files)
+          }
         }
       },
       info
@@ -47,7 +54,7 @@ class CardService {
   async editCard(
     user: User,
     id: string,
-    data: CardInput,
+    { title, content, files = [] }: CardInput,
     db: Prisma,
     info: GraphQLResolveInfo
   ) {
@@ -64,9 +71,12 @@ class CardService {
           id
         },
         data: {
-          ...data,
-          slug: slugify(data.title),
-          files: {}
+          title,
+          content,
+          slug: slugify(title),
+          files: {
+            create: await this.fileService.processMultipleFiles(files)
+          }
         }
       },
       info
