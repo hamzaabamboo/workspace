@@ -15,10 +15,11 @@ generates:
     config:
       contextType: ./types#Context
       mappers:
+        Board: ./generated/prisma#Board
         Card: ./generated/prisma#Card
         User: ./generated/prisma#User
         UserRole: ./generated/prisma#UserRole
-        Clipboard: ./generated/prisma.ts#Clipboard
+        Clipboard: ./generated/prisma#Clipboard
       # defaultMapper: ./generated/prisma.ts#{T}
     plugins:
       - typescript

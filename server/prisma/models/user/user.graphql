@@ -4,6 +4,8 @@ type User {
   password: String!
   role: UserRole!
   profileImage: String
+  createdBoards: [Board!]! @relation(name: "BoardCreator")
+  joinedBoards: [Board!]! @relation(name: "BoardMember")
 }
 
 enum UserRole {

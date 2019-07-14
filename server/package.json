@@ -13,6 +13,7 @@
     "bcryptjs": "2.4.3",
     "fs": "^0.0.1-security",
     "graphql-shield": "^5.3.5",
+    "graphql-tag": "^2.10.1",
     "graphql-tools": "^4.0.4",
     "graphql-yoga": "^1.18.0",
     "jsonwebtoken": "^8.5.1",
