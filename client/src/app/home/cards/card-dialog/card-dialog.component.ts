@@ -1,5 +1,9 @@
 import { Component, OnInit, Inject } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialog
+} from "@angular/material/dialog";
 import { CardDialogData } from "../cards.component";
 
 @Component({
@@ -9,11 +13,17 @@ import { CardDialogData } from "../cards.component";
 })
 export class CardDialogComponent {
   constructor(
+    private dialogService: MatDialog,
     public dialogRef: MatDialogRef<CardDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CardDialogData
   ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  edit() {
+    this.dialogRef.close();
+    // this.dialogService.open();
   }
 }

@@ -28,7 +28,6 @@ export class CardsComponent implements OnInit {
 
   openDialog(card: Card) {
     this.dialog.open(CardDialogComponent, {
-      width: "250px",
       data: { card }
     });
   }

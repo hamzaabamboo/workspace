@@ -1,0 +1,4 @@
+fragment ClipboardData on Clipboard {
+  id
+  content
+}

@@ -4,6 +4,7 @@ import {
   GraphQLScalarTypeConfig
 } from "graphql";
 import { Card, User, UserRole } from "./generated/prisma";
+import { Clipboard } from "./generated/prisma.ts";
 import { Context } from "./types";
 export type Maybe<T> = T | null;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -14,7 +15,6 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** The `Upload` scalar type represents a file upload. */
   Upload: any;
   DateTime: any;
 };
@@ -186,6 +186,18 @@ export type CardWhereInput = {
   NOT?: Maybe<Array<CardWhereInput>>;
 };
 
+export type Clipboard = {
+  __typename?: "Clipboard";
+  id: Scalars["ID"];
+  creator: User;
+  content: Scalars["String"];
+  archived: Scalars["Boolean"];
+};
+
+export type ClipboardInput = {
+  content: Scalars["String"];
+};
+
 export type File = {
   __typename?: "File";
   filename: Scalars["String"];
@@ -299,6 +311,8 @@ export type Mutation = {
   __typename?: "Mutation";
   makeCard: Card;
   editCard: Card;
+  makeClipboard: Clipboard;
+  deleteClipboard: Clipboard;
   login: AuthPayload;
   signup: AuthPayload;
 };
@@ -311,6 +325,14 @@ export type MutationMakeCardArgs = {
 export type MutationEditCardArgs = {
   id: Scalars["ID"];
   data?: Maybe<CardInput>;
+};
+
+export type MutationMakeClipboardArgs = {
+  data?: Maybe<ClipboardInput>;
+};
+
+export type MutationDeleteClipboardArgs = {
+  id: Scalars["ID"];
 };
 
 export type MutationLoginArgs = {
@@ -326,6 +348,7 @@ export type MutationSignupArgs = {
 export type Query = {
   __typename?: "Query";
   getCards: Array<Maybe<Card>>;
+  getClipboards: Array<Maybe<Clipboard>>;
   hello?: Maybe<Scalars["String"]>;
   currentUser: User;
 };
@@ -333,6 +356,7 @@ export type Query = {
 export type Subscription = {
   __typename?: "Subscription";
   cards: Array<Maybe<Card>>;
+  clipboards: Array<Maybe<Clipboard>>;
 };
 
 export type User = {
@@ -502,15 +526,17 @@ export type ResolversTypes = {
   FileOrderByInput: FileOrderByInput;
   Int: ResolverTypeWrapper<Scalars["Int"]>;
   File: ResolverTypeWrapper<File>;
+  Clipboard: ResolverTypeWrapper<Clipboard>;
   Mutation: ResolverTypeWrapper<{}>;
   CardInput: CardInput;
   Upload: ResolverTypeWrapper<Scalars["Upload"]>;
+  ClipboardInput: ClipboardInput;
   AuthPayload: ResolverTypeWrapper<
     Omit<AuthPayload, "user"> & { user: ResolversTypes["User"] }
   >;
   Subscription: ResolverTypeWrapper<{}>;
-  CardMetaInput: ResolverTypeWrapper<CardMetaInput>;
   DateTime: ResolverTypeWrapper<Scalars["DateTime"]>;
+  CardMetaInput: ResolverTypeWrapper<CardMetaInput>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -531,13 +557,15 @@ export type ResolversParentTypes = {
   FileOrderByInput: FileOrderByInput;
   Int: Scalars["Int"];
   File: File;
+  Clipboard: Clipboard;
   Mutation: {};
   CardInput: CardInput;
   Upload: Scalars["Upload"];
+  ClipboardInput: ClipboardInput;
   AuthPayload: Omit<AuthPayload, "user"> & { user: ResolversTypes["User"] };
   Subscription: {};
-  CardMetaInput: CardMetaInput;
   DateTime: Scalars["DateTime"];
+  CardMetaInput: CardMetaInput;
 };
 
 export type AuthPayloadResolvers<
@@ -589,6 +617,16 @@ export type CardMetaInputResolvers<
   >;
 };
 
+export type ClipboardResolvers<
+  ContextType = Context,
+  ParentType = ResolversParentTypes["Clipboard"]
+> = {
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  creator?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  content?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  archived?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+};
+
 export interface DateTimeScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["DateTime"], any> {
   name: "DateTime";
@@ -619,6 +657,18 @@ export type MutationResolvers<
     ContextType,
     MutationEditCardArgs
   >;
+  makeClipboard?: Resolver<
+    ResolversTypes["Clipboard"],
+    ParentType,
+    ContextType,
+    MutationMakeClipboardArgs
+  >;
+  deleteClipboard?: Resolver<
+    ResolversTypes["Clipboard"],
+    ParentType,
+    ContextType,
+    MutationDeleteClipboardArgs
+  >;
   login?: Resolver<
     ResolversTypes["AuthPayload"],
     ParentType,
@@ -642,6 +692,11 @@ export type QueryResolvers<
     ParentType,
     ContextType
   >;
+  getClipboards?: Resolver<
+    Array<Maybe<ResolversTypes["Clipboard"]>>,
+    ParentType,
+    ContextType
+  >;
   hello?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   currentUser?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
 };
@@ -652,6 +707,11 @@ export type SubscriptionResolvers<
 > = {
   cards?: SubscriptionResolver<
     Array<Maybe<ResolversTypes["Card"]>>,
+    ParentType,
+    ContextType
+  >;
+  clipboards?: SubscriptionResolver<
+    Array<Maybe<ResolversTypes["Clipboard"]>>,
     ParentType,
     ContextType
   >;
@@ -682,6 +742,7 @@ export type Resolvers<ContextType = Context> = {
   Board?: BoardResolvers<ContextType>;
   Card?: CardResolvers<ContextType>;
   CardMetaInput?: CardMetaInputResolvers<ContextType>;
+  Clipboard?: ClipboardResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   File?: FileResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;

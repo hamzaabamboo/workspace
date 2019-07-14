@@ -1,0 +1,6 @@
+query getClipboards {
+  getClipboards {
+    id
+    content
+  }
+}

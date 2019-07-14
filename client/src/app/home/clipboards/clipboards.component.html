@@ -1,0 +1,11 @@
+<h1 class="mat-display-1">Clipboards</h1>
+<div class="card-wrapper">
+  <div class="cards-container">
+    <mat-card
+      *ngFor="let clipboard of $clipboards | async"
+      (click)="openDialog(clipboard)"
+    >
+      <mat-card-content>{{ clipboard.content }}</mat-card-content>
+    </mat-card>
+  </div>
+</div>

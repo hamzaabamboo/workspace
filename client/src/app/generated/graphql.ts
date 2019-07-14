@@ -9,7 +9,6 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** The `Upload` scalar type represents a file upload. */
   Upload: any;
   DateTime: any;
 };
@@ -181,6 +180,18 @@ export type CardWhereInput = {
   NOT?: Maybe<Array<CardWhereInput>>;
 };
 
+export type Clipboard = {
+  __typename?: "Clipboard";
+  id: Scalars["ID"];
+  creator: User;
+  content: Scalars["String"];
+  archived: Scalars["Boolean"];
+};
+
+export type ClipboardInput = {
+  content: Scalars["String"];
+};
+
 export type File = {
   __typename?: "File";
   filename: Scalars["String"];
@@ -294,6 +305,8 @@ export type Mutation = {
   __typename?: "Mutation";
   makeCard: Card;
   editCard: Card;
+  makeClipboard: Clipboard;
+  deleteClipboard: Clipboard;
   login: AuthPayload;
   signup: AuthPayload;
 };
@@ -306,6 +319,14 @@ export type MutationMakeCardArgs = {
 export type MutationEditCardArgs = {
   id: Scalars["ID"];
   data?: Maybe<CardInput>;
+};
+
+export type MutationMakeClipboardArgs = {
+  data?: Maybe<ClipboardInput>;
+};
+
+export type MutationDeleteClipboardArgs = {
+  id: Scalars["ID"];
 };
 
 export type MutationLoginArgs = {
@@ -321,6 +342,7 @@ export type MutationSignupArgs = {
 export type Query = {
   __typename?: "Query";
   getCards: Array<Maybe<Card>>;
+  getClipboards: Array<Maybe<Clipboard>>;
   hello?: Maybe<Scalars["String"]>;
   currentUser: User;
 };
@@ -328,6 +350,7 @@ export type Query = {
 export type Subscription = {
   __typename?: "Subscription";
   cards: Array<Maybe<Card>>;
+  clipboards: Array<Maybe<Clipboard>>;
 };
 
 export type User = {
@@ -433,6 +456,19 @@ export type MakeCardMutation = { __typename?: "Mutation" } & {
   makeCard: { __typename?: "Card" } & Pick<Card, "id">;
 };
 
+export type ClipboardDataFragment = { __typename?: "Clipboard" } & Pick<
+  Clipboard,
+  "id" | "content"
+>;
+
+export type GetClipboardsQueryVariables = {};
+
+export type GetClipboardsQuery = { __typename?: "Query" } & {
+  getClipboards: Array<
+    Maybe<{ __typename?: "Clipboard" } & Pick<Clipboard, "id" | "content">>
+  >;
+};
+
 export type HelloQueryVariables = {};
 
 export type HelloQuery = { __typename?: "Query" } & Pick<Query, "hello">;
@@ -455,6 +491,12 @@ export const CardContentFragmentDoc = gql`
     files {
       filename
     }
+  }
+`;
+export const ClipboardDataFragmentDoc = gql`
+  fragment ClipboardData on Clipboard {
+    id
+    content
   }
 `;
 export const GetCardsDocument = gql`
@@ -494,6 +536,24 @@ export class MakeCardGQL extends Apollo.Mutation<
   MakeCardMutationVariables
 > {
   document = MakeCardDocument;
+}
+export const GetClipboardsDocument = gql`
+  query getClipboards {
+    getClipboards {
+      id
+      content
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: "root"
+})
+export class GetClipboardsGQL extends Apollo.Query<
+  GetClipboardsQuery,
+  GetClipboardsQueryVariables
+> {
+  document = GetClipboardsDocument;
 }
 export const HelloDocument = gql`
   query Hello {

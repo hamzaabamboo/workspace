@@ -4,7 +4,7 @@ import { HomeModule } from "./home/home.module";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HttpClientModule } from "@angular/common/http";
-import { AuthService } from "./auth.service";
+import { AuthService } from "./common/services/auth.service";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { InMemoryCache } from "apollo-cache-inmemory";
@@ -14,7 +14,7 @@ import links from "./links";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
-import { NavigationComponent } from "./components/navigation/navigation.component";
+import { NavigationComponent } from "./common/components/navigation/navigation.component";
 import { LoginModule } from "./login/login.module";
 import { MatIconModule } from "@angular/material/icon";
 
@@ -40,9 +40,9 @@ import { MatIconModule } from "@angular/material/icon";
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(apollo: Apollo) {
+  constructor(apollo: Apollo, authService: AuthService) {
     apollo.create({
-      link: links,
+      link: links({ authService }),
       cache: new InMemoryCache({
         dataIdFromObject: o => o.id
       })

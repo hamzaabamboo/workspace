@@ -6,7 +6,7 @@ import {
 } from "../generated/graphql";
 import { FormGroup, FormBuilder } from "ngx-strongly-typed-forms";
 import { Validators } from "@angular/forms";
-import { AuthService } from "../auth.service";
+import { AuthService } from "../common/services/auth.service";
 import { map } from "rxjs/operators";
 import { pipe } from "rxjs";
 import { Router } from "@angular/router";
@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
-    console.log(this.loginForm.value);
     if (this.loginForm.valid) {
       const { token, user } = await this.loginGQL
         .mutate(this.loginForm.value)

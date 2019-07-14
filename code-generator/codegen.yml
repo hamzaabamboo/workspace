@@ -1,5 +1,5 @@
 overwrite: true
-schema: "http://backend:4000"
+schema: "server/src/generated/schema.graphql"
 documents: "client/src/app/**/*.graphql"
 generates:
   ./client/src/app/generated/graphql.ts:
@@ -18,7 +18,7 @@ generates:
         Card: ./generated/prisma#Card
         User: ./generated/prisma#User
         UserRole: ./generated/prisma#UserRole
-        # Clipboard: ./generated/prisma.ts#Clipboard
+        Clipboard: ./generated/prisma.ts#Clipboard
       # defaultMapper: ./generated/prisma.ts#{T}
     plugins:
       - typescript

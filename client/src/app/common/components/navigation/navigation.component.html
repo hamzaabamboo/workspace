@@ -1,0 +1,18 @@
+<mat-toolbar>
+  Workspaces
+  <span class="spacer"></span>
+  <button mat-button (click)="goTo(['login'])">
+    <mat-icon
+      aria-hidden="false"
+      aria-label="Login"
+      *ngIf="!isLoggedIn; else notLoggedIn"
+      >lock</mat-icon
+    >
+  </button>
+</mat-toolbar>
+
+<ng-template #notLoggedIn>
+  <button mat-button (click)="logout()">
+    <mat-icon aria-hidden="false" aria-label="Logout">lock_open</mat-icon>
+  </button>
+</ng-template>

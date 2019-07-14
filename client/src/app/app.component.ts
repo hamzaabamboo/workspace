@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { AuthService } from "./auth.service";
+import { AuthService } from "./common/services/auth.service";
 
 @Component({
   selector: "app-root",
@@ -12,7 +12,6 @@ export class AppComponent implements OnInit {
   constructor(private auth: AuthService) {}
   ngOnInit() {
     if (this.auth.isAuthenticated$.value) {
-      this.auth.getInfo();
     }
   }
 }
