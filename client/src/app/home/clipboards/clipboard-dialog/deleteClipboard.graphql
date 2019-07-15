@@ -1,0 +1,5 @@
+mutation deleteClipboard($id: ID!) {
+  deleteClipboard(id: $id) {
+    id
+  }
+}

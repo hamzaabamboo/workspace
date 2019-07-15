@@ -26,6 +26,12 @@ class CardResolvers implements ClassResolvers {
           return cardService.editCard(user, id, data, ctx.db, info);
         }
       }
+      // Subscription: {
+      //   async cards(parent, args, ctx, info) {
+      //     const user = await ctx.user();
+      //     return cardService.subscribeCard(user, ctx.db, info);
+      //   }
+      // }
     };
   }
 }

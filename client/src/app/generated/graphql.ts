@@ -239,14 +239,8 @@ export enum FileOrderByInput {
   IdDesc = "id_DESC",
   TypeAsc = "type_ASC",
   TypeDesc = "type_DESC",
-  PathAsc = "path_ASC",
-  PathDesc = "path_DESC",
   FilenameAsc = "filename_ASC",
-  FilenameDesc = "filename_DESC",
-  MimetypeAsc = "mimetype_ASC",
-  MimetypeDesc = "mimetype_DESC",
-  EncodingAsc = "encoding_ASC",
-  EncodingDesc = "encoding_DESC"
+  FilenameDesc = "filename_DESC"
 }
 
 export enum FileType {
@@ -275,20 +269,6 @@ export type FileWhereInput = {
   type_not?: Maybe<FileType>;
   type_in?: Maybe<Array<FileType>>;
   type_not_in?: Maybe<Array<FileType>>;
-  path?: Maybe<Scalars["String"]>;
-  path_not?: Maybe<Scalars["String"]>;
-  path_in?: Maybe<Array<Scalars["String"]>>;
-  path_not_in?: Maybe<Array<Scalars["String"]>>;
-  path_lt?: Maybe<Scalars["String"]>;
-  path_lte?: Maybe<Scalars["String"]>;
-  path_gt?: Maybe<Scalars["String"]>;
-  path_gte?: Maybe<Scalars["String"]>;
-  path_contains?: Maybe<Scalars["String"]>;
-  path_not_contains?: Maybe<Scalars["String"]>;
-  path_starts_with?: Maybe<Scalars["String"]>;
-  path_not_starts_with?: Maybe<Scalars["String"]>;
-  path_ends_with?: Maybe<Scalars["String"]>;
-  path_not_ends_with?: Maybe<Scalars["String"]>;
   filename?: Maybe<Scalars["String"]>;
   filename_not?: Maybe<Scalars["String"]>;
   filename_in?: Maybe<Array<Scalars["String"]>>;
@@ -303,34 +283,6 @@ export type FileWhereInput = {
   filename_not_starts_with?: Maybe<Scalars["String"]>;
   filename_ends_with?: Maybe<Scalars["String"]>;
   filename_not_ends_with?: Maybe<Scalars["String"]>;
-  mimetype?: Maybe<Scalars["String"]>;
-  mimetype_not?: Maybe<Scalars["String"]>;
-  mimetype_in?: Maybe<Array<Scalars["String"]>>;
-  mimetype_not_in?: Maybe<Array<Scalars["String"]>>;
-  mimetype_lt?: Maybe<Scalars["String"]>;
-  mimetype_lte?: Maybe<Scalars["String"]>;
-  mimetype_gt?: Maybe<Scalars["String"]>;
-  mimetype_gte?: Maybe<Scalars["String"]>;
-  mimetype_contains?: Maybe<Scalars["String"]>;
-  mimetype_not_contains?: Maybe<Scalars["String"]>;
-  mimetype_starts_with?: Maybe<Scalars["String"]>;
-  mimetype_not_starts_with?: Maybe<Scalars["String"]>;
-  mimetype_ends_with?: Maybe<Scalars["String"]>;
-  mimetype_not_ends_with?: Maybe<Scalars["String"]>;
-  encoding?: Maybe<Scalars["String"]>;
-  encoding_not?: Maybe<Scalars["String"]>;
-  encoding_in?: Maybe<Array<Scalars["String"]>>;
-  encoding_not_in?: Maybe<Array<Scalars["String"]>>;
-  encoding_lt?: Maybe<Scalars["String"]>;
-  encoding_lte?: Maybe<Scalars["String"]>;
-  encoding_gt?: Maybe<Scalars["String"]>;
-  encoding_gte?: Maybe<Scalars["String"]>;
-  encoding_contains?: Maybe<Scalars["String"]>;
-  encoding_not_contains?: Maybe<Scalars["String"]>;
-  encoding_starts_with?: Maybe<Scalars["String"]>;
-  encoding_not_starts_with?: Maybe<Scalars["String"]>;
-  encoding_ends_with?: Maybe<Scalars["String"]>;
-  encoding_not_ends_with?: Maybe<Scalars["String"]>;
   AND?: Maybe<Array<FileWhereInput>>;
   OR?: Maybe<Array<FileWhereInput>>;
   NOT?: Maybe<Array<FileWhereInput>>;
@@ -544,6 +496,14 @@ export type MakeCardMutation = { __typename?: "Mutation" } & {
   makeCard: { __typename?: "Card" } & Pick<Card, "id">;
 };
 
+export type DeleteClipboardMutationVariables = {
+  id: Scalars["ID"];
+};
+
+export type DeleteClipboardMutation = { __typename?: "Mutation" } & {
+  deleteClipboard: { __typename?: "Clipboard" } & Pick<Clipboard, "id">;
+};
+
 export type ClipboardDataFragment = { __typename?: "Clipboard" } & Pick<
   Clipboard,
   "id" | "content"
@@ -624,6 +584,23 @@ export class MakeCardGQL extends Apollo.Mutation<
   MakeCardMutationVariables
 > {
   document = MakeCardDocument;
+}
+export const DeleteClipboardDocument = gql`
+  mutation deleteClipboard($id: ID!) {
+    deleteClipboard(id: $id) {
+      id
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: "root"
+})
+export class DeleteClipboardGQL extends Apollo.Mutation<
+  DeleteClipboardMutation,
+  DeleteClipboardMutationVariables
+> {
+  document = DeleteClipboardDocument;
 }
 export const GetClipboardsDocument = gql`
   query getClipboards {

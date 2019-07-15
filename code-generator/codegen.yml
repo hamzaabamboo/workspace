@@ -20,6 +20,7 @@ generates:
         User: ./generated/prisma#User
         UserRole: ./generated/prisma#UserRole
         Clipboard: ./generated/prisma#Clipboard
+      # defaultMapper: any
       # defaultMapper: ./generated/prisma.ts#{T}
     plugins:
       - typescript

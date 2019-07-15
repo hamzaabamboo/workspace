@@ -6,6 +6,8 @@ import {
 } from "@angular/material/dialog";
 import { ClipboardDialogData } from "../clipboards.component";
 import { NgNavigatorShareService } from "ng-navigator-share";
+import { DeleteClipboardGQL } from "src/app/generated/graphql";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-clipboard-dialog",
@@ -18,6 +20,8 @@ export class ClipboardDialogComponent {
   constructor(
     private dialogService: MatDialog,
     public dialogRef: MatDialogRef<ClipboardDialogComponent>,
+    public snackbarService: MatSnackBar,
+    public deleteClipboard: DeleteClipboardGQL,
     @Inject(MAT_DIALOG_DATA) public data: ClipboardDialogData
   ) {}
 
@@ -34,8 +38,13 @@ export class ClipboardDialogComponent {
       this.dialogRef.close();
     }
   }
-  edit() {
+  async delete() {
+    await this.deleteClipboard
+      .mutate({ id: this.data.clipboard.id })
+      .toPromise();
     this.dialogRef.close();
-    // this.dialogService.open();
+    this.snackbarService.open("Clipboard Deleted", "Dismiss", {
+      duration: 2000
+    });
   }
 }

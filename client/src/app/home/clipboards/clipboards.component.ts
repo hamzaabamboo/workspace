@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Clipboard, GetClipboardsGQL } from "src/app/generated/graphql";
 import { ClipboardDialogComponent } from "./clipboard-dialog/clipboard-dialog.component";
+import { CreateClipboardDialogComponent } from "./create-clipboard-dialog/create-clipboard-dialog.component";
 
 export interface ClipboardDialogData {
   clipboard: Clipboard;
@@ -32,5 +33,8 @@ export class ClipboardsComponent implements OnInit {
     });
   }
 
+  openCreateDialog() {
+    this.dialog.open(CreateClipboardDialogComponent);
+  }
   ngOnInit() {}
 }

@@ -1,0 +1,14 @@
+<div mat-dialog-content>
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Enter text"
+      [(ngModel)]="message"
+      type="text"
+    />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button (click)="delete()">Create</button>
+</div>

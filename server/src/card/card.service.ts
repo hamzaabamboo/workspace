@@ -82,6 +82,12 @@ class CardService {
       info
     );
   }
+
+  subscribeCard(user: User, db: Prisma, info: GraphQLResolveInfo) {
+    return db.subscription.card({
+      where: { node: { creator: { id: user.id } } }
+    });
+  }
 }
 
 export default CardService;
