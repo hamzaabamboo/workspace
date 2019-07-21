@@ -1,0 +1,6 @@
+mutation createClipboard($data: ClipboardInput) {
+  makeClipboard(data: $data) {
+    id
+    content
+  }
+}

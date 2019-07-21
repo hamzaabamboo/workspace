@@ -1,9 +1,11 @@
 import { GraphQLResolveInfo } from "graphql";
-import { User, CardInput } from "../resolver.types";
-import { Prisma } from "../generated/prisma";
+import { Prisma, User } from "../generated/prisma";
+import { MutationResolvers } from "../resolver.types";
 import slugify from "slugify";
 import { Service } from "typedi";
 import FileService from "../file/file.service";
+import { FileType } from "../generated/prisma-client";
+import { FileUpload } from "../types";
 
 @Service()
 class CardService {
@@ -19,7 +21,11 @@ class CardService {
 
   async makeCard(
     user: User,
-    { title, content, files = [] }: CardInput,
+    {
+      title,
+      content,
+      files = []
+    }: MutationResolvers.CardInput & { files: FileUpload[] },
     board: string,
     db: Prisma,
     info: GraphQLResolveInfo
@@ -54,7 +60,11 @@ class CardService {
   async editCard(
     user: User,
     id: string,
-    { title, content, files = [] }: CardInput,
+    {
+      title,
+      content,
+      files = []
+    }: MutationResolvers.CardInput & { files: FileUpload[] },
     db: Prisma,
     info: GraphQLResolveInfo
   ) {

@@ -138,10 +138,22 @@ export type CardInput = {
   files?: Maybe<Array<Maybe<Scalars["Upload"]>>>;
 };
 
-export type CardMetaInput = {
-  __typename?: "CardMetaInput";
-  public?: Maybe<Scalars["Boolean"]>;
-  archived?: Maybe<Scalars["Boolean"]>;
+export type CardPreviousValues = {
+  __typename?: "CardPreviousValues";
+  id: Scalars["ID"];
+  title: Scalars["String"];
+  slug: Scalars["String"];
+  content?: Maybe<Scalars["String"]>;
+  public: Scalars["Boolean"];
+  archived: Scalars["Boolean"];
+};
+
+export type CardSubscriptionPayload = {
+  __typename?: "CardSubscriptionPayload";
+  mutation: MutationType;
+  node?: Maybe<Card>;
+  updatedFields?: Maybe<Array<Scalars["String"]>>;
+  previousValues?: Maybe<CardPreviousValues>;
 };
 
 export type CardWhereInput = {
@@ -337,6 +349,12 @@ export type MutationSignupArgs = {
   password: Scalars["String"];
 };
 
+export enum MutationType {
+  Created = "CREATED",
+  Updated = "UPDATED",
+  Deleted = "DELETED"
+}
+
 export type Query = {
   __typename?: "Query";
   getBoards: Array<Maybe<Board>>;
@@ -348,7 +366,7 @@ export type Query = {
 
 export type Subscription = {
   __typename?: "Subscription";
-  cards: Array<Maybe<Card>>;
+  cards: Array<Maybe<CardSubscriptionPayload>>;
   clipboards: Array<Maybe<Clipboard>>;
 };
 
@@ -509,6 +527,17 @@ export type ClipboardDataFragment = { __typename?: "Clipboard" } & Pick<
   "id" | "content"
 >;
 
+export type CreateClipboardMutationVariables = {
+  data?: Maybe<ClipboardInput>;
+};
+
+export type CreateClipboardMutation = { __typename?: "Mutation" } & {
+  makeClipboard: { __typename?: "Clipboard" } & Pick<
+    Clipboard,
+    "id" | "content"
+  >;
+};
+
 export type GetClipboardsQueryVariables = {};
 
 export type GetClipboardsQuery = { __typename?: "Query" } & {
@@ -601,6 +630,24 @@ export class DeleteClipboardGQL extends Apollo.Mutation<
   DeleteClipboardMutationVariables
 > {
   document = DeleteClipboardDocument;
+}
+export const CreateClipboardDocument = gql`
+  mutation createClipboard($data: ClipboardInput) {
+    makeClipboard(data: $data) {
+      id
+      content
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: "root"
+})
+export class CreateClipboardGQL extends Apollo.Mutation<
+  CreateClipboardMutation,
+  CreateClipboardMutationVariables
+> {
+  document = CreateClipboardDocument;
 }
 export const GetClipboardsDocument = gql`
   query getClipboards {

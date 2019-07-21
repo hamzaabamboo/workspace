@@ -1,5 +1,10 @@
-import { Prisma } from "./generated/prisma";
-import { Resolvers, User } from "./resolver.types";
+import { Prisma, User } from "./generated/prisma";
+import {
+  Resolvers,
+  QueryResolvers,
+  MutationResolvers,
+  SubscriptionResolvers
+} from "./generated/resolver.types";
 import { Request } from "express";
 import { GraphQLResolveInfo } from "graphql";
 import { ReadStream } from "fs";
@@ -20,7 +25,13 @@ export interface TokenPayload {
 export type ResultWrapper<T> = T | Promise<T>;
 
 export interface ClassResolvers {
-  resolvers(): Resolvers;
+  resolvers(): Partial<PartialResolver>;
+}
+
+export interface PartialResolver {
+  Query: Partial<QueryResolvers.Type>;
+  Mutation: Partial<MutationResolvers.Type>;
+  Subscription: Partial<SubscriptionResolvers.Type>;
 }
 
 export type FileUpload = Promise<{

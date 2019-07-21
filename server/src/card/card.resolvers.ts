@@ -1,13 +1,13 @@
-import { Resolvers } from "../resolver.types";
 import { Service } from "typedi";
 import CardService from "./card.service";
-import { ClassResolvers } from "../types";
+import { ClassResolvers, PartialResolver } from "../types";
+import { Resolvers, QueryResolvers } from "../resolver.types";
 
 @Service()
 class CardResolvers implements ClassResolvers {
   constructor(private cardService: CardService) {}
 
-  resolvers(): Resolvers {
+  resolvers(): Partial<PartialResolver> {
     const { cardService } = this;
     return {
       Query: {
@@ -26,12 +26,6 @@ class CardResolvers implements ClassResolvers {
           return cardService.editCard(user, id, data, ctx.db, info);
         }
       }
-      // Subscription: {
-      //   async cards(parent, args, ctx, info) {
-      //     const user = await ctx.user();
-      //     return cardService.subscribeCard(user, ctx.db, info);
-      //   }
-      // }
     };
   }
 }

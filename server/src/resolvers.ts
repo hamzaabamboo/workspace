@@ -1,8 +1,8 @@
 import { isEmpty, omitBy, merge } from "lodash";
 import { fileLoader } from "merge-graphql-schemas";
 import { join } from "path";
-import { Resolvers } from "./resolver.types";
 import { getResolvers } from "./container";
+import { Resolvers } from "./generated/resolver.types";
 
 export const mergeResolvers = (mergingResolvers: any[]) => {
   const reducedResolver = mergingResolvers.reduce(

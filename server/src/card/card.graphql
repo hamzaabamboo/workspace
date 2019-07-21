@@ -8,20 +8,11 @@ type Mutation {
 }
 
 type Subscription {
-  cards: [Card]!
+  cards: [CardSubscriptionPayload]!
 }
 
 input CardInput {
   title: String!
   content: String
   files: [Upload]
-}
-
-type Subscription {
-  cards: [Card]!
-}
-
-type CardMetaInput {
-  public: Boolean
-  archived: Boolean
 }

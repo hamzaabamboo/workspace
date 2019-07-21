@@ -32,6 +32,15 @@ $ ./dev.sh up # Start dev server and anything
 $ ./dev.sh exec backend sh # Run shell inside backend container for debugging and stuff
 ```
 
+#### Running Codegen for resolvers
+
+```sh
+# Either run in server folder
+$ yarn watch-gen
+# or run in docker
+$ ./dev.sh exec backend yarn watch-gen
+```
+
 #### Ports
 
 Port `6869` is exposed for `backend` container for both API and graphql-playground  

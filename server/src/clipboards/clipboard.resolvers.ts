@@ -1,13 +1,13 @@
-import { Resolvers } from "../resolver.types";
 import { Service } from "typedi";
-import { ClassResolvers } from "../types";
+import { ClassResolvers, PartialResolver } from "../types";
 import ClipboardService from "./clipboard.service";
+import { Resolvers } from "../resolver.types";
 
 @Service()
 class ClipboardResolvers implements ClassResolvers {
   constructor(private clipboardService: ClipboardService) {}
 
-  resolvers(): Resolvers {
+  resolvers(): Partial<PartialResolver> {
     const { clipboardService } = this;
     return {
       Query: {

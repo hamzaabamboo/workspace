@@ -11,17 +11,3 @@ generates:
   ./client/src/app/generated/graphql.schema.json:
     plugins:
       - introspection
-  ./server/src/resolver.types.ts:
-    config:
-      contextType: ./types#Context
-      mappers:
-        Board: ./generated/prisma#Board
-        Card: ./generated/prisma#Card
-        User: ./generated/prisma#User
-        UserRole: ./generated/prisma#UserRole
-        Clipboard: ./generated/prisma#Clipboard
-      # defaultMapper: any
-      # defaultMapper: ./generated/prisma.ts#{T}
-    plugins:
-      - typescript
-      - typescript-resolvers

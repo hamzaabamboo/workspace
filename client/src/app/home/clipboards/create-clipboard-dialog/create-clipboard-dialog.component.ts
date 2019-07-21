@@ -6,7 +6,10 @@ import {
   MAT_DIALOG_DATA
 } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { DeleteClipboardGQL } from "src/app/generated/graphql";
+import {
+  DeleteClipboardGQL,
+  CreateClipboardGQL
+} from "src/app/generated/graphql";
 import { ClipboardDialogData } from "../clipboards.component";
 
 @Component({
@@ -20,13 +23,20 @@ export class CreateClipboardDialogComponent {
   constructor(
     private dialogService: MatDialog,
     public dialogRef: MatDialogRef<CreateClipboardDialogComponent>,
-    public snackbarService: MatSnackBar
+    public snackbarService: MatSnackBar,
+    public createCardboardgql: CreateClipboardGQL
   ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  async create() {
+    await this.createCardboardgql
+      .mutate({ data: { content: this.message } })
+      .toPromise();
+    this.dialogRef.close();
+  }
   async delete() {
     if (this.message) {
       console.log(this.message);
