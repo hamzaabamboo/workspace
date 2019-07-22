@@ -1,8 +1,8 @@
 import { GraphQLResolveInfo } from "graphql";
-import { User, BoardInput } from "../resolver.types";
-import { Prisma } from "../generated/prisma";
+import { Prisma, User } from "../generated/prisma";
 import slugify from "slugify";
 import gql from "graphql-tag";
+import { MutationResolvers } from "../resolver.types";
 class BoardService {
   getBoards({ id }: User, db: Prisma, info: GraphQLResolveInfo) {
     return db.query.boards(
@@ -17,7 +17,7 @@ class BoardService {
 
   async makeBoard(
     user: User,
-    { title, isPublic }: BoardInput,
+    { title, isPublic }: MutationResolvers.BoardInput,
     db: Prisma,
     info: GraphQLResolveInfo
   ) {
@@ -41,7 +41,7 @@ class BoardService {
   async editBoard(
     user: User,
     id: string,
-    { title, isPublic }: BoardInput,
+    { title, isPublic }: MutationResolvers.BoardInput,
     db: Prisma,
     info: GraphQLResolveInfo
   ) {

@@ -1,13 +1,13 @@
-import { Resolvers, Resolver } from "../resolver.types";
+import { Resolvers } from "../resolver.types";
 import { Service } from "typedi";
-import { ClassResolvers } from "../types";
+import { ClassResolvers, PartialResolver } from "../types";
 import BoardService from "./board.service";
 
 @Service()
 class BoardResolver implements ClassResolvers {
   constructor(private boardService: BoardService) {}
 
-  resolvers(): Resolvers {
+  resolvers(): Partial<PartialResolver> {
     const { boardService } = this;
     return {
       Query: {

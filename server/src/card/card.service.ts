@@ -25,7 +25,7 @@ class CardService {
       title,
       content,
       files = []
-    }: MutationResolvers.CardInput & { files: FileUpload[] },
+    }: MutationResolvers.CardInput & { files?: FileUpload[] },
     board: string,
     db: Prisma,
     info: GraphQLResolveInfo
@@ -64,7 +64,7 @@ class CardService {
       title,
       content,
       files = []
-    }: MutationResolvers.CardInput & { files: FileUpload[] },
+    }: MutationResolvers.CardInput & { files?: FileUpload[] },
     db: Prisma,
     info: GraphQLResolveInfo
   ) {

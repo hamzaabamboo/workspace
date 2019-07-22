@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from "graphql";
-import { User, CardInput, ClipboardInput } from "../resolver.types";
-import { Prisma } from "../generated/prisma";
+import { MutationResolvers } from "../resolver.types";
+import { Prisma, User } from "../generated/prisma";
 import slugify from "slugify";
 
 class ClipboardService {
@@ -15,11 +15,10 @@ class ClipboardService {
 
   async makeClipboard(
     user: User,
-    data: ClipboardInput,
+    data: MutationResolvers.ClipboardInput,
     db: Prisma,
     info: GraphQLResolveInfo
   ) {
-    console.log("data");
     return await db.mutation.createClipboard(
       {
         data: {

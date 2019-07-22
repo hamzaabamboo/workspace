@@ -4,7 +4,7 @@ import {
   QueryResolvers,
   MutationResolvers,
   SubscriptionResolvers
-} from "./generated/resolver.types";
+} from "./resolver.types";
 import { Request } from "express";
 import { GraphQLResolveInfo } from "graphql";
 import { ReadStream } from "fs";
@@ -25,7 +25,7 @@ export interface TokenPayload {
 export type ResultWrapper<T> = T | Promise<T>;
 
 export interface ClassResolvers {
-  resolvers(): Partial<PartialResolver>;
+  resolvers(): RecursivePartial<Resolvers>;
 }
 
 export interface PartialResolver {
@@ -33,6 +33,14 @@ export interface PartialResolver {
   Mutation: Partial<MutationResolvers.Type>;
   Subscription: Partial<SubscriptionResolvers.Type>;
 }
+
+export type RecursivePartial<T> = {
+  [P in keyof T]?: T[P] extends (infer U)[]
+    ? RecursivePartial<U>[]
+    : T[P] extends object
+    ? RecursivePartial<T[P]>
+    : T[P]
+};
 
 export type FileUpload = Promise<{
   filename: string;
