@@ -23,7 +23,7 @@ services:
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DATABASE: prisma
+      POSTGRES_DATABASE: ${DB_NAME}
     volumes:
       - postgres:/var/lib/postgresql/data
   backend:
@@ -36,6 +36,10 @@ services:
       - uploads:/app/uploads
     environment:
       PRISMA_ENDPOINT: http://prisma:4466
+      PRISMA_SECRET: ${PRISMA_SECRET}
+      APP_SECRET: ${APP_SECRET}
+      PRISMA_MANAGEMENT_API_SECRET: ${PRISMA_MANAGEMENT_API_SECRET}
+      PRISMA_ENDPOINT: ${PRISMA_ENDPOINT}
     command: ["yarn", "start"]
 volumes:
   postgres: ~

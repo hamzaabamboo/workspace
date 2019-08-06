@@ -2,4 +2,4 @@
 set -e
 
 echo "ssh to server"
-ssh deploy@$HOST "cd staging && git pull origin staging && ./deploy-staging.sh"
+ssh deploy@$HOST "cd workspace/staging && git pull origin staging && ./scripts/deploy-staging.sh"

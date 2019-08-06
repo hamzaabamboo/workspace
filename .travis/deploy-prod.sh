@@ -2,4 +2,4 @@
 set -e
 
 echo "ssh to server"
-ssh deploy@$HOST "cd production && git pull origin master && ./deploy-prod.sh"
+ssh deploy@$HOST "cd workspace/production && git pull origin master && ./scripts/deploy-prod.sh"

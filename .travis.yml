@@ -25,3 +25,9 @@ deploy:
       branch:
         - ci
         - staging
+  - provider: script
+    skip_cleanup: true
+    script: env HOST=$host .travis/deploy-prod.sh
+    on:
+      branch:
+        - master
