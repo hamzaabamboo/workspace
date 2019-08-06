@@ -3,11 +3,12 @@ import { fileLoader } from "merge-graphql-schemas";
 import { join } from "path";
 import { getResolvers } from "./container";
 import { Resolvers } from "./resolver.types";
+import { PartialResolver } from "./types";
 
 export const mergeResolvers = (mergingResolvers: any[]) => {
   const reducedResolver = mergingResolvers.reduce(
-    (prev: Resolvers, current) => {
-      const toMerge: Resolvers =
+    (prev: PartialResolver, current) => {
+      const toMerge: PartialResolver =
         current instanceof Function ? getResolvers(current) : current;
 
       return merge(prev, toMerge);
@@ -15,7 +16,7 @@ export const mergeResolvers = (mergingResolvers: any[]) => {
     {}
   );
 
-  return omitBy(reducedResolver, isEmpty);
+  return omitBy(reducedResolver, isEmpty) as any;
 };
 
 const resolversArray = fileLoader(join(__dirname, "./**/*.resolvers.*"));

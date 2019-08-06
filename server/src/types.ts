@@ -8,6 +8,7 @@ import {
 import { Request } from "express";
 import { GraphQLResolveInfo } from "graphql";
 import { ReadStream } from "fs";
+import { Resolver } from "dns";
 
 // tslint:disable-next-line:interface-name
 export interface Context {
@@ -28,11 +29,13 @@ export interface ClassResolvers {
   resolvers(): RecursivePartial<Resolvers>;
 }
 
-export interface PartialResolver {
-  Query: Partial<QueryResolvers.Type>;
-  Mutation: Partial<MutationResolvers.Type>;
-  Subscription: Partial<SubscriptionResolvers.Type>;
-}
+// export interface PartialResolver {
+//   Query: Partial<QueryResolvers.Type>;
+//   Mutation: Partial<MutationResolvers.Type>;
+//   Subscription: Partial<SubscriptionResolvers.Type>;
+// }
+
+export type PartialResolver = RecursivePartial<Resolvers>;
 
 export type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]

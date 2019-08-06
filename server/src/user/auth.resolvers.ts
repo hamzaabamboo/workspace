@@ -1,10 +1,9 @@
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-import { Context } from "../types";
-import { Resolvers } from "../resolver.types";
+import { Context, PartialResolver } from "../types";
 import { User } from "../generated/prisma";
 
-const user: Resolvers = {
+const user: PartialResolver = {
   Query: {
     async currentUser(parent, args, ctx, info) {
       return ctx.user(info);
