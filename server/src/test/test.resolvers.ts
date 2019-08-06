@@ -1,7 +1,8 @@
 import { Resolvers } from "../resolver.types";
+import { PartialResolver } from "../types";
 
 class Test {
-  resolvers(): Resolvers {
+  resolvers(): PartialResolver {
     return {
       Query: {
         hello: () => "worlds"
