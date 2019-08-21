@@ -18,7 +18,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma-deploy": "ts-node prisma/datamodel.ts && prisma deploy",
-    "prisma-generate": "ts-node prisma/datamodel.ts && prisma generate"
+    "prisma-generate": "ts-node prisma/datamodel.ts && prisma generate",
+    "generate": "ts-node src/generate-typing.ts"
   },
   "dependencies": {
     "@nestjs/common": "^6.0.0",
@@ -38,6 +39,7 @@
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",
+    "shortid": "^2.2.14",
     "slugify": "^1.3.4"
   },
   "devDependencies": {
@@ -48,6 +50,7 @@
     "@types/jest": "24.0.11",
     "@types/jsonwebtoken": "^8.3.3",
     "@types/node": "11.13.4",
+    "@types/shortid": "^0.0.29",
     "@types/supertest": "2.0.7",
     "jest": "24.7.1",
     "nodemon": "^1.19.1",
@@ -66,7 +69,6 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
     "testRegex": ".spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"

@@ -12,14 +12,12 @@ import { BoardInput, Board } from '../graphql';
 import { BoardService } from './board.service';
 import { AuthService } from '../user/auth/auth.service';
 import { GraphQLResolveInfo } from 'graphql';
-import { UserService } from '../user/user.service';
 
 @Resolver('Board')
 export class BoardResolver implements ResolverMap {
   constructor(
     private readonly boardService: BoardService,
     private readonly authService: AuthService,
-    private readonly userService: UserService,
   ) {}
 
   @Mutation()
@@ -41,20 +39,12 @@ export class BoardResolver implements ResolverMap {
   }
 
   @ResolveProperty()
-  async creator(@Parent() parent: Board, @Info() info: GraphQLResolveInfo) {
-    const user = await this.userService.findUsers(
-      { createdBoards_some: { id: parent.id } },
-      info,
-    );
-    return user[0];
+  creator(@Parent() parent: Board, @Info() info: GraphQLResolveInfo) {
+    return this.boardService.getBoardCreator(parent.id, info);
   }
 
   @ResolveProperty()
-  async member(@Parent() parent: Board, @Info() info: GraphQLResolveInfo) {
-    const user = await this.userService.findUsers(
-      { joinedBoards_some: { id: parent.id } },
-      info,
-    );
-    return user[0];
+  member(@Parent() parent: Board, @Info() info: GraphQLResolveInfo) {
+    return this.boardService.getBoardMembers(parent.id, info);
   }
 }

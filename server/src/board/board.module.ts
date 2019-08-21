@@ -7,5 +7,6 @@ import { UserModule } from '../user/user.module';
 @Module({
   imports: [PrismaModule, UserModule],
   providers: [BoardResolver, BoardService],
+  exports: [BoardService],
 })
 export class BoardModule {}

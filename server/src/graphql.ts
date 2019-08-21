@@ -83,9 +83,10 @@ export interface BoardCreateInput {
     id?: string;
     title: string;
     slug: string;
-    isPublic?: boolean;
     creator: UserCreateOneWithoutCreatedBoardsInput;
     member?: UserCreateManyWithoutJoinedBoardsInput;
+    isPublic?: boolean;
+    cards?: CardCreateManyWithoutParentInput;
 }
 
 export interface BoardCreateManyWithoutCreatorInput {
@@ -98,25 +99,36 @@ export interface BoardCreateManyWithoutMemberInput {
     connect?: BoardWhereUniqueInput[];
 }
 
-export interface BoardCreateOneInput {
-    create?: BoardCreateInput;
+export interface BoardCreateOneWithoutCardsInput {
+    create?: BoardCreateWithoutCardsInput;
     connect?: BoardWhereUniqueInput;
+}
+
+export interface BoardCreateWithoutCardsInput {
+    id?: string;
+    title: string;
+    slug: string;
+    creator: UserCreateOneWithoutCreatedBoardsInput;
+    member?: UserCreateManyWithoutJoinedBoardsInput;
+    isPublic?: boolean;
 }
 
 export interface BoardCreateWithoutCreatorInput {
     id?: string;
     title: string;
     slug: string;
-    isPublic?: boolean;
     member?: UserCreateManyWithoutJoinedBoardsInput;
+    isPublic?: boolean;
+    cards?: CardCreateManyWithoutParentInput;
 }
 
 export interface BoardCreateWithoutMemberInput {
     id?: string;
     title: string;
     slug: string;
-    isPublic?: boolean;
     creator: UserCreateOneWithoutCreatedBoardsInput;
+    isPublic?: boolean;
+    cards?: CardCreateManyWithoutParentInput;
 }
 
 export interface BoardInput {
@@ -125,9 +137,6 @@ export interface BoardInput {
 }
 
 export interface BoardScalarWhereInput {
-    AND?: BoardScalarWhereInput[];
-    OR?: BoardScalarWhereInput[];
-    NOT?: BoardScalarWhereInput[];
     id?: string;
     id_not?: string;
     id_in?: string[];
@@ -172,33 +181,29 @@ export interface BoardScalarWhereInput {
     slug_not_ends_with?: string;
     isPublic?: boolean;
     isPublic_not?: boolean;
+    AND?: BoardScalarWhereInput[];
+    OR?: BoardScalarWhereInput[];
+    NOT?: BoardScalarWhereInput[];
 }
 
 export interface BoardSubscriptionWhereInput {
-    AND?: BoardSubscriptionWhereInput[];
-    OR?: BoardSubscriptionWhereInput[];
-    NOT?: BoardSubscriptionWhereInput[];
     mutation_in?: MutationType[];
     updatedFields_contains?: string;
     updatedFields_contains_every?: string[];
     updatedFields_contains_some?: string[];
     node?: BoardWhereInput;
-}
-
-export interface BoardUpdateDataInput {
-    title?: string;
-    slug?: string;
-    isPublic?: boolean;
-    creator?: UserUpdateOneRequiredWithoutCreatedBoardsInput;
-    member?: UserUpdateManyWithoutJoinedBoardsInput;
+    AND?: BoardSubscriptionWhereInput[];
+    OR?: BoardSubscriptionWhereInput[];
+    NOT?: BoardSubscriptionWhereInput[];
 }
 
 export interface BoardUpdateInput {
     title?: string;
     slug?: string;
-    isPublic?: boolean;
     creator?: UserUpdateOneRequiredWithoutCreatedBoardsInput;
     member?: UserUpdateManyWithoutJoinedBoardsInput;
+    isPublic?: boolean;
+    cards?: CardUpdateManyWithoutParentInput;
 }
 
 export interface BoardUpdateManyDataInput {
@@ -215,26 +220,26 @@ export interface BoardUpdateManyMutationInput {
 
 export interface BoardUpdateManyWithoutCreatorInput {
     create?: BoardCreateWithoutCreatorInput[];
+    delete?: BoardWhereUniqueInput[];
     connect?: BoardWhereUniqueInput[];
     set?: BoardWhereUniqueInput[];
     disconnect?: BoardWhereUniqueInput[];
-    delete?: BoardWhereUniqueInput[];
     update?: BoardUpdateWithWhereUniqueWithoutCreatorInput[];
-    updateMany?: BoardUpdateManyWithWhereNestedInput[];
-    deleteMany?: BoardScalarWhereInput[];
     upsert?: BoardUpsertWithWhereUniqueWithoutCreatorInput[];
+    deleteMany?: BoardScalarWhereInput[];
+    updateMany?: BoardUpdateManyWithWhereNestedInput[];
 }
 
 export interface BoardUpdateManyWithoutMemberInput {
     create?: BoardCreateWithoutMemberInput[];
+    delete?: BoardWhereUniqueInput[];
     connect?: BoardWhereUniqueInput[];
     set?: BoardWhereUniqueInput[];
     disconnect?: BoardWhereUniqueInput[];
-    delete?: BoardWhereUniqueInput[];
     update?: BoardUpdateWithWhereUniqueWithoutMemberInput[];
-    updateMany?: BoardUpdateManyWithWhereNestedInput[];
-    deleteMany?: BoardScalarWhereInput[];
     upsert?: BoardUpsertWithWhereUniqueWithoutMemberInput[];
+    deleteMany?: BoardScalarWhereInput[];
+    updateMany?: BoardUpdateManyWithWhereNestedInput[];
 }
 
 export interface BoardUpdateManyWithWhereNestedInput {
@@ -242,27 +247,37 @@ export interface BoardUpdateManyWithWhereNestedInput {
     data: BoardUpdateManyDataInput;
 }
 
-export interface BoardUpdateOneInput {
-    create?: BoardCreateInput;
-    connect?: BoardWhereUniqueInput;
-    disconnect?: boolean;
+export interface BoardUpdateOneWithoutCardsInput {
+    create?: BoardCreateWithoutCardsInput;
+    update?: BoardUpdateWithoutCardsDataInput;
+    upsert?: BoardUpsertWithoutCardsInput;
     delete?: boolean;
-    update?: BoardUpdateDataInput;
-    upsert?: BoardUpsertNestedInput;
+    disconnect?: boolean;
+    connect?: BoardWhereUniqueInput;
+}
+
+export interface BoardUpdateWithoutCardsDataInput {
+    title?: string;
+    slug?: string;
+    creator?: UserUpdateOneRequiredWithoutCreatedBoardsInput;
+    member?: UserUpdateManyWithoutJoinedBoardsInput;
+    isPublic?: boolean;
 }
 
 export interface BoardUpdateWithoutCreatorDataInput {
     title?: string;
     slug?: string;
-    isPublic?: boolean;
     member?: UserUpdateManyWithoutJoinedBoardsInput;
+    isPublic?: boolean;
+    cards?: CardUpdateManyWithoutParentInput;
 }
 
 export interface BoardUpdateWithoutMemberDataInput {
     title?: string;
     slug?: string;
-    isPublic?: boolean;
     creator?: UserUpdateOneRequiredWithoutCreatedBoardsInput;
+    isPublic?: boolean;
+    cards?: CardUpdateManyWithoutParentInput;
 }
 
 export interface BoardUpdateWithWhereUniqueWithoutCreatorInput {
@@ -275,9 +290,9 @@ export interface BoardUpdateWithWhereUniqueWithoutMemberInput {
     data: BoardUpdateWithoutMemberDataInput;
 }
 
-export interface BoardUpsertNestedInput {
-    update: BoardUpdateDataInput;
-    create: BoardCreateInput;
+export interface BoardUpsertWithoutCardsInput {
+    update: BoardUpdateWithoutCardsDataInput;
+    create: BoardCreateWithoutCardsInput;
 }
 
 export interface BoardUpsertWithWhereUniqueWithoutCreatorInput {
@@ -293,9 +308,6 @@ export interface BoardUpsertWithWhereUniqueWithoutMemberInput {
 }
 
 export interface BoardWhereInput {
-    AND?: BoardWhereInput[];
-    OR?: BoardWhereInput[];
-    NOT?: BoardWhereInput[];
     id?: string;
     id_not?: string;
     id_in?: string[];
@@ -338,12 +350,18 @@ export interface BoardWhereInput {
     slug_not_starts_with?: string;
     slug_ends_with?: string;
     slug_not_ends_with?: string;
-    isPublic?: boolean;
-    isPublic_not?: boolean;
     creator?: UserWhereInput;
     member_every?: UserWhereInput;
     member_some?: UserWhereInput;
     member_none?: UserWhereInput;
+    isPublic?: boolean;
+    isPublic_not?: boolean;
+    cards_every?: CardWhereInput;
+    cards_some?: CardWhereInput;
+    cards_none?: CardWhereInput;
+    AND?: BoardWhereInput[];
+    OR?: BoardWhereInput[];
+    NOT?: BoardWhereInput[];
 }
 
 export interface BoardWhereUniqueInput {
@@ -352,14 +370,24 @@ export interface BoardWhereUniqueInput {
 
 export interface CardCreateInput {
     id?: string;
+    creator: UserCreateOneWithoutCreatedCardsInput;
+    parent?: BoardCreateOneWithoutCardsInput;
     title: string;
     slug: string;
     content?: string;
     public?: boolean;
     archived?: boolean;
-    creator: UserCreateOneInput;
-    parent?: BoardCreateOneInput;
     files?: FileCreateManyWithoutCardInput;
+}
+
+export interface CardCreateManyWithoutCreatorInput {
+    create?: CardCreateWithoutCreatorInput[];
+    connect?: CardWhereUniqueInput[];
+}
+
+export interface CardCreateManyWithoutParentInput {
+    create?: CardCreateWithoutParentInput[];
+    connect?: CardWhereUniqueInput[];
 }
 
 export interface CardCreateOneWithoutFilesInput {
@@ -367,15 +395,37 @@ export interface CardCreateOneWithoutFilesInput {
     connect?: CardWhereUniqueInput;
 }
 
-export interface CardCreateWithoutFilesInput {
+export interface CardCreateWithoutCreatorInput {
     id?: string;
+    parent?: BoardCreateOneWithoutCardsInput;
     title: string;
     slug: string;
     content?: string;
     public?: boolean;
     archived?: boolean;
-    creator: UserCreateOneInput;
-    parent?: BoardCreateOneInput;
+    files?: FileCreateManyWithoutCardInput;
+}
+
+export interface CardCreateWithoutFilesInput {
+    id?: string;
+    creator: UserCreateOneWithoutCreatedCardsInput;
+    parent?: BoardCreateOneWithoutCardsInput;
+    title: string;
+    slug: string;
+    content?: string;
+    public?: boolean;
+    archived?: boolean;
+}
+
+export interface CardCreateWithoutParentInput {
+    id?: string;
+    creator: UserCreateOneWithoutCreatedCardsInput;
+    title: string;
+    slug: string;
+    content?: string;
+    public?: boolean;
+    archived?: boolean;
+    files?: FileCreateManyWithoutCardInput;
 }
 
 export interface CardInput {
@@ -384,62 +434,7 @@ export interface CardInput {
     files?: Upload[];
 }
 
-export interface CardSubscriptionWhereInput {
-    AND?: CardSubscriptionWhereInput[];
-    OR?: CardSubscriptionWhereInput[];
-    NOT?: CardSubscriptionWhereInput[];
-    mutation_in?: MutationType[];
-    updatedFields_contains?: string;
-    updatedFields_contains_every?: string[];
-    updatedFields_contains_some?: string[];
-    node?: CardWhereInput;
-}
-
-export interface CardUpdateInput {
-    title?: string;
-    slug?: string;
-    content?: string;
-    public?: boolean;
-    archived?: boolean;
-    creator?: UserUpdateOneRequiredInput;
-    parent?: BoardUpdateOneInput;
-    files?: FileUpdateManyWithoutCardInput;
-}
-
-export interface CardUpdateManyMutationInput {
-    title?: string;
-    slug?: string;
-    content?: string;
-    public?: boolean;
-    archived?: boolean;
-}
-
-export interface CardUpdateOneRequiredWithoutFilesInput {
-    create?: CardCreateWithoutFilesInput;
-    connect?: CardWhereUniqueInput;
-    update?: CardUpdateWithoutFilesDataInput;
-    upsert?: CardUpsertWithoutFilesInput;
-}
-
-export interface CardUpdateWithoutFilesDataInput {
-    title?: string;
-    slug?: string;
-    content?: string;
-    public?: boolean;
-    archived?: boolean;
-    creator?: UserUpdateOneRequiredInput;
-    parent?: BoardUpdateOneInput;
-}
-
-export interface CardUpsertWithoutFilesInput {
-    update: CardUpdateWithoutFilesDataInput;
-    create: CardCreateWithoutFilesInput;
-}
-
-export interface CardWhereInput {
-    AND?: CardWhereInput[];
-    OR?: CardWhereInput[];
-    NOT?: CardWhereInput[];
+export interface CardScalarWhereInput {
     id?: string;
     id_not?: string;
     id_in?: string[];
@@ -500,51 +495,143 @@ export interface CardWhereInput {
     public_not?: boolean;
     archived?: boolean;
     archived_not?: boolean;
-    creator?: UserWhereInput;
-    parent?: BoardWhereInput;
-    files_every?: FileWhereInput;
-    files_some?: FileWhereInput;
-    files_none?: FileWhereInput;
+    AND?: CardScalarWhereInput[];
+    OR?: CardScalarWhereInput[];
+    NOT?: CardScalarWhereInput[];
 }
 
-export interface CardWhereUniqueInput {
-    id?: string;
-    slug?: string;
-}
-
-export interface ClipboardCreateInput {
-    id?: string;
-    content: string;
-    archived?: boolean;
-    creator: UserCreateOneInput;
-}
-
-export interface ClipboardSubscriptionWhereInput {
-    AND?: ClipboardSubscriptionWhereInput[];
-    OR?: ClipboardSubscriptionWhereInput[];
-    NOT?: ClipboardSubscriptionWhereInput[];
+export interface CardSubscriptionWhereInput {
     mutation_in?: MutationType[];
     updatedFields_contains?: string;
     updatedFields_contains_every?: string[];
     updatedFields_contains_some?: string[];
-    node?: ClipboardWhereInput;
+    node?: CardWhereInput;
+    AND?: CardSubscriptionWhereInput[];
+    OR?: CardSubscriptionWhereInput[];
+    NOT?: CardSubscriptionWhereInput[];
 }
 
-export interface ClipboardUpdateInput {
+export interface CardUpdateInput {
+    creator?: UserUpdateOneRequiredWithoutCreatedCardsInput;
+    parent?: BoardUpdateOneWithoutCardsInput;
+    title?: string;
+    slug?: string;
     content?: string;
+    public?: boolean;
     archived?: boolean;
-    creator?: UserUpdateOneRequiredInput;
+    files?: FileUpdateManyWithoutCardInput;
 }
 
-export interface ClipboardUpdateManyMutationInput {
+export interface CardUpdateManyDataInput {
+    title?: string;
+    slug?: string;
     content?: string;
+    public?: boolean;
     archived?: boolean;
 }
 
-export interface ClipboardWhereInput {
-    AND?: ClipboardWhereInput[];
-    OR?: ClipboardWhereInput[];
-    NOT?: ClipboardWhereInput[];
+export interface CardUpdateManyMutationInput {
+    title?: string;
+    slug?: string;
+    content?: string;
+    public?: boolean;
+    archived?: boolean;
+}
+
+export interface CardUpdateManyWithoutCreatorInput {
+    create?: CardCreateWithoutCreatorInput[];
+    delete?: CardWhereUniqueInput[];
+    connect?: CardWhereUniqueInput[];
+    set?: CardWhereUniqueInput[];
+    disconnect?: CardWhereUniqueInput[];
+    update?: CardUpdateWithWhereUniqueWithoutCreatorInput[];
+    upsert?: CardUpsertWithWhereUniqueWithoutCreatorInput[];
+    deleteMany?: CardScalarWhereInput[];
+    updateMany?: CardUpdateManyWithWhereNestedInput[];
+}
+
+export interface CardUpdateManyWithoutParentInput {
+    create?: CardCreateWithoutParentInput[];
+    delete?: CardWhereUniqueInput[];
+    connect?: CardWhereUniqueInput[];
+    set?: CardWhereUniqueInput[];
+    disconnect?: CardWhereUniqueInput[];
+    update?: CardUpdateWithWhereUniqueWithoutParentInput[];
+    upsert?: CardUpsertWithWhereUniqueWithoutParentInput[];
+    deleteMany?: CardScalarWhereInput[];
+    updateMany?: CardUpdateManyWithWhereNestedInput[];
+}
+
+export interface CardUpdateManyWithWhereNestedInput {
+    where: CardScalarWhereInput;
+    data: CardUpdateManyDataInput;
+}
+
+export interface CardUpdateOneRequiredWithoutFilesInput {
+    create?: CardCreateWithoutFilesInput;
+    update?: CardUpdateWithoutFilesDataInput;
+    upsert?: CardUpsertWithoutFilesInput;
+    connect?: CardWhereUniqueInput;
+}
+
+export interface CardUpdateWithoutCreatorDataInput {
+    parent?: BoardUpdateOneWithoutCardsInput;
+    title?: string;
+    slug?: string;
+    content?: string;
+    public?: boolean;
+    archived?: boolean;
+    files?: FileUpdateManyWithoutCardInput;
+}
+
+export interface CardUpdateWithoutFilesDataInput {
+    creator?: UserUpdateOneRequiredWithoutCreatedCardsInput;
+    parent?: BoardUpdateOneWithoutCardsInput;
+    title?: string;
+    slug?: string;
+    content?: string;
+    public?: boolean;
+    archived?: boolean;
+}
+
+export interface CardUpdateWithoutParentDataInput {
+    creator?: UserUpdateOneRequiredWithoutCreatedCardsInput;
+    title?: string;
+    slug?: string;
+    content?: string;
+    public?: boolean;
+    archived?: boolean;
+    files?: FileUpdateManyWithoutCardInput;
+}
+
+export interface CardUpdateWithWhereUniqueWithoutCreatorInput {
+    where: CardWhereUniqueInput;
+    data: CardUpdateWithoutCreatorDataInput;
+}
+
+export interface CardUpdateWithWhereUniqueWithoutParentInput {
+    where: CardWhereUniqueInput;
+    data: CardUpdateWithoutParentDataInput;
+}
+
+export interface CardUpsertWithoutFilesInput {
+    update: CardUpdateWithoutFilesDataInput;
+    create: CardCreateWithoutFilesInput;
+}
+
+export interface CardUpsertWithWhereUniqueWithoutCreatorInput {
+    where: CardWhereUniqueInput;
+    update: CardUpdateWithoutCreatorDataInput;
+    create: CardCreateWithoutCreatorInput;
+}
+
+export interface CardUpsertWithWhereUniqueWithoutParentInput {
+    where: CardWhereUniqueInput;
+    update: CardUpdateWithoutParentDataInput;
+    create: CardCreateWithoutParentInput;
+}
+
+export interface CardWhereInput {
     id?: string;
     id_not?: string;
     id_in?: string[];
@@ -559,6 +646,112 @@ export interface ClipboardWhereInput {
     id_not_starts_with?: string;
     id_ends_with?: string;
     id_not_ends_with?: string;
+    creator?: UserWhereInput;
+    parent?: BoardWhereInput;
+    title?: string;
+    title_not?: string;
+    title_in?: string[];
+    title_not_in?: string[];
+    title_lt?: string;
+    title_lte?: string;
+    title_gt?: string;
+    title_gte?: string;
+    title_contains?: string;
+    title_not_contains?: string;
+    title_starts_with?: string;
+    title_not_starts_with?: string;
+    title_ends_with?: string;
+    title_not_ends_with?: string;
+    slug?: string;
+    slug_not?: string;
+    slug_in?: string[];
+    slug_not_in?: string[];
+    slug_lt?: string;
+    slug_lte?: string;
+    slug_gt?: string;
+    slug_gte?: string;
+    slug_contains?: string;
+    slug_not_contains?: string;
+    slug_starts_with?: string;
+    slug_not_starts_with?: string;
+    slug_ends_with?: string;
+    slug_not_ends_with?: string;
+    content?: string;
+    content_not?: string;
+    content_in?: string[];
+    content_not_in?: string[];
+    content_lt?: string;
+    content_lte?: string;
+    content_gt?: string;
+    content_gte?: string;
+    content_contains?: string;
+    content_not_contains?: string;
+    content_starts_with?: string;
+    content_not_starts_with?: string;
+    content_ends_with?: string;
+    content_not_ends_with?: string;
+    public?: boolean;
+    public_not?: boolean;
+    archived?: boolean;
+    archived_not?: boolean;
+    files_every?: FileWhereInput;
+    files_some?: FileWhereInput;
+    files_none?: FileWhereInput;
+    AND?: CardWhereInput[];
+    OR?: CardWhereInput[];
+    NOT?: CardWhereInput[];
+}
+
+export interface CardWhereUniqueInput {
+    id?: string;
+    slug?: string;
+}
+
+export interface ClipboardCreateInput {
+    id?: string;
+    creator: UserCreateOneInput;
+    content: string;
+    archived?: boolean;
+}
+
+export interface ClipboardSubscriptionWhereInput {
+    mutation_in?: MutationType[];
+    updatedFields_contains?: string;
+    updatedFields_contains_every?: string[];
+    updatedFields_contains_some?: string[];
+    node?: ClipboardWhereInput;
+    AND?: ClipboardSubscriptionWhereInput[];
+    OR?: ClipboardSubscriptionWhereInput[];
+    NOT?: ClipboardSubscriptionWhereInput[];
+}
+
+export interface ClipboardUpdateInput {
+    creator?: UserUpdateOneRequiredInput;
+    content?: string;
+    archived?: boolean;
+}
+
+export interface ClipboardUpdateManyMutationInput {
+    content?: string;
+    archived?: boolean;
+}
+
+export interface ClipboardWhereInput {
+    id?: string;
+    id_not?: string;
+    id_in?: string[];
+    id_not_in?: string[];
+    id_lt?: string;
+    id_lte?: string;
+    id_gt?: string;
+    id_gte?: string;
+    id_contains?: string;
+    id_not_contains?: string;
+    id_starts_with?: string;
+    id_not_starts_with?: string;
+    id_ends_with?: string;
+    id_not_ends_with?: string;
+    creator?: UserWhereInput;
     content?: string;
     content_not?: string;
     content_in?: string[];
@@ -575,7 +768,9 @@ export interface ClipboardWhereInput {
     content_not_ends_with?: string;
     archived?: boolean;
     archived_not?: boolean;
-    creator?: UserWhereInput;
+    AND?: ClipboardWhereInput[];
+    OR?: ClipboardWhereInput[];
+    NOT?: ClipboardWhereInput[];
 }
 
 export interface ClipboardWhereUniqueInput {
@@ -584,9 +779,9 @@ export interface ClipboardWhereUniqueInput {
 
 export interface FileCreateInput {
     id?: string;
+    card: CardCreateOneWithoutFilesInput;
     type?: FileType;
     filename: string;
-    card: CardCreateOneWithoutFilesInput;
 }
 
 export interface FileCreateManyWithoutCardInput {
@@ -601,9 +796,6 @@ export interface FileCreateWithoutCardInput {
 }
 
 export interface FileScalarWhereInput {
-    AND?: FileScalarWhereInput[];
-    OR?: FileScalarWhereInput[];
-    NOT?: FileScalarWhereInput[];
     id?: string;
     id_not?: string;
     id_in?: string[];
@@ -636,23 +828,26 @@ export interface FileScalarWhereInput {
     filename_not_starts_with?: string;
     filename_ends_with?: string;
     filename_not_ends_with?: string;
+    AND?: FileScalarWhereInput[];
+    OR?: FileScalarWhereInput[];
+    NOT?: FileScalarWhereInput[];
 }
 
 export interface FileSubscriptionWhereInput {
-    AND?: FileSubscriptionWhereInput[];
-    OR?: FileSubscriptionWhereInput[];
-    NOT?: FileSubscriptionWhereInput[];
     mutation_in?: MutationType[];
     updatedFields_contains?: string;
     updatedFields_contains_every?: string[];
     updatedFields_contains_some?: string[];
     node?: FileWhereInput;
+    AND?: FileSubscriptionWhereInput[];
+    OR?: FileSubscriptionWhereInput[];
+    NOT?: FileSubscriptionWhereInput[];
 }
 
 export interface FileUpdateInput {
+    card?: CardUpdateOneRequiredWithoutFilesInput;
     type?: FileType;
     filename?: string;
-    card?: CardUpdateOneRequiredWithoutFilesInput;
 }
 
 export interface FileUpdateManyDataInput {
@@ -667,14 +862,14 @@ export interface FileUpdateManyMutationInput {
 
 export interface FileUpdateManyWithoutCardInput {
     create?: FileCreateWithoutCardInput[];
+    delete?: FileWhereUniqueInput[];
     connect?: FileWhereUniqueInput[];
     set?: FileWhereUniqueInput[];
     disconnect?: FileWhereUniqueInput[];
-    delete?: FileWhereUniqueInput[];
     update?: FileUpdateWithWhereUniqueWithoutCardInput[];
-    updateMany?: FileUpdateManyWithWhereNestedInput[];
-    deleteMany?: FileScalarWhereInput[];
     upsert?: FileUpsertWithWhereUniqueWithoutCardInput[];
+    deleteMany?: FileScalarWhereInput[];
+    updateMany?: FileUpdateManyWithWhereNestedInput[];
 }
 
 export interface FileUpdateManyWithWhereNestedInput {
@@ -699,9 +894,6 @@ export interface FileUpsertWithWhereUniqueWithoutCardInput {
 }
 
 export interface FileWhereInput {
-    AND?: FileWhereInput[];
-    OR?: FileWhereInput[];
-    NOT?: FileWhereInput[];
     id?: string;
     id_not?: string;
     id_in?: string[];
@@ -716,6 +908,7 @@ export interface FileWhereInput {
     id_not_starts_with?: string;
     id_ends_with?: string;
     id_not_ends_with?: string;
+    card?: CardWhereInput;
     type?: FileType;
     type_not?: FileType;
     type_in?: FileType[];
@@ -734,7 +927,9 @@ export interface FileWhereInput {
     filename_not_starts_with?: string;
     filename_ends_with?: string;
     filename_not_ends_with?: string;
-    card?: CardWhereInput;
+    AND?: FileWhereInput[];
+    OR?: FileWhereInput[];
+    NOT?: FileWhereInput[];
 }
 
 export interface FileWhereUniqueInput {
@@ -749,6 +944,7 @@ export interface UserCreateInput {
     profileImage?: string;
     createdBoards?: BoardCreateManyWithoutCreatorInput;
     joinedBoards?: BoardCreateManyWithoutMemberInput;
+    createdCards?: CardCreateManyWithoutCreatorInput;
 }
 
 export interface UserCreateManyWithoutJoinedBoardsInput {
@@ -766,12 +962,28 @@ export interface UserCreateOneWithoutCreatedBoardsInput {
     connect?: UserWhereUniqueInput;
 }
 
+export interface UserCreateOneWithoutCreatedCardsInput {
+    create?: UserCreateWithoutCreatedCardsInput;
+    connect?: UserWhereUniqueInput;
+}
+
 export interface UserCreateWithoutCreatedBoardsInput {
     id?: string;
     email: string;
     password: string;
     role: UserRole;
     profileImage?: string;
+    joinedBoards?: BoardCreateManyWithoutMemberInput;
+    createdCards?: CardCreateManyWithoutCreatorInput;
+}
+
+export interface UserCreateWithoutCreatedCardsInput {
+    id?: string;
+    email: string;
+    password: string;
+    role: UserRole;
+    profileImage?: string;
+    createdBoards?: BoardCreateManyWithoutCreatorInput;
     joinedBoards?: BoardCreateManyWithoutMemberInput;
 }
 
@@ -782,12 +994,10 @@ export interface UserCreateWithoutJoinedBoardsInput {
     role: UserRole;
     profileImage?: string;
     createdBoards?: BoardCreateManyWithoutCreatorInput;
+    createdCards?: CardCreateManyWithoutCreatorInput;
 }
 
 export interface UserScalarWhereInput {
-    AND?: UserScalarWhereInput[];
-    OR?: UserScalarWhereInput[];
-    NOT?: UserScalarWhereInput[];
     id?: string;
     id_not?: string;
     id_in?: string[];
@@ -848,17 +1058,20 @@ export interface UserScalarWhereInput {
     profileImage_not_starts_with?: string;
     profileImage_ends_with?: string;
     profileImage_not_ends_with?: string;
+    AND?: UserScalarWhereInput[];
+    OR?: UserScalarWhereInput[];
+    NOT?: UserScalarWhereInput[];
 }
 
 export interface UserSubscriptionWhereInput {
-    AND?: UserSubscriptionWhereInput[];
-    OR?: UserSubscriptionWhereInput[];
-    NOT?: UserSubscriptionWhereInput[];
     mutation_in?: MutationType[];
     updatedFields_contains?: string;
     updatedFields_contains_every?: string[];
     updatedFields_contains_some?: string[];
     node?: UserWhereInput;
+    AND?: UserSubscriptionWhereInput[];
+    OR?: UserSubscriptionWhereInput[];
+    NOT?: UserSubscriptionWhereInput[];
 }
 
 export interface UserUpdateDataInput {
@@ -868,6 +1081,7 @@ export interface UserUpdateDataInput {
     profileImage?: string;
     createdBoards?: BoardUpdateManyWithoutCreatorInput;
     joinedBoards?: BoardUpdateManyWithoutMemberInput;
+    createdCards?: CardUpdateManyWithoutCreatorInput;
 }
 
 export interface UserUpdateInput {
@@ -877,6 +1091,7 @@ export interface UserUpdateInput {
     profileImage?: string;
     createdBoards?: BoardUpdateManyWithoutCreatorInput;
     joinedBoards?: BoardUpdateManyWithoutMemberInput;
+    createdCards?: CardUpdateManyWithoutCreatorInput;
 }
 
 export interface UserUpdateManyDataInput {
@@ -895,14 +1110,14 @@ export interface UserUpdateManyMutationInput {
 
 export interface UserUpdateManyWithoutJoinedBoardsInput {
     create?: UserCreateWithoutJoinedBoardsInput[];
+    delete?: UserWhereUniqueInput[];
     connect?: UserWhereUniqueInput[];
     set?: UserWhereUniqueInput[];
     disconnect?: UserWhereUniqueInput[];
-    delete?: UserWhereUniqueInput[];
     update?: UserUpdateWithWhereUniqueWithoutJoinedBoardsInput[];
-    updateMany?: UserUpdateManyWithWhereNestedInput[];
-    deleteMany?: UserScalarWhereInput[];
     upsert?: UserUpsertWithWhereUniqueWithoutJoinedBoardsInput[];
+    deleteMany?: UserScalarWhereInput[];
+    updateMany?: UserUpdateManyWithWhereNestedInput[];
 }
 
 export interface UserUpdateManyWithWhereNestedInput {
@@ -912,16 +1127,23 @@ export interface UserUpdateManyWithWhereNestedInput {
 
 export interface UserUpdateOneRequiredInput {
     create?: UserCreateInput;
-    connect?: UserWhereUniqueInput;
     update?: UserUpdateDataInput;
     upsert?: UserUpsertNestedInput;
+    connect?: UserWhereUniqueInput;
 }
 
 export interface UserUpdateOneRequiredWithoutCreatedBoardsInput {
     create?: UserCreateWithoutCreatedBoardsInput;
-    connect?: UserWhereUniqueInput;
     update?: UserUpdateWithoutCreatedBoardsDataInput;
     upsert?: UserUpsertWithoutCreatedBoardsInput;
+    connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateOneRequiredWithoutCreatedCardsInput {
+    create?: UserCreateWithoutCreatedCardsInput;
+    update?: UserUpdateWithoutCreatedCardsDataInput;
+    upsert?: UserUpsertWithoutCreatedCardsInput;
+    connect?: UserWhereUniqueInput;
 }
 
 export interface UserUpdateWithoutCreatedBoardsDataInput {
@@ -929,6 +1151,16 @@ export interface UserUpdateWithoutCreatedBoardsDataInput {
     password?: string;
     role?: UserRole;
     profileImage?: string;
+    joinedBoards?: BoardUpdateManyWithoutMemberInput;
+    createdCards?: CardUpdateManyWithoutCreatorInput;
+}
+
+export interface UserUpdateWithoutCreatedCardsDataInput {
+    email?: string;
+    password?: string;
+    role?: UserRole;
+    profileImage?: string;
+    createdBoards?: BoardUpdateManyWithoutCreatorInput;
     joinedBoards?: BoardUpdateManyWithoutMemberInput;
 }
 
@@ -938,6 +1170,7 @@ export interface UserUpdateWithoutJoinedBoardsDataInput {
     role?: UserRole;
     profileImage?: string;
     createdBoards?: BoardUpdateManyWithoutCreatorInput;
+    createdCards?: CardUpdateManyWithoutCreatorInput;
 }
 
 export interface UserUpdateWithWhereUniqueWithoutJoinedBoardsInput {
@@ -955,6 +1188,11 @@ export interface UserUpsertWithoutCreatedBoardsInput {
     create: UserCreateWithoutCreatedBoardsInput;
 }
 
+export interface UserUpsertWithoutCreatedCardsInput {
+    update: UserUpdateWithoutCreatedCardsDataInput;
+    create: UserCreateWithoutCreatedCardsInput;
+}
+
 export interface UserUpsertWithWhereUniqueWithoutJoinedBoardsInput {
     where: UserWhereUniqueInput;
     update: UserUpdateWithoutJoinedBoardsDataInput;
@@ -962,9 +1200,6 @@ export interface UserUpsertWithWhereUniqueWithoutJoinedBoardsInput {
 }
 
 export interface UserWhereInput {
-    AND?: UserWhereInput[];
-    OR?: UserWhereInput[];
-    NOT?: UserWhereInput[];
     id?: string;
     id_not?: string;
     id_in?: string[];
@@ -1031,6 +1266,12 @@ export interface UserWhereInput {
     joinedBoards_every?: BoardWhereInput;
     joinedBoards_some?: BoardWhereInput;
     joinedBoards_none?: BoardWhereInput;
+    createdCards_every?: CardWhereInput;
+    createdCards_some?: CardWhereInput;
+    createdCards_none?: CardWhereInput;
+    AND?: UserWhereInput[];
+    OR?: UserWhereInput[];
+    NOT?: UserWhereInput[];
 }
 
 export interface UserWhereUniqueInput {
@@ -1071,13 +1312,14 @@ export interface BatchPayload {
     count: Long;
 }
 
-export interface Board extends Node {
+export interface Board {
     id: string;
     title: string;
     slug: string;
     creator: User;
     member?: User[];
     isPublic: boolean;
+    cards?: Card[];
 }
 
 export interface BoardConnection {
@@ -1105,7 +1347,7 @@ export interface BoardSubscriptionPayload {
     previousValues?: BoardPreviousValues;
 }
 
-export interface Card extends Node {
+export interface Card {
     id: string;
     creator: User;
     parent?: Board;
@@ -1144,12 +1386,7 @@ export interface CardSubscriptionPayload {
     previousValues?: CardPreviousValues;
 }
 
-export interface Cat {
-    id: number;
-    name: string;
-}
-
-export interface Clipboard extends Node {
+export interface Clipboard {
     id: string;
     creator: User;
     content: string;
@@ -1180,7 +1417,7 @@ export interface ClipboardSubscriptionPayload {
     previousValues?: ClipboardPreviousValues;
 }
 
-export interface File extends Node {
+export interface File {
     id: string;
     card: Card;
     type?: FileType;
@@ -1216,36 +1453,35 @@ export interface IMutation {
     editBoard(id: string, data: BoardInput): Board | Promise<Board>;
     makeCard(data?: CardInput, board?: string): Card | Promise<Card>;
     editCard(id: string, data?: CardInput): Card | Promise<Card>;
-    makeCat(name: string): Cat | Promise<Cat>;
-    createCard(data: CardCreateInput): Card | Promise<Card>;
-    createFile(data: FileCreateInput): File | Promise<File>;
-    createClipboard(data: ClipboardCreateInput): Clipboard | Promise<Clipboard>;
     createBoard(data: BoardCreateInput): Board | Promise<Board>;
-    createUser(data: UserCreateInput): User | Promise<User>;
-    updateCard(data: CardUpdateInput, where: CardWhereUniqueInput): Card | Promise<Card>;
-    updateFile(data: FileUpdateInput, where: FileWhereUniqueInput): File | Promise<File>;
-    updateClipboard(data: ClipboardUpdateInput, where: ClipboardWhereUniqueInput): Clipboard | Promise<Clipboard>;
     updateBoard(data: BoardUpdateInput, where: BoardWhereUniqueInput): Board | Promise<Board>;
-    updateUser(data: UserUpdateInput, where: UserWhereUniqueInput): User | Promise<User>;
-    deleteCard(where: CardWhereUniqueInput): Card | Promise<Card>;
-    deleteFile(where: FileWhereUniqueInput): File | Promise<File>;
-    deleteClipboard(where: ClipboardWhereUniqueInput): Clipboard | Promise<Clipboard>;
-    deleteBoard(where: BoardWhereUniqueInput): Board | Promise<Board>;
-    deleteUser(where: UserWhereUniqueInput): User | Promise<User>;
-    upsertCard(where: CardWhereUniqueInput, create: CardCreateInput, update: CardUpdateInput): Card | Promise<Card>;
-    upsertFile(where: FileWhereUniqueInput, create: FileCreateInput, update: FileUpdateInput): File | Promise<File>;
-    upsertClipboard(where: ClipboardWhereUniqueInput, create: ClipboardCreateInput, update: ClipboardUpdateInput): Clipboard | Promise<Clipboard>;
-    upsertBoard(where: BoardWhereUniqueInput, create: BoardCreateInput, update: BoardUpdateInput): Board | Promise<Board>;
-    upsertUser(where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput): User | Promise<User>;
-    updateManyCards(data: CardUpdateManyMutationInput, where?: CardWhereInput): BatchPayload | Promise<BatchPayload>;
-    updateManyFiles(data: FileUpdateManyMutationInput, where?: FileWhereInput): BatchPayload | Promise<BatchPayload>;
-    updateManyClipboards(data: ClipboardUpdateManyMutationInput, where?: ClipboardWhereInput): BatchPayload | Promise<BatchPayload>;
     updateManyBoards(data: BoardUpdateManyMutationInput, where?: BoardWhereInput): BatchPayload | Promise<BatchPayload>;
-    updateManyUsers(data: UserUpdateManyMutationInput, where?: UserWhereInput): BatchPayload | Promise<BatchPayload>;
-    deleteManyCards(where?: CardWhereInput): BatchPayload | Promise<BatchPayload>;
-    deleteManyFiles(where?: FileWhereInput): BatchPayload | Promise<BatchPayload>;
-    deleteManyClipboards(where?: ClipboardWhereInput): BatchPayload | Promise<BatchPayload>;
+    upsertBoard(where: BoardWhereUniqueInput, create: BoardCreateInput, update: BoardUpdateInput): Board | Promise<Board>;
+    deleteBoard(where: BoardWhereUniqueInput): Board | Promise<Board>;
     deleteManyBoards(where?: BoardWhereInput): BatchPayload | Promise<BatchPayload>;
+    createCard(data: CardCreateInput): Card | Promise<Card>;
+    updateCard(data: CardUpdateInput, where: CardWhereUniqueInput): Card | Promise<Card>;
+    updateManyCards(data: CardUpdateManyMutationInput, where?: CardWhereInput): BatchPayload | Promise<BatchPayload>;
+    upsertCard(where: CardWhereUniqueInput, create: CardCreateInput, update: CardUpdateInput): Card | Promise<Card>;
+    deleteCard(where: CardWhereUniqueInput): Card | Promise<Card>;
+    deleteManyCards(where?: CardWhereInput): BatchPayload | Promise<BatchPayload>;
+    createClipboard(data: ClipboardCreateInput): Clipboard | Promise<Clipboard>;
+    updateClipboard(data: ClipboardUpdateInput, where: ClipboardWhereUniqueInput): Clipboard | Promise<Clipboard>;
+    updateManyClipboards(data: ClipboardUpdateManyMutationInput, where?: ClipboardWhereInput): BatchPayload | Promise<BatchPayload>;
+    upsertClipboard(where: ClipboardWhereUniqueInput, create: ClipboardCreateInput, update: ClipboardUpdateInput): Clipboard | Promise<Clipboard>;
+    deleteClipboard(where: ClipboardWhereUniqueInput): Clipboard | Promise<Clipboard>;
+    deleteManyClipboards(where?: ClipboardWhereInput): BatchPayload | Promise<BatchPayload>;
+    createFile(data: FileCreateInput): File | Promise<File>;
+    updateFile(data: FileUpdateInput, where: FileWhereUniqueInput): File | Promise<File>;
+    updateManyFiles(data: FileUpdateManyMutationInput, where?: FileWhereInput): BatchPayload | Promise<BatchPayload>;
+    upsertFile(where: FileWhereUniqueInput, create: FileCreateInput, update: FileUpdateInput): File | Promise<File>;
+    deleteFile(where: FileWhereUniqueInput): File | Promise<File>;
+    deleteManyFiles(where?: FileWhereInput): BatchPayload | Promise<BatchPayload>;
+    createUser(data: UserCreateInput): User | Promise<User>;
+    updateUser(data: UserUpdateInput, where: UserWhereUniqueInput): User | Promise<User>;
+    updateManyUsers(data: UserUpdateManyMutationInput, where?: UserWhereInput): BatchPayload | Promise<BatchPayload>;
+    upsertUser(where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput): User | Promise<User>;
+    deleteUser(where: UserWhereUniqueInput): User | Promise<User>;
     deleteManyUsers(where?: UserWhereInput): BatchPayload | Promise<BatchPayload>;
     login(email: string, password: string): AuthPayload | Promise<AuthPayload>;
     signup(email: string, password: string): AuthPayload | Promise<AuthPayload>;
@@ -1261,37 +1497,35 @@ export interface PageInfo {
 export interface IQuery {
     getBoards(): Board[] | Promise<Board[]>;
     getCards(): Card[] | Promise<Card[]>;
-    cat(): Cat | Promise<Cat>;
-    cats(): Cat[] | Promise<Cat[]>;
-    cards(where?: CardWhereInput, orderBy?: CardOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): Card[] | Promise<Card[]>;
-    files(where?: FileWhereInput, orderBy?: FileOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): File[] | Promise<File[]>;
-    clipboards(where?: ClipboardWhereInput, orderBy?: ClipboardOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): Clipboard[] | Promise<Clipboard[]>;
-    boards(where?: BoardWhereInput, orderBy?: BoardOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): Board[] | Promise<Board[]>;
-    users(where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): User[] | Promise<User[]>;
-    card(where: CardWhereUniqueInput): Card | Promise<Card>;
-    file(where: FileWhereUniqueInput): File | Promise<File>;
-    clipboard(where: ClipboardWhereUniqueInput): Clipboard | Promise<Clipboard>;
     board(where: BoardWhereUniqueInput): Board | Promise<Board>;
-    user(where: UserWhereUniqueInput): User | Promise<User>;
-    cardsConnection(where?: CardWhereInput, orderBy?: CardOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): CardConnection | Promise<CardConnection>;
-    filesConnection(where?: FileWhereInput, orderBy?: FileOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): FileConnection | Promise<FileConnection>;
-    clipboardsConnection(where?: ClipboardWhereInput, orderBy?: ClipboardOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): ClipboardConnection | Promise<ClipboardConnection>;
+    boards(where?: BoardWhereInput, orderBy?: BoardOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): Board[] | Promise<Board[]>;
     boardsConnection(where?: BoardWhereInput, orderBy?: BoardOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): BoardConnection | Promise<BoardConnection>;
+    card(where: CardWhereUniqueInput): Card | Promise<Card>;
+    cards(where?: CardWhereInput, orderBy?: CardOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): Card[] | Promise<Card[]>;
+    cardsConnection(where?: CardWhereInput, orderBy?: CardOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): CardConnection | Promise<CardConnection>;
+    clipboard(where: ClipboardWhereUniqueInput): Clipboard | Promise<Clipboard>;
+    clipboards(where?: ClipboardWhereInput, orderBy?: ClipboardOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): Clipboard[] | Promise<Clipboard[]>;
+    clipboardsConnection(where?: ClipboardWhereInput, orderBy?: ClipboardOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): ClipboardConnection | Promise<ClipboardConnection>;
+    file(where: FileWhereUniqueInput): File | Promise<File>;
+    files(where?: FileWhereInput, orderBy?: FileOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): File[] | Promise<File[]>;
+    filesConnection(where?: FileWhereInput, orderBy?: FileOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): FileConnection | Promise<FileConnection>;
+    user(where: UserWhereUniqueInput): User | Promise<User>;
+    users(where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): User[] | Promise<User[]>;
     usersConnection(where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): UserConnection | Promise<UserConnection>;
     node(id: string): Node | Promise<Node>;
     currentUser(): User | Promise<User>;
 }
 
 export interface ISubscription {
-    cards(): CardSubscriptionPayload[] | Promise<CardSubscriptionPayload[]>;
-    card(where?: CardSubscriptionWhereInput): CardSubscriptionPayload | Promise<CardSubscriptionPayload>;
-    file(where?: FileSubscriptionWhereInput): FileSubscriptionPayload | Promise<FileSubscriptionPayload>;
-    clipboard(where?: ClipboardSubscriptionWhereInput): ClipboardSubscriptionPayload | Promise<ClipboardSubscriptionPayload>;
+    cardsSubscription(): CardSubscriptionPayload[] | Promise<CardSubscriptionPayload[]>;
     board(where?: BoardSubscriptionWhereInput): BoardSubscriptionPayload | Promise<BoardSubscriptionPayload>;
+    card(where?: CardSubscriptionWhereInput): CardSubscriptionPayload | Promise<CardSubscriptionPayload>;
+    clipboard(where?: ClipboardSubscriptionWhereInput): ClipboardSubscriptionPayload | Promise<ClipboardSubscriptionPayload>;
+    file(where?: FileSubscriptionWhereInput): FileSubscriptionPayload | Promise<FileSubscriptionPayload>;
     user(where?: UserSubscriptionWhereInput): UserSubscriptionPayload | Promise<UserSubscriptionPayload>;
 }
 
-export interface User extends Node {
+export interface User {
     id: string;
     email: string;
     password: string;
@@ -1299,6 +1533,7 @@ export interface User extends Node {
     profileImage?: string;
     createdBoards?: Board[];
     joinedBoards?: Board[];
+    createdCards?: Card[];
 }
 
 export interface UserConnection {

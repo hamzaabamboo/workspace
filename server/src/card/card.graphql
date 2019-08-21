@@ -1,0 +1,18 @@
+type Query {
+  getCards: [Card]!
+}
+
+type Mutation {
+  makeCard(data: CardInput, board: ID): Card!
+  editCard(id: ID!, data: CardInput): Card!
+}
+
+type Subscription {
+  subscribeCards: [CardSubscriptionPayload]!
+}
+
+input CardInput {
+  title: String!
+  content: String
+  files: [Upload]
+}
