@@ -29,6 +29,7 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.1.0",
     "graphql": "^14.4.2",
+    "graphql-cli": "^3.0.14",
     "graphql-tools": "^4.0.5",
     "graphql-upload": "^8.0.7",
     "jsonwebtoken": "^8.5.1",
