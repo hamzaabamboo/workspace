@@ -8,7 +8,6 @@ import { UserModule } from './user/user.module';
   imports: [
     GraphQLModule.forRoot({
       typePaths: ['./src/**/*.graphql'],
-      // playground: true,
       playground: process.env.NODE_ENV !== 'production',
     }),
     CardModule,

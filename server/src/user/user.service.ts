@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
-import { AuthPayload, User } from '../graphql';
+import { AuthPayload, User, UserWhereInput } from '../graphql';
 import { GraphQLResolveInfo } from 'graphql';
 
 @Injectable()
@@ -14,13 +14,13 @@ export class UserService {
       throw new Error(`${email} has already been registered`);
     }
     const hashed = await bcrypt.hash(password, 10);
-    const user = await this.prisma.mutation.createUser({
+    const user = (await this.prisma.mutation.createUser({
       data: {
         email,
         password: hashed,
         role: 'NORMAL',
       },
-    });
+    })) as User;
     return {
       token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
       user,
@@ -43,7 +43,11 @@ export class UserService {
     };
   }
 
-  fetchUser(id: string, info: GraphQLResolveInfo) {
+  findUserById(id: string, info?: GraphQLResolveInfo) {
     return this.prisma.query.user({ where: { id } }, info);
+  }
+
+  findUsers(where: UserWhereInput, info?: GraphQLResolveInfo) {
+    return this.prisma.query.users({ where }, info);
   }
 }
