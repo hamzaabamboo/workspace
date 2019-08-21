@@ -40,6 +40,7 @@ services:
       APP_SECRET: ${APP_SECRET}
       PRISMA_MANAGEMENT_API_SECRET: ${PRISMA_MANAGEMENT_API_SECRET}
       PRISMA_ENDPOINT: ${PRISMA_ENDPOINT}
+      BACKEND_PORT: ${BACKEND_PORT}
     command: ["yarn", "start"]
 volumes:
   postgres: ~
