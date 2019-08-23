@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import slugify from 'slugify';
 import { ID_Input } from '../generated/prisma';
-import { BoardInput, Board, BoardWhereInput, User } from '../graphql';
+import { BoardInput, Board, BoardWhereInput } from '../graphql';
 import { AuthError } from '../user/auth/AuthError';
 import { GraphQLResolveInfo } from 'graphql';
 import { UserService } from '../user/user.service';
