@@ -1,8 +1,0 @@
-type Board {
-  id: ID! @id @unique
-  title: String!
-  slug: String!
-  creator: User! @relation(name: "BoardCreator")
-  member: [User!]! @relation(name: "BoardMember")
-  isPublic: Boolean! @default(value: true)
-}
