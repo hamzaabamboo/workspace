@@ -1,8 +1,18 @@
-import { Resolver, Mutation, Args, Query, Subscription } from '@nestjs/graphql';
-import { ResolverMap } from '../types';
-import { ClipboardInput } from '../graphql';
+import {
+  Resolver,
+  Mutation,
+  Args,
+  Query,
+  Subscription,
+  ResolveProperty,
+  Info,
+} from '@nestjs/graphql';
+import { ResolverMap, Result } from '../types';
+import { ClipboardInput, Clipboard } from '../graphql';
 import { AuthService } from '../user/auth/auth.service';
 import { ClipboardService } from './clipboard.service';
+import { User } from '../user/user.decorator';
+import { GraphQLResolveInfo } from 'graphql';
 
 @Resolver('Clipboard')
 export class ClipboardResolver implements ResolverMap {
@@ -33,5 +43,13 @@ export class ClipboardResolver implements ResolverMap {
   subscribeClipboards() {
     const user = this.authService.getUserId();
     return this.clipboardService.subscribeClipboard(user) as any;
+  }
+
+  @ResolveProperty()
+  creator(
+    @User() user: string,
+    @Info() info: GraphQLResolveInfo,
+  ): Result<Clipboard['creator']> {
+    return this.clipboardService.getClipboardCreator(user, info);
   }
 }

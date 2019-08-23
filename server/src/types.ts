@@ -19,7 +19,7 @@ export interface TokenPayload {
   userId: string;
 }
 
-export type ResultWrapper<T> = T | Promise<T>;
+export type Result<T> = T | Promise<T>;
 
 export type FileUpload = Promise<{
   filename: string;

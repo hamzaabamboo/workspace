@@ -7,7 +7,7 @@ import {
   Info,
   Query,
 } from '@nestjs/graphql';
-import { ResolverMap } from '../types';
+import { ResolverMap, Result } from '../types';
 import { BoardInput, Board } from '../graphql';
 import { BoardService } from './board.service';
 import { AuthService } from '../user/auth/auth.service';
@@ -40,12 +40,18 @@ export class BoardResolver implements ResolverMap {
   }
 
   @ResolveProperty()
-  creator(@User() user: string, @Info() info: GraphQLResolveInfo) {
+  creator(
+    @User() user: string,
+    @Info() info: GraphQLResolveInfo,
+  ): Result<Board['creator']> {
     return this.boardService.getBoardCreator(user, info);
   }
 
   @ResolveProperty()
-  member(@Parent() parent: Board, @Info() info: GraphQLResolveInfo) {
+  member(
+    @Parent() parent: Board,
+    @Info() info: GraphQLResolveInfo,
+  ): Result<Board['member']> {
     return this.boardService.getBoardMembers(parent.id, info);
   }
 }

@@ -2,10 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { ClipboardInput, Clipboard } from '../graphql';
 import { AuthError } from '../user/auth/AuthError';
+import { UserService } from '../user/user.service';
+import { GraphQLResolveInfo } from 'graphql';
 
 @Injectable()
 export class ClipboardService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly userSerivce: UserService,
+  ) {}
+
+  getClipboardCreator(user: string, info: GraphQLResolveInfo) {
+    return this.userSerivce.findUserById(user, info);
+  }
 
   getClipboards(user: string) {
     return this.prisma.query.clipboards({

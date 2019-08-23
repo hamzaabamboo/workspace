@@ -44,10 +44,10 @@ export class UserService {
   }
 
   findUserById(id: string, info?: GraphQLResolveInfo) {
-    return this.prisma.query.user({ where: { id } }, info);
+    return this.prisma.query.user({ where: { id } }, info) as Promise<User>;
   }
 
   findUsers(where: UserWhereInput, info?: GraphQLResolveInfo) {
-    return this.prisma.query.users({ where }, info);
+    return this.prisma.query.users({ where }, info) as Promise<User[]>;
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CardInput, Card } from '../graphql';
+import { CardInput, Card, Board } from '../graphql';
 import { FileService } from '../file/file.service';
 import slugify from 'slugify';
 import { UserService } from '../user/user.service';
@@ -21,13 +21,13 @@ export class CardService {
   }
 
   async getCardParent(cardId: string, info: GraphQLResolveInfo) {
-    const user = await this.boardService.findBoards(
+    const card = await this.boardService.findBoards(
       {
         cards_some: { id: cardId },
       },
       info,
     );
-    return user[0];
+    return card[0] as Board;
   }
 
   getCards(userId: string) {

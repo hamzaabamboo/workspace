@@ -8,7 +8,7 @@ import {
   Query,
   Subscription,
 } from '@nestjs/graphql';
-import { ResolverMap } from '../types';
+import { ResolverMap, Result } from '../types';
 import { CardInput, Card } from '../graphql';
 import { CardService } from './card.service';
 import { AuthService } from '../user/auth/auth.service';
@@ -46,12 +46,18 @@ export class CardResolver implements ResolverMap {
   }
 
   @ResolveProperty()
-  async creator(@User() user: string, @Info() info: GraphQLResolveInfo) {
+  creator(
+    @User() user: string,
+    @Info() info: GraphQLResolveInfo,
+  ): Result<Card['creator']> {
     return this.cardService.getCardCreator(user, info);
   }
 
   @ResolveProperty()
-  parent(@Parent() card: Card, @Info() info: GraphQLResolveInfo) {
+  parent(
+    @Parent() card: Card,
+    @Info() info: GraphQLResolveInfo,
+  ): Result<Card['parent']> {
     return this.cardService.getCardParent(card.id, info);
   }
 }

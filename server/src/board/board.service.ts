@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import slugify from 'slugify';
 import { ID_Input } from '../generated/prisma';
-import { BoardInput, Board, BoardWhereInput } from '../graphql';
+import { BoardInput, Board, BoardWhereInput, User } from '../graphql';
 import { AuthError } from '../user/auth/AuthError';
 import { GraphQLResolveInfo } from 'graphql';
 import { UserService } from '../user/user.service';
@@ -22,16 +22,15 @@ export class BoardService {
     return this.prisma.query.boards({ where }, info);
   }
 
-  async getBoardCreator(id: string, info: GraphQLResolveInfo) {
+  getBoardCreator(id: string, info: GraphQLResolveInfo) {
     return this.userService.findUserById(id, info);
   }
 
-  async getBoardMembers(boardId: string, info: GraphQLResolveInfo) {
-    const user = await this.userService.findUsers(
+  getBoardMembers(boardId: string, info: GraphQLResolveInfo) {
+    return this.userService.findUsers(
       { joinedBoards_some: { id: boardId } },
       info,
     );
-    return user[0];
   }
 
   getBoards(id: string) {
