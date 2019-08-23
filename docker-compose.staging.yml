@@ -8,7 +8,7 @@ services:
   client:
     image: ${REGISTRY_URL}/workspace/client:staging
   backend:
-    image: ${REGISTRY_URL}/workspace/backend
+    image: ${REGISTRY_URL}/workspace/backend:staging
     command: ["yarn", "prod"]
     restart: on-failure
   postgres-db:
