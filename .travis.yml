@@ -24,7 +24,6 @@ script:
   - docker build --cache-from $REGISTRY_URL/workspace/client -t $REGISTRY_URL/workspace/client ./client
   - docker build --cache-from $REGISTRY_URL/workspace/backend -t $REGISTRY_URL/workspace/backend ./server
   - docker build --cache-from $REGISTRY_URL/workspace/nginx -t $REGISTRY_URL/workspace/nginx ./nginx
-  - docker save $REGISTRY_URL/workspace/client $REGISTRY_URL/workspace/backend $REGISTRY_URL/workspace/nginx | gzip -2 > "$HOME/docker/docker_images.tar.gz"
 
 deploy:
   - provider: script
