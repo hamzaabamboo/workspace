@@ -8,6 +8,9 @@ sudo: false
 #     -
 before_install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" $REGISTRY_URL --password-stdin
+  - docker pull $REGISTRY_URL/workspace/client:latest || true
+  - docker pull $REGISTRY_URL/workspace/backend:latest || true
+  - docker pull $REGISTRY_URL/workspace/nginx:latest || true
   # - echo -e "Host $host\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   # - openssl aes-256-cbc -K $encrypted_07f88c26126b_key -iv $encrypted_07f88c26126b_iv
   #   -in .travis/deploy_rsa.enc -out .travis/id_rsa -d
@@ -17,14 +20,12 @@ before_install:
   # - ssh-add ~/.ssh/id_rsa
 
 script:
-  - docker pull $REGISTRY_URL/workspace/client || true
-  - docker pull $REGISTRY_URL/workspace/backend || true
-  - docker pull $REGISTRY_URL/workspace/nginx || true
+  - docker build --cache-from $REGISTRY_URL/workspace/client:latest -t $REGISTRY_URL/workspace/client ./client
+  - docker build --cache-from $REGISTRY_URL/workspace/backend:latest -t $REGISTRY_URL/workspace/backend ./server
+  - docker build --cache-from $REGISTRY_URL/workspace/nginx:latest -t $REGISTRY_URL/workspace/nginx ./nginx
 
-  - docker build --cache-from $REGISTRY_URL/workspace/client -t $REGISTRY_URL/workspace/client ./client
-  - docker build --cache-from $REGISTRY_URL/workspace/backend -t $REGISTRY_URL/workspace/backend ./server
-  - docker build --cache-from $REGISTRY_URL/workspace/nginx -t $REGISTRY_URL/workspace/nginx ./nginx
-
+after_script:
+  - docker image
 deploy:
   - provider: script
     skip_cleanup: true
