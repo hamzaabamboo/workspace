@@ -1,15 +1,14 @@
 version: "3.3"
 services:
   nginx:
-    build:
-      context: ./nginx
+    image: ${REGISTRY_URL}/workspace/nginx
     restart: always
     ports:
       - "0.0.0.0:${APP_PORT}:80"
   client:
-    build:
-      context: ./client
+    image: ${REGISTRY_URL}/workspace/client
   backend:
+    image: ${REGISTRY_URL}/workspace/backend
     command: ["yarn", "prod"]
     restart: on-failure
   postgres-db:

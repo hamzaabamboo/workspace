@@ -1,14 +1,12 @@
 version: "3.3"
 services:
   nginx:
-    build:
-      context: ./nginx
+    image: ${REGISTRY_URL}/workspace/nginx:staging
     restart: always
     ports:
       - "0.0.0.0:${APP_PORT}:80"
   client:
-    build:
-      context: ./client
+    image: ${REGISTRY_URL}/workspace/client:staging
   backend:
     command: ["yarn", "prod"]
     restart: on-failure
