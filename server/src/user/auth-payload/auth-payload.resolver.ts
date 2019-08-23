@@ -9,7 +9,6 @@ export class AuthPayloadResolver {
 
   @ResolveProperty()
   user(@Parent() parent: AuthPayload, @Info() info: GraphQLResolveInfo) {
-    console.log(parent);
     return this.userService.findUserById(parent.user.id, info);
   }
 }

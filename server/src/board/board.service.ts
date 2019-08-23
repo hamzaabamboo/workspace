@@ -22,12 +22,8 @@ export class BoardService {
     return this.prisma.query.boards({ where }, info);
   }
 
-  async getBoardCreator(boardId: string, info: GraphQLResolveInfo) {
-    const user = await this.userService.findUsers(
-      { createdBoards_some: { id: boardId } },
-      info,
-    );
-    return user[0];
+  async getBoardCreator(id: string, info: GraphQLResolveInfo) {
+    return this.userService.findUserById(id, info);
   }
 
   async getBoardMembers(boardId: string, info: GraphQLResolveInfo) {

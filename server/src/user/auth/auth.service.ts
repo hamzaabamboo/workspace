@@ -3,14 +3,15 @@ import { CONTEXT } from '@nestjs/graphql';
 import { TokenPayload } from '../../types';
 import * as jwt from 'jsonwebtoken';
 import { AuthError } from './AuthError';
+import { getAuthHeader, getUserToken } from './user.util';
 
 @Injectable({ scope: Scope.REQUEST })
 export class AuthService {
   constructor(@Inject(CONTEXT) private readonly context: any) {}
   getUserId() {
-    const Authorization = this.context.req.get('Authorization');
+    const Authorization = getAuthHeader(this.context);
     if (Authorization) {
-      const token = Authorization.replace('Bearer ', '');
+      const token = getUserToken(Authorization);
       const { userId } = jwt.verify(
         token,
         process.env.APP_SECRET,

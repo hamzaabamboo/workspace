@@ -5,6 +5,7 @@ import { CardModule } from './card/card.module';
 import { BoardModule } from './board/board.module';
 import { UserModule } from './user/user.module';
 import { FileModule } from './file/file.module';
+import { ClipboardModule } from './clipboard/clipboard.module';
 @Module({
   imports: [
     GraphQLModule.forRoot({

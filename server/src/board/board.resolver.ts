@@ -12,6 +12,7 @@ import { BoardInput, Board } from '../graphql';
 import { BoardService } from './board.service';
 import { AuthService } from '../user/auth/auth.service';
 import { GraphQLResolveInfo } from 'graphql';
+import { User } from '../user/user.decorator';
 
 @Resolver('Board')
 export class BoardResolver implements ResolverMap {
@@ -39,8 +40,8 @@ export class BoardResolver implements ResolverMap {
   }
 
   @ResolveProperty()
-  creator(@Parent() parent: Board, @Info() info: GraphQLResolveInfo) {
-    return this.boardService.getBoardCreator(parent.id, info);
+  creator(@User() user: string, @Info() info: GraphQLResolveInfo) {
+    return this.boardService.getBoardCreator(user, info);
   }
 
   @ResolveProperty()

@@ -13,6 +13,7 @@ import { CardInput, Card } from '../graphql';
 import { CardService } from './card.service';
 import { AuthService } from '../user/auth/auth.service';
 import { GraphQLResolveInfo } from 'graphql';
+import { User } from '../user/user.decorator';
 
 @Resolver('Card')
 export class CardResolver implements ResolverMap {
@@ -39,14 +40,14 @@ export class CardResolver implements ResolverMap {
   }
 
   @Subscription()
-  cardsSubscription() {
+  subscribeCards() {
     const user = this.authService.getUserId();
     return this.cardService.subscribeCard(user) as any;
   }
 
   @ResolveProperty()
-  async creator(@Parent() card: Card, @Info() info: GraphQLResolveInfo) {
-    return this.cardService.getCardCreator(card.id, info);
+  async creator(@User() user: string, @Info() info: GraphQLResolveInfo) {
+    return this.cardService.getCardCreator(user, info);
   }
 
   @ResolveProperty()

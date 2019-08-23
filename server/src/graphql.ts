@@ -709,9 +709,60 @@ export interface CardWhereUniqueInput {
 
 export interface ClipboardCreateInput {
     id?: string;
-    creator: UserCreateOneInput;
+    creator: UserCreateOneWithoutCreatedClipboardsInput;
     content: string;
     archived?: boolean;
+}
+
+export interface ClipboardCreateManyWithoutCreatorInput {
+    create?: ClipboardCreateWithoutCreatorInput[];
+    connect?: ClipboardWhereUniqueInput[];
+}
+
+export interface ClipboardCreateWithoutCreatorInput {
+    id?: string;
+    content: string;
+    archived?: boolean;
+}
+
+export interface ClipboardInput {
+    content: string;
+}
+
+export interface ClipboardScalarWhereInput {
+    id?: string;
+    id_not?: string;
+    id_in?: string[];
+    id_not_in?: string[];
+    id_lt?: string;
+    id_lte?: string;
+    id_gt?: string;
+    id_gte?: string;
+    id_contains?: string;
+    id_not_contains?: string;
+    id_starts_with?: string;
+    id_not_starts_with?: string;
+    id_ends_with?: string;
+    id_not_ends_with?: string;
+    content?: string;
+    content_not?: string;
+    content_in?: string[];
+    content_not_in?: string[];
+    content_lt?: string;
+    content_lte?: string;
+    content_gt?: string;
+    content_gte?: string;
+    content_contains?: string;
+    content_not_contains?: string;
+    content_starts_with?: string;
+    content_not_starts_with?: string;
+    content_ends_with?: string;
+    content_not_ends_with?: string;
+    archived?: boolean;
+    archived_not?: boolean;
+    AND?: ClipboardScalarWhereInput[];
+    OR?: ClipboardScalarWhereInput[];
+    NOT?: ClipboardScalarWhereInput[];
 }
 
 export interface ClipboardSubscriptionWhereInput {
@@ -726,7 +777,12 @@ export interface ClipboardSubscriptionWhereInput {
 }
 
 export interface ClipboardUpdateInput {
-    creator?: UserUpdateOneRequiredInput;
+    creator?: UserUpdateOneRequiredWithoutCreatedClipboardsInput;
+    content?: string;
+    archived?: boolean;
+}
+
+export interface ClipboardUpdateManyDataInput {
     content?: string;
     archived?: boolean;
 }
@@ -734,6 +790,39 @@ export interface ClipboardUpdateInput {
 export interface ClipboardUpdateManyMutationInput {
     content?: string;
     archived?: boolean;
+}
+
+export interface ClipboardUpdateManyWithoutCreatorInput {
+    create?: ClipboardCreateWithoutCreatorInput[];
+    delete?: ClipboardWhereUniqueInput[];
+    connect?: ClipboardWhereUniqueInput[];
+    set?: ClipboardWhereUniqueInput[];
+    disconnect?: ClipboardWhereUniqueInput[];
+    update?: ClipboardUpdateWithWhereUniqueWithoutCreatorInput[];
+    upsert?: ClipboardUpsertWithWhereUniqueWithoutCreatorInput[];
+    deleteMany?: ClipboardScalarWhereInput[];
+    updateMany?: ClipboardUpdateManyWithWhereNestedInput[];
+}
+
+export interface ClipboardUpdateManyWithWhereNestedInput {
+    where: ClipboardScalarWhereInput;
+    data: ClipboardUpdateManyDataInput;
+}
+
+export interface ClipboardUpdateWithoutCreatorDataInput {
+    content?: string;
+    archived?: boolean;
+}
+
+export interface ClipboardUpdateWithWhereUniqueWithoutCreatorInput {
+    where: ClipboardWhereUniqueInput;
+    data: ClipboardUpdateWithoutCreatorDataInput;
+}
+
+export interface ClipboardUpsertWithWhereUniqueWithoutCreatorInput {
+    where: ClipboardWhereUniqueInput;
+    update: ClipboardUpdateWithoutCreatorDataInput;
+    create: ClipboardCreateWithoutCreatorInput;
 }
 
 export interface ClipboardWhereInput {
@@ -945,16 +1034,12 @@ export interface UserCreateInput {
     createdBoards?: BoardCreateManyWithoutCreatorInput;
     joinedBoards?: BoardCreateManyWithoutMemberInput;
     createdCards?: CardCreateManyWithoutCreatorInput;
+    createdClipboards?: ClipboardCreateManyWithoutCreatorInput;
 }
 
 export interface UserCreateManyWithoutJoinedBoardsInput {
     create?: UserCreateWithoutJoinedBoardsInput[];
     connect?: UserWhereUniqueInput[];
-}
-
-export interface UserCreateOneInput {
-    create?: UserCreateInput;
-    connect?: UserWhereUniqueInput;
 }
 
 export interface UserCreateOneWithoutCreatedBoardsInput {
@@ -967,6 +1052,11 @@ export interface UserCreateOneWithoutCreatedCardsInput {
     connect?: UserWhereUniqueInput;
 }
 
+export interface UserCreateOneWithoutCreatedClipboardsInput {
+    create?: UserCreateWithoutCreatedClipboardsInput;
+    connect?: UserWhereUniqueInput;
+}
+
 export interface UserCreateWithoutCreatedBoardsInput {
     id?: string;
     email: string;
@@ -975,6 +1065,7 @@ export interface UserCreateWithoutCreatedBoardsInput {
     profileImage?: string;
     joinedBoards?: BoardCreateManyWithoutMemberInput;
     createdCards?: CardCreateManyWithoutCreatorInput;
+    createdClipboards?: ClipboardCreateManyWithoutCreatorInput;
 }
 
 export interface UserCreateWithoutCreatedCardsInput {
@@ -985,6 +1076,18 @@ export interface UserCreateWithoutCreatedCardsInput {
     profileImage?: string;
     createdBoards?: BoardCreateManyWithoutCreatorInput;
     joinedBoards?: BoardCreateManyWithoutMemberInput;
+    createdClipboards?: ClipboardCreateManyWithoutCreatorInput;
+}
+
+export interface UserCreateWithoutCreatedClipboardsInput {
+    id?: string;
+    email: string;
+    password: string;
+    role: UserRole;
+    profileImage?: string;
+    createdBoards?: BoardCreateManyWithoutCreatorInput;
+    joinedBoards?: BoardCreateManyWithoutMemberInput;
+    createdCards?: CardCreateManyWithoutCreatorInput;
 }
 
 export interface UserCreateWithoutJoinedBoardsInput {
@@ -995,6 +1098,7 @@ export interface UserCreateWithoutJoinedBoardsInput {
     profileImage?: string;
     createdBoards?: BoardCreateManyWithoutCreatorInput;
     createdCards?: CardCreateManyWithoutCreatorInput;
+    createdClipboards?: ClipboardCreateManyWithoutCreatorInput;
 }
 
 export interface UserScalarWhereInput {
@@ -1074,16 +1178,6 @@ export interface UserSubscriptionWhereInput {
     NOT?: UserSubscriptionWhereInput[];
 }
 
-export interface UserUpdateDataInput {
-    email?: string;
-    password?: string;
-    role?: UserRole;
-    profileImage?: string;
-    createdBoards?: BoardUpdateManyWithoutCreatorInput;
-    joinedBoards?: BoardUpdateManyWithoutMemberInput;
-    createdCards?: CardUpdateManyWithoutCreatorInput;
-}
-
 export interface UserUpdateInput {
     email?: string;
     password?: string;
@@ -1092,6 +1186,7 @@ export interface UserUpdateInput {
     createdBoards?: BoardUpdateManyWithoutCreatorInput;
     joinedBoards?: BoardUpdateManyWithoutMemberInput;
     createdCards?: CardUpdateManyWithoutCreatorInput;
+    createdClipboards?: ClipboardUpdateManyWithoutCreatorInput;
 }
 
 export interface UserUpdateManyDataInput {
@@ -1125,13 +1220,6 @@ export interface UserUpdateManyWithWhereNestedInput {
     data: UserUpdateManyDataInput;
 }
 
-export interface UserUpdateOneRequiredInput {
-    create?: UserCreateInput;
-    update?: UserUpdateDataInput;
-    upsert?: UserUpsertNestedInput;
-    connect?: UserWhereUniqueInput;
-}
-
 export interface UserUpdateOneRequiredWithoutCreatedBoardsInput {
     create?: UserCreateWithoutCreatedBoardsInput;
     update?: UserUpdateWithoutCreatedBoardsDataInput;
@@ -1146,6 +1234,13 @@ export interface UserUpdateOneRequiredWithoutCreatedCardsInput {
     connect?: UserWhereUniqueInput;
 }
 
+export interface UserUpdateOneRequiredWithoutCreatedClipboardsInput {
+    create?: UserCreateWithoutCreatedClipboardsInput;
+    update?: UserUpdateWithoutCreatedClipboardsDataInput;
+    upsert?: UserUpsertWithoutCreatedClipboardsInput;
+    connect?: UserWhereUniqueInput;
+}
+
 export interface UserUpdateWithoutCreatedBoardsDataInput {
     email?: string;
     password?: string;
@@ -1153,6 +1248,7 @@ export interface UserUpdateWithoutCreatedBoardsDataInput {
     profileImage?: string;
     joinedBoards?: BoardUpdateManyWithoutMemberInput;
     createdCards?: CardUpdateManyWithoutCreatorInput;
+    createdClipboards?: ClipboardUpdateManyWithoutCreatorInput;
 }
 
 export interface UserUpdateWithoutCreatedCardsDataInput {
@@ -1162,6 +1258,17 @@ export interface UserUpdateWithoutCreatedCardsDataInput {
     profileImage?: string;
     createdBoards?: BoardUpdateManyWithoutCreatorInput;
     joinedBoards?: BoardUpdateManyWithoutMemberInput;
+    createdClipboards?: ClipboardUpdateManyWithoutCreatorInput;
+}
+
+export interface UserUpdateWithoutCreatedClipboardsDataInput {
+    email?: string;
+    password?: string;
+    role?: UserRole;
+    profileImage?: string;
+    createdBoards?: BoardUpdateManyWithoutCreatorInput;
+    joinedBoards?: BoardUpdateManyWithoutMemberInput;
+    createdCards?: CardUpdateManyWithoutCreatorInput;
 }
 
 export interface UserUpdateWithoutJoinedBoardsDataInput {
@@ -1171,16 +1278,12 @@ export interface UserUpdateWithoutJoinedBoardsDataInput {
     profileImage?: string;
     createdBoards?: BoardUpdateManyWithoutCreatorInput;
     createdCards?: CardUpdateManyWithoutCreatorInput;
+    createdClipboards?: ClipboardUpdateManyWithoutCreatorInput;
 }
 
 export interface UserUpdateWithWhereUniqueWithoutJoinedBoardsInput {
     where: UserWhereUniqueInput;
     data: UserUpdateWithoutJoinedBoardsDataInput;
-}
-
-export interface UserUpsertNestedInput {
-    update: UserUpdateDataInput;
-    create: UserCreateInput;
 }
 
 export interface UserUpsertWithoutCreatedBoardsInput {
@@ -1191,6 +1294,11 @@ export interface UserUpsertWithoutCreatedBoardsInput {
 export interface UserUpsertWithoutCreatedCardsInput {
     update: UserUpdateWithoutCreatedCardsDataInput;
     create: UserCreateWithoutCreatedCardsInput;
+}
+
+export interface UserUpsertWithoutCreatedClipboardsInput {
+    update: UserUpdateWithoutCreatedClipboardsDataInput;
+    create: UserCreateWithoutCreatedClipboardsInput;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutJoinedBoardsInput {
@@ -1269,6 +1377,9 @@ export interface UserWhereInput {
     createdCards_every?: CardWhereInput;
     createdCards_some?: CardWhereInput;
     createdCards_none?: CardWhereInput;
+    createdClipboards_every?: ClipboardWhereInput;
+    createdClipboards_some?: ClipboardWhereInput;
+    createdClipboards_none?: ClipboardWhereInput;
     AND?: UserWhereInput[];
     OR?: UserWhereInput[];
     NOT?: UserWhereInput[];
@@ -1453,6 +1564,8 @@ export interface IMutation {
     editBoard(id: string, data: BoardInput): Board | Promise<Board>;
     makeCard(data?: CardInput, board?: string): Card | Promise<Card>;
     editCard(id: string, data?: CardInput): Card | Promise<Card>;
+    makeClipboard(data: ClipboardInput): Clipboard | Promise<Clipboard>;
+    removeClipboard(id: string): Clipboard | Promise<Clipboard>;
     createBoard(data: BoardCreateInput): Board | Promise<Board>;
     updateBoard(data: BoardUpdateInput, where: BoardWhereUniqueInput): Board | Promise<Board>;
     updateManyBoards(data: BoardUpdateManyMutationInput, where?: BoardWhereInput): BatchPayload | Promise<BatchPayload>;
@@ -1497,6 +1610,7 @@ export interface PageInfo {
 export interface IQuery {
     getBoards(): Board[] | Promise<Board[]>;
     getCards(): Card[] | Promise<Card[]>;
+    getClipboards(): Clipboard[] | Promise<Clipboard[]>;
     board(where: BoardWhereUniqueInput): Board | Promise<Board>;
     boards(where?: BoardWhereInput, orderBy?: BoardOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): Board[] | Promise<Board[]>;
     boardsConnection(where?: BoardWhereInput, orderBy?: BoardOrderByInput, skip?: number, after?: string, before?: string, first?: number, last?: number): BoardConnection | Promise<BoardConnection>;
@@ -1517,7 +1631,8 @@ export interface IQuery {
 }
 
 export interface ISubscription {
-    cardsSubscription(): CardSubscriptionPayload[] | Promise<CardSubscriptionPayload[]>;
+    subscribeCards(): CardSubscriptionPayload[] | Promise<CardSubscriptionPayload[]>;
+    subscribeClipboards(): Clipboard[] | Promise<Clipboard[]>;
     board(where?: BoardSubscriptionWhereInput): BoardSubscriptionPayload | Promise<BoardSubscriptionPayload>;
     card(where?: CardSubscriptionWhereInput): CardSubscriptionPayload | Promise<CardSubscriptionPayload>;
     clipboard(where?: ClipboardSubscriptionWhereInput): ClipboardSubscriptionPayload | Promise<ClipboardSubscriptionPayload>;
@@ -1534,6 +1649,7 @@ export interface User {
     createdBoards?: Board[];
     joinedBoards?: Board[];
     createdCards?: Card[];
+    createdClipboards?: Clipboard[];
 }
 
 export interface UserConnection {

@@ -1,5 +1,5 @@
 export class AuthError extends Error {
   constructor(message?: string) {
-    super(message || 'Not authorized');
+    super(`Not authorized ${message ? `: ${message}` : ''}`);
   }
 }

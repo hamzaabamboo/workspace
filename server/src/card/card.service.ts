@@ -16,11 +16,8 @@ export class CardService {
     private readonly boardService: BoardService,
   ) {}
 
-  async getCardCreator(cardId: string, info: GraphQLResolveInfo) {
-    const user = await this.userService.findUsers({
-      createdCards_some: { id: cardId },
-    });
-    return user[0];
+  async getCardCreator(id: string, info: GraphQLResolveInfo) {
+    return this.userService.findUserById(id, info);
   }
 
   async getCardParent(cardId: string, info: GraphQLResolveInfo) {
