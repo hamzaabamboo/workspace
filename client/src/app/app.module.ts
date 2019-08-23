@@ -8,6 +8,7 @@ import { AuthService } from "./common/services/auth.service";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { persistCache } from "apollo-cache-persist";
 import { ApolloModule, Apollo } from "apollo-angular";
 import { NgxStronglyTypedFormsModule } from "ngx-strongly-typed-forms";
 import links from "./links";
@@ -18,6 +19,7 @@ import { NavigationComponent } from "./common/components/navigation/navigation.c
 import { LoginModule } from "./login/login.module";
 import { MatIconModule } from "@angular/material/icon";
 
+export const cache = new InMemoryCache({});
 @NgModule({
   declarations: [AppComponent, NavigationComponent],
   imports: [
@@ -40,12 +42,18 @@ import { MatIconModule } from "@angular/material/icon";
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(apollo: Apollo, authService: AuthService) {
-    apollo.create({
-      link: links({ authService }),
-      cache: new InMemoryCache({
-        dataIdFromObject: o => o.id
-      })
+  constructor(private apollo: Apollo, private authService: AuthService) {
+    this.setupApollo();
+  }
+  async setupApollo() {
+    await persistCache({
+      cache,
+      storage: window.localStorage
+    });
+
+    this.apollo.create({
+      link: links({ authService: this.authService }),
+      cache
     });
   }
 }

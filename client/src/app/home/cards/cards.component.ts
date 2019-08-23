@@ -20,7 +20,7 @@ export interface CardDialogData {
 export class CardsComponent implements OnInit {
   $cards: Observable<CardContentFragment[]>;
 
-  constructor(private getCards: GetCardsGQL, private dialog: MatDialog) {
+  constructor(getCards: GetCardsGQL, private dialog: MatDialog) {
     this.$cards = getCards
       .watch()
       .valueChanges.pipe(map(res => res.data.getCards));

@@ -6,8 +6,12 @@ import {
 } from "@angular/material/dialog";
 import { ClipboardDialogData } from "../clipboards.component";
 import { NgNavigatorShareService } from "ng-navigator-share";
-import { DeleteClipboardGQL } from "src/app/generated/graphql";
+import {
+  DeleteClipboardGQL,
+  GetClipboardsDocument
+} from "src/app/generated/graphql";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { cache } from "src/app/app.module";
 
 @Component({
   selector: "app-clipboard-dialog",
@@ -39,8 +43,11 @@ export class ClipboardDialogComponent {
     }
   }
   async delete() {
-    await this.deleteClipboard
-      .mutate({ id: this.data.clipboard.id })
+    const res = await this.deleteClipboard
+      .mutate(
+        { id: this.data.clipboard.id },
+        { refetchQueries: [{ query: GetClipboardsDocument }] }
+      )
       .toPromise();
     this.dialogRef.close();
     this.snackbarService.open("Clipboard Deleted", "Dismiss", {

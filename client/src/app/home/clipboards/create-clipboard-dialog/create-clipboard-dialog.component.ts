@@ -1,16 +1,13 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { Message } from "@angular/compiler/src/i18n/i18n_ast";
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA
-} from "@angular/material/dialog";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import {
   DeleteClipboardGQL,
-  CreateClipboardGQL
+  CreateClipboardGQL,
+  GetCardsDocument,
+  GetClipboardsDocument
 } from "src/app/generated/graphql";
-import { ClipboardDialogData } from "../clipboards.component";
 
 @Component({
   selector: "app-create-clipboard-dialog",
@@ -33,7 +30,10 @@ export class CreateClipboardDialogComponent {
 
   async create() {
     await this.createCardboardgql
-      .mutate({ data: { content: this.message } })
+      .mutate(
+        { data: { content: this.message } },
+        { refetchQueries: [{ query: GetClipboardsDocument }] }
+      )
       .toPromise();
     this.dialogRef.close();
   }

@@ -17,6 +17,8 @@ services:
     ports:
       - "4466:4466"
   backend:
+    build:
+      context: ./server
     volumes:
       - ./server:/app
       - /app/node_modules
