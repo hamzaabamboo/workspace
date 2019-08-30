@@ -5,7 +5,7 @@ type Card {
   title: String!
   slug: String! @unique
   content: String
-  public: Boolean! @default(value: true)
+  isPublic: Boolean! @default(value: true)
   archived: Boolean! @default(value: false)
   files: [File]
 }

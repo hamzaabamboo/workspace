@@ -9,7 +9,6 @@ services:
     image: ${REGISTRY_URL}/workspace/client
   backend:
     image: ${REGISTRY_URL}/workspace/backend
-    command: ["yarn", "prod"]
     restart: on-failure
   postgres-db:
     volumes:

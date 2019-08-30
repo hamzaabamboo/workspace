@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM node:10-alpine as build
 
 WORKDIR /app
 
@@ -14,4 +14,12 @@ RUN yarn run prisma-generate
 
 RUN yarn generate
 
-CMD ["yarn", "start" ]
+RUN yarn build
+
+FROM node:10-alpine
+
+WORKDIR /app
+
+COPY --from=build /app/dist ./dist
+
+CMD ["yarn","start:prod"]
