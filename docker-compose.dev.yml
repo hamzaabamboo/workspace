@@ -22,16 +22,8 @@ services:
     volumes:
       - ./server:/app
       - /app/node_modules
-    command: ["yarn", "start"]
+    command: ["yarn", "start:dev"]
     environment:
       NODE_ENV: development
     ports:
-      - ${BACKEND_PORT}:4000
-  code-generator:
-    build:
-      context: ./code-generator
-    volumes:
-      - /app/node_modules
-      - ./server:/app/server
-      - ./client:/app/client
-      - ./code-generator/codegen.yml:/app/codegen.yml
+      - ${BACKEND_PORT}:${BACKEND_PORT}

@@ -1,5 +1,5 @@
 # Specifies the HTTP endpoint of your Prisma API
-endpoint: ${env:PRISMA_ENDPOINT, "http://prisma:4466"}
+endpoint: ${env:PRISMA_ENDPOINT, "http://localhost:4466"}
 
 # Defines your models, each model is mapped to the database as a table.
 datamodel: generated/datamodel.graphql
@@ -11,12 +11,10 @@ generate:
     output: ../src/generated/prisma-client
   - generator: graphql-schema
     output: ../src/generated/prisma.graphql
-
 # Seed your service with initial data based on `seed.graphql`.
-seed:
-  # import: seed.graphql
-  run: ts-node ./prisma/seed.ts
-
+# seed:
+# import: seed.graphql
+# run: ts-node ./prisma/seed.ts
 # Ensures Prisma client is re-generated after a datamodel changed
 hooks:
   post-deploy:

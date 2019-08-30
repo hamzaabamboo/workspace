@@ -1,80 +1,73 @@
-import { GraphQLResolveInfo } from "graphql";
-import { Prisma, User } from "../generated/prisma";
-import slugify from "slugify";
-import gql from "graphql-tag";
-import { MutationResolvers } from "../resolver.types";
-class BoardService {
-  getBoards({ id }: User, db: Prisma, info: GraphQLResolveInfo) {
-    return db.query.boards(
-      {
-        where: {
-          OR: [{ member_some: { id } }, { creator: { id } }]
-        }
-      },
-      info
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import slugify from 'slugify';
+import { ID_Input } from '../generated/prisma';
+import { BoardInput, Board, BoardWhereInput } from '../graphql';
+import { AuthError } from '../user/auth/AuthError';
+import { GraphQLResolveInfo } from 'graphql';
+import { UserService } from '../user/user.service';
+
+@Injectable()
+export class BoardService {
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly userService: UserService,
+  ) {}
+
+  findBoardById(id: ID_Input, info?: GraphQLResolveInfo) {
+    return this.prisma.query.board({ where: { id } }, info);
+  }
+
+  findBoards(where: BoardWhereInput, info?: GraphQLResolveInfo) {
+    return this.prisma.query.boards({ where }, info);
+  }
+
+  getBoardCreator(id: string, info: GraphQLResolveInfo) {
+    return this.userService.findUserById(id, info);
+  }
+
+  getBoardMembers(boardId: string, info: GraphQLResolveInfo) {
+    return this.userService.findUsers(
+      { joinedBoards_some: { id: boardId } },
+      info,
     );
   }
 
-  async makeBoard(
-    user: User,
-    { title, isPublic }: MutationResolvers.BoardInput,
-    db: Prisma,
-    info: GraphQLResolveInfo
-  ) {
-    return await db.mutation.createBoard(
-      {
-        data: {
-          title,
-          isPublic,
-          slug: slugify(title),
-          creator: {
-            connect: {
-              id: user.id
-            }
-          }
-        }
+  getBoards(id: string) {
+    return this.prisma.query.boards({
+      where: {
+        OR: [{ member_some: { id } }, { creator: { id } }],
       },
-      info
-    );
+    }) as Promise<Board[]>;
   }
 
-  async editBoard(
-    user: User,
-    id: string,
-    { title, isPublic }: MutationResolvers.BoardInput,
-    db: Prisma,
-    info: GraphQLResolveInfo
-  ) {
-    const board = await db.query.board(
-      { where: { id } },
-      gql`
-        {
-          creator {
-            id
-          }
-        }
-      `
-    );
-    if (!board) {
-      throw new Error("Board not found!");
-    }
-    if (board.creator.id != user.id) {
-      throw new Error("You are not owner of this board");
-    }
-    return await db.mutation.updateBoard(
-      {
-        where: {
-          id
+  makeBoard(id: ID_Input, { title, isPublic }: BoardInput) {
+    return this.prisma.mutation.createBoard({
+      data: {
+        title,
+        isPublic,
+        slug: slugify(title),
+        creator: {
+          connect: {
+            id,
+          },
         },
-        data: {
-          title,
-          isPublic,
-          slug: slugify(title)
-        }
       },
-      info
-    );
+    }) as Promise<Board>;
+  }
+
+  isOwner(user: ID_Input, board: ID_Input) {
+    return this.prisma.exists.Board({ id: board, creator: { id: user } });
+  }
+
+  async editBoard(user: ID_Input, id: ID_Input, data: BoardInput) {
+    if (!(await this.isOwner(user, id)))
+      throw new AuthError('Not creator of this board.');
+    return this.prisma.mutation.updateBoard({
+      where: {
+        id,
+      },
+      data,
+    }) as Promise<Board>;
   }
 }
-
-export default BoardService;
