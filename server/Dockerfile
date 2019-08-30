@@ -10,8 +10,6 @@ COPY . .
 
 EXPOSE 4000
 
-RUN yarn run prisma-generate
-
 RUN yarn generate
 
 RUN yarn build

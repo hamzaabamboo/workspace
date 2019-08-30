@@ -30,7 +30,7 @@ services:
     restart: on-failure
     build:
       context: ./server
-      dockerfile: ./server/Dockerfile
+      dockerfile: ./Dockerfile
     depends_on:
       - prisma
     volumes:
@@ -42,7 +42,6 @@ services:
       PRISMA_MANAGEMENT_API_SECRET: ${PRISMA_MANAGEMENT_API_SECRET}
       PRISMA_ENDPOINT: ${PRISMA_ENDPOINT}
       BACKEND_PORT: ${BACKEND_PORT}
-    command: ["yarn", "start"]
 volumes:
   postgres: ~
   uploads: ~
