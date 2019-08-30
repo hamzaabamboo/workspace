@@ -25,7 +25,8 @@ script:
   - docker build --cache-from $REGISTRY_URL/workspace/nginx:latest -t $REGISTRY_URL/workspace/nginx ./nginx
 
 after_script:
-  - docker image
+  - docker images
+
 deploy:
   - provider: script
     skip_cleanup: true
