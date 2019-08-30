@@ -15,4 +15,5 @@ input CardInput {
   title: String!
   content: String
   files: [Upload]
+  isPublic: Boolean
 }

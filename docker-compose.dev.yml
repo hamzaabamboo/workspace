@@ -22,7 +22,9 @@ services:
     volumes:
       - ./server:/app
       - /app/node_modules
-    command: ["yarn", "start:dev"]
+    build:
+      context: ./server
+      dockerfile: ./server/Dockerfiledev
     environment:
       NODE_ENV: development
     ports:

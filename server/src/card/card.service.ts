@@ -54,7 +54,7 @@ export class CardService {
 
   async makeCard(
     user: string,
-    { title, content, files }: CardInput,
+    { title, content, files, isPublic = false }: CardInput,
     board: string,
   ) {
     return this.prisma.mutation.createCard({
@@ -62,7 +62,7 @@ export class CardService {
         title,
         content,
         slug: slugify(title),
-        public: false,
+        isPublic,
         archived: false,
         creator: {
           connect: {
