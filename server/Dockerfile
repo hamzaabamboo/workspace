@@ -12,6 +12,6 @@ EXPOSE 4000
 
 RUN yarn run prisma-generate
 
-RUN yarn run graphql codegen
+RUN yarn generate
 
 CMD ["yarn", "start" ]

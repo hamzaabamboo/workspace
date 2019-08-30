@@ -1,6 +1,6 @@
 type Clipboard {
   id: ID! @id @unique
-  creator: User!
+  creator: User! @relation(name: "ClipboardCreator")
   content: String!
   archived: Boolean! @default(value: false)
 }

@@ -1,103 +1,89 @@
-import { GraphQLResolveInfo } from "graphql";
-import { Prisma, User } from "../generated/prisma";
-import { MutationResolvers } from "../resolver.types";
-import slugify from "slugify";
-import { Service } from "typedi";
-import FileService from "../file/file.service";
-import { FileType } from "../generated/prisma-client";
-import { FileUpload } from "../types";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { CardInput, Card, Board } from '../graphql';
+import { FileService } from '../file/file.service';
+import slugify from 'slugify';
+import { UserService } from '../user/user.service';
+import { BoardService } from '../board/board.service';
+import { GraphQLResolveInfo } from 'graphql';
 
-@Service()
-class CardService {
-  constructor(private readonly fileService: FileService) {}
-  getCards(user: User, db: Prisma, info: GraphQLResolveInfo) {
-    return db.query.cards(
+@Injectable()
+export class CardService {
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly fileService: FileService,
+    private readonly userService: UserService,
+    private readonly boardService: BoardService,
+  ) {}
+
+  async getCardCreator(id: string, info: GraphQLResolveInfo) {
+    return this.userService.findUserById(id, info);
+  }
+
+  async getCardParent(cardId: string, info: GraphQLResolveInfo) {
+    const card = await this.boardService.findBoards(
       {
-        where: { creator: { id: user.id } }
+        cards_some: { id: cardId },
       },
-      info
+      info,
     );
+    return card[0] as Board;
+  }
+
+  getCards(userId: string) {
+    return this.prisma.query.cards({
+      where: { creator: { id: userId } },
+    }) as Promise<Card[]>;
+  }
+
+  async editCard(cardId: string, { files, title, content }: CardInput) {
+    await this.prisma.mutation.updateCard({
+      where: { id: cardId },
+      data: { files: { deleteMany: { id_not: '0' } } },
+    });
+    return this.prisma.mutation.updateCard({
+      where: { id: cardId },
+      data: {
+        title,
+        content,
+        slug: slugify(title),
+        files: { create: await this.fileService.processMultipleFiles(files) },
+      },
+    }) as Promise<Card>;
   }
 
   async makeCard(
-    user: User,
-    {
-      title,
-      content,
-      files = []
-    }: MutationResolvers.CardInput & { files?: FileUpload[] },
+    user: string,
+    { title, content, files }: CardInput,
     board: string,
-    db: Prisma,
-    info: GraphQLResolveInfo
   ) {
-    return await db.mutation.createCard(
-      {
-        data: {
-          title,
-          content,
-          slug: slugify(title),
-          public: false,
-          archived: false,
-          creator: {
-            connect: {
-              id: user.id
-            }
+    return this.prisma.mutation.createCard({
+      data: {
+        title,
+        content,
+        slug: slugify(title),
+        public: false,
+        archived: false,
+        creator: {
+          connect: {
+            id: user,
           },
-          parent: board && {
-            connect: {
-              id: board
-            }
-          },
-          files: {
-            create: await this.fileService.processMultipleFiles(files)
-          }
-        }
-      },
-      info
-    );
-  }
-
-  async editCard(
-    user: User,
-    id: string,
-    {
-      title,
-      content,
-      files = []
-    }: MutationResolvers.CardInput & { files?: FileUpload[] },
-    db: Prisma,
-    info: GraphQLResolveInfo
-  ) {
-    const card = await db.query.card({ where: { id } }, `{ creator { id } }`);
-    if (!card) {
-      throw new Error("Card not found!");
-    }
-    if (card.creator.id != user.id) {
-      throw new Error("You are not owner of this card");
-    }
-    return await db.mutation.updateCard(
-      {
-        where: {
-          id
         },
-        data: {
-          title,
-          content,
-          slug: slugify(title),
-          files: {
-            create: await this.fileService.processMultipleFiles(files)
-          }
-        }
+        parent: board && {
+          connect: {
+            id: board,
+          },
+        },
+        files: {
+          create: await this.fileService.processMultipleFiles(files),
+        },
       },
-      info
-    );
+    }) as Promise<Card>;
   }
 
-  subscribeCard(user: User, db: Prisma, info: GraphQLResolveInfo) {
-    return db.subscription.card({
-      where: { node: { creator: { id: user.id } } }
+  subscribeCard(userId: string) {
+    return this.prisma.subscription.card({
+      where: { node: { creator: { id: userId } } },
     });
   }
 }
-
-export default CardService;

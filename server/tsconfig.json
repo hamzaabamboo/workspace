@@ -1,17 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "moduleResolution": "node",
     "module": "commonjs",
-    "sourceMap": true,
-    "rootDir": "src",
-    "outDir": "dist",
-    "lib": ["esnext", "dom"],
-    "resolveJsonModule": true,
+    "declaration": true,
+    "removeComments": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
-    // "esModuleInterop": true
+    "experimentalDecorators": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "incremental": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["src/**/*.test.ts"]
+  "exclude": ["node_modules", "dist", "prisma"]
 }

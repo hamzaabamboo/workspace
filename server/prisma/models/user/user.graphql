@@ -6,6 +6,8 @@ type User {
   profileImage: String
   createdBoards: [Board!]! @relation(name: "BoardCreator")
   joinedBoards: [Board!]! @relation(name: "BoardMember")
+  createdCards: [Card!]! @relation(name: "CardCreator")
+  createdClipboards: [Clipboard!]! @relation(name: "ClipboardCreator")
 }
 
 enum UserRole {
