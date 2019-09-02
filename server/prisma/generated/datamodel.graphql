@@ -1,0 +1,62 @@
+schema {
+  query: Query
+}
+
+type Board {
+  id: ID! @id @unique
+  title: String!
+  slug: String!
+  creator: User! @relation(name: "BoardCreator")
+  member: [User!]! @relation(name: "BoardMember")
+  isPublic: Boolean! @default(value: true)
+  cards: [Card!]! @relation(name: "CardInBoard")
+}
+
+type Card {
+  id: ID! @id @unique
+  creator: User! @relation(name: "CardCreator")
+  parent: Board @relation(name: "CardInBoard")
+  title: String!
+  slug: String! @unique
+  content: String
+  isPublic: Boolean! @default(value: true)
+  archived: Boolean! @default(value: false)
+  files: [File]
+}
+
+type File {
+  id: ID! @id @unique
+  card: Card!
+  type: FileType
+  filename: String!
+}
+
+enum FileType {
+  IMAGE
+  DOCUMENT
+  OTHER
+}
+
+type Clipboard {
+  id: ID! @id @unique
+  creator: User! @relation(name: "ClipboardCreator")
+  content: String!
+  archived: Boolean! @default(value: false)
+}
+
+type User {
+  id: ID! @id
+  email: String! @unique
+  password: String!
+  role: UserRole!
+  profileImage: String
+  createdBoards: [Board!]! @relation(name: "BoardCreator")
+  joinedBoards: [Board!]! @relation(name: "BoardMember")
+  createdCards: [Card!]! @relation(name: "CardCreator")
+  createdClipboards: [Clipboard!]! @relation(name: "ClipboardCreator")
+}
+
+enum UserRole {
+  NORMAL
+  ADMIN
+}
