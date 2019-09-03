@@ -2,7 +2,7 @@
 endpoint: ${env:PRISMA_ENDPOINT, "http://localhost:4466"}
 
 # Defines your models, each model is mapped to the database as a table.
-datamodel: generated/datamodel.graphql
+datamodel: generated/datamodel.gql
 
 secret: mysecret42
 # Specifies the language and directory for the generated Prisma client.
@@ -20,6 +20,7 @@ hooks:
   post-deploy:
     - graphql get-schema -p prisma
     - graphql codegen
+    - yarn generate
 # If specified, the `secret` must be used to generate a JWT which is attached
 # to the `Authorization` header of HTTP requests made against the Prisma API.
 # Info: https://www.prisma.io/docs/reference/prisma-api/concepts-utee3eiquo#authentication

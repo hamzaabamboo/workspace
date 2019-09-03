@@ -24,7 +24,7 @@ services:
       - /app/node_modules
     build:
       context: ./server
-      dockerfile: ./server/Dockerfiledev
+      dockerfile: ./Dockerfiledev
     environment:
       NODE_ENV: development
     ports:
