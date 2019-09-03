@@ -14,6 +14,8 @@ RUN yarn generate
 
 RUN yarn build
 
+RUN sh scripts/transfer-graphql.sh
+
 FROM node:10-alpine
 
 WORKDIR /app

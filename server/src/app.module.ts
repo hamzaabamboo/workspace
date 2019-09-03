@@ -9,15 +9,19 @@ import { ClipboardModule } from './clipboard/clipboard.module';
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      typePaths: ['./src/**/*.graphql'],
+      typePaths: ['./**/*.graphql'],
       playground: process.env.NODE_ENV !== 'production',
       context: ctx => ctx,
+      resolverValidationOptions: {
+        requireResolversForResolveType: false,
+      },
     }),
     CardModule,
     BoardModule,
     UserModule,
     PrismaModule,
     FileModule,
+    ClipboardModule,
   ],
 })
 export class AppModule {}
