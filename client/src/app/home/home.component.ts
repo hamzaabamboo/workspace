@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
-import { MakeCardGQL, HelloGQL } from "../generated/graphql";
 
 @Component({
   selector: "app-home",
@@ -10,9 +8,7 @@ import { MakeCardGQL, HelloGQL } from "../generated/graphql";
 })
 export class HomeComponent implements OnInit {
   message: Observable<string>;
-  constructor(private hello: HelloGQL) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.message = this.hello.watch().valueChanges.pipe(map(r => r.data.hello));
-  }
+  ngOnInit() {}
 }

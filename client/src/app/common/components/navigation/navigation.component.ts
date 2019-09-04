@@ -3,6 +3,7 @@ import { AuthService } from "src/app/common/services/auth.service";
 import { Observable } from "apollo-link";
 import { BehaviorSubject } from "rxjs";
 import { Router } from "@angular/router";
+import { Apollo } from "apollo-angular";
 
 @Component({
   selector: "app-navigation",
@@ -12,7 +13,11 @@ import { Router } from "@angular/router";
 export class NavigationComponent implements OnInit {
   isLoggedIn = false;
   $loginStatus: BehaviorSubject<boolean>;
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(
+    private apollo: Apollo,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.$loginStatus = authService.isAuthenticated$;
     this.isLoggedIn = this.$loginStatus.value;
   }
@@ -30,5 +35,6 @@ export class NavigationComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate([""]);
+    this.apollo.getClient().cache.reset();
   }
 }

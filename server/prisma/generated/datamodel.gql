@@ -1,7 +1,3 @@
-schema {
-  query: Query
-}
-
 type Board {
   id: ID! @id @unique
   title: String!
@@ -59,4 +55,8 @@ type User {
 enum UserRole {
   NORMAL
   ADMIN
+}
+
+schema {
+  query: Query
 }

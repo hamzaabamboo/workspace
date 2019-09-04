@@ -29,3 +29,11 @@ services:
       NODE_ENV: development
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}
+  code-generator:
+    build:
+      context: ./code-generator
+    volumes:
+      - /app/node_modules
+      - ./server:/app/server
+      - ./client:/app/client
+      - ./code-generator/codegen.yml:/app/codegen.yml
