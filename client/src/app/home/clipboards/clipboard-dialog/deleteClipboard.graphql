@@ -1,5 +1,5 @@
 mutation deleteClipboard($id: ID!) {
-  deleteClipboard(id: $id) {
+  deleteClipboard(where: { id: $id }) {
     id
   }
 }

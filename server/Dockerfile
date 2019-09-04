@@ -1,4 +1,4 @@
-FROM node:10-alpine as build
+FROM node:12-alpine as build
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ RUN yarn build
 
 RUN sh scripts/transfer-graphql.sh
 
-FROM node:10-alpine
+FROM node:12-alpine
 
 WORKDIR /app
 

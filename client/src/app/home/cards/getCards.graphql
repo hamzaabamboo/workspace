@@ -2,7 +2,7 @@ query getCards {
   getCards {
     id
     ...CardContent
-    public
+    isPublic
     archived
   }
 }

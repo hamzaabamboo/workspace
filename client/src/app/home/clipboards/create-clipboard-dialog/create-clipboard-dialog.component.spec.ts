@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CreateClipboardDialogComponent } from './create-clipboard-dialog.component';
+import { CreateClipboardDialogComponent } from "./create-clipboard-dialog.component";
 
-describe('CreateClipboardDialogComponent', () => {
+describe("CreateClipboardDialogComponent", () => {
   let component: CreateClipboardDialogComponent;
   let fixture: ComponentFixture<CreateClipboardDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateClipboardDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateClipboardDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('CreateClipboardDialogComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
