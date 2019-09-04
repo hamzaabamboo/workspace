@@ -27,5 +27,3 @@ services:
       dockerfile: ./Dockerfiledev
     environment:
       NODE_ENV: development
-    ports:
-      - ${BACKEND_PORT}:${BACKEND_PORT}

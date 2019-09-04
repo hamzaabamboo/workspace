@@ -8,8 +8,6 @@ RUN yarn install
 
 COPY . . 
 
-EXPOSE 4000
-
 RUN yarn generate
 
 RUN yarn build

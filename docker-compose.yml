@@ -42,6 +42,8 @@ services:
       PRISMA_MANAGEMENT_API_SECRET: ${PRISMA_MANAGEMENT_API_SECRET}
       PRISMA_ENDPOINT: ${PRISMA_ENDPOINT}
       BACKEND_PORT: ${BACKEND_PORT}
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
 volumes:
   postgres: ~
   uploads: ~
