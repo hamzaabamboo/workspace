@@ -16,14 +16,4 @@ RUN yarn build
 
 RUN sh scripts/transfer-graphql.sh
 
-FROM node:12-alpine
-
-WORKDIR /app
-
-COPY --from=build /app/dist ./dist
-
-COPY --from=build /app/node_modules ./node_modules
-
-COPY package.json .
-
 CMD ["yarn","start:prod"]
